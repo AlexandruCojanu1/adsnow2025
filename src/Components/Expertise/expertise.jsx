@@ -10,11 +10,11 @@ function ExpertiseSection(){
         <>
            <div className="section">
                 <div className="hero-container">
-                    <div className="d-flex flex-column flex-xl-row gspace-5">
+                    <div className="d-flex flex-column flex-lg-row gspace-5">
                         <div className="expertise-img-layout">
                             <div className="image-container expertise-img">
                                 <img
-                                    src="./assets/image/working-job-career-casual-showing-SJZWF3N-1024x737.jpg"
+                                    src="/assets/image/working-job-career-casual-showing-SJZWF3N-1024x737.jpg"
                                     alt="Expertise Image"
                                     className="img-fluid animate-box animated animate__animated"
                                     data-animate="animate__fadeInUp"

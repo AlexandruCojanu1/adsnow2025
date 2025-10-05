@@ -1,7 +1,7 @@
 export const services = [
     {
         id: 1,
-        icon: "./assets/image/Icon-7.png",
+        icon: "/assets/image/Icon-7.png",
         title: "Social Media Marketing",
         content: "Build brand awareness & engage your audience effectively lorem ipsum dolor sit amet consectetur adip.",
         speed: "slow",
@@ -9,7 +9,7 @@ export const services = [
     },
     {
         id: 2,
-        icon: "./assets/image/digital-marketing-icons-F4LJ4W8.png",
+        icon: "/assets/image/digital-marketing-icons-F4LJ4W8.png",
         title: "Content Marketing",
         content: "Build brand awareness & engage your audience effectively lorem ipsum dolor sit amet consectetur adip.",
         speed: "",
@@ -17,7 +17,7 @@ export const services = [
     },
     {
         id: 3,
-        icon: "./assets/image/Icon-8.png",
+        icon: "/assets/image/Icon-8.png",
         title: "PPC Advertising",
         content: "Build brand awareness & engage your audience effectively lorem ipsum dolor sit amet consectetur adip.",
         speed: "fast",
@@ -25,7 +25,7 @@ export const services = [
     },
     {
         id: 4,
-        icon: "./assets/image/Icon-5.png",
+        icon: "/assets/image/Icon-5.png",
         title: "Email Marketing",
         content: "Build brand awareness & engage your audience effectively lorem ipsum dolor sit amet consectetur adip.",
         speed: "slow",
@@ -33,7 +33,7 @@ export const services = [
     },
     {
         id: 5,
-        icon: "./assets/image/Icon-6.png",
+        icon: "/assets/image/Icon-6.png",
         title: "Branding & Design",
         content: "Build brand awareness & engage your audience effectively lorem ipsum dolor sit amet consectetur adip.",
         speed: "",
@@ -41,7 +41,7 @@ export const services = [
     },
     {
         id: 6,
-        icon: "./assets/image/Icon-4.png",
+        icon: "/assets/image/Icon-4.png",
         title: "Web Development",
         content: "Build brand awareness & engage your audience effectively lorem ipsum dolor sit amet consectetur adip.",
         speed: "fast",

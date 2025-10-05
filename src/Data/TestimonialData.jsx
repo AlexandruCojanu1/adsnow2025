@@ -5,7 +5,7 @@ export const testimonials = [
         title: "CEO Nexatech",
         content: "Marko completely transformed our online presence! Their digital marketing strategies helped us double our revenue in just six months.",
         rating: 5,
-        image: "./assets/image/Photo-13.jpg",
+        image: "/assets/image/Photo-13.jpg",
     },
     {
         id: 2,
@@ -13,7 +13,7 @@ export const testimonials = [
         title: "Marketing Director",
         content: "We've worked with many agencies before, but Marko stands out. Their data-driven approach and creative solutions gave us an edge over competitors.",
         rating: 5,
-        image: "./assets/image/Photo-8.jpg",
+        image: "/assets/image/Photo-8.jpg",
     },
     {
         id: 4,
@@ -21,7 +21,7 @@ export const testimonials = [
         title: "Founder",
         content: "From SEO to paid ads, Marko nailed every aspect of our campaign. Our website traffic skyrocketed, and lead generation has never been better!",
         rating: 5,
-        image: "./assets/image/Photo-11.jpg",
+        image: "/assets/image/Photo-11.jpg",
     },
     {
         id: 5,
@@ -29,7 +29,7 @@ export const testimonials = [
         title: "COO, BrightWave",
         content: "Highly professional and results-oriented. Marko's expertise in branding and content marketing helped us build a strong online identity.",
         rating: 5,
-        image: "./assets/image/Photo-12.jpg",
+        image: "/assets/image/Photo-12.jpg",
     },
     {
         id: 6,
@@ -37,7 +37,7 @@ export const testimonials = [
         title: "CEO Nexatech",
         content: "Marko completely transformed our online presence! Their digital marketing strategies helped us double our revenue in just six months.",
         rating: 5,
-        image: "./assets/image/Photo-13.jpg",
+        image: "/assets/image/Photo-13.jpg",
     },
     {
         id: 7,
@@ -45,7 +45,7 @@ export const testimonials = [
         title: "Marketing Director",
         content: "We've worked with many agencies before, but Marko stands out. Their data-driven approach and creative solutions gave us an edge over competitors.",
         rating: 5,
-        image: "./assets/image/Photo-8.jpg",
+        image: "/assets/image/Photo-8.jpg",
     },
     {
         id: 8,
@@ -53,7 +53,7 @@ export const testimonials = [
         title: "Founder",
         content: "From SEO to paid ads, Marko nailed every aspect of our campaign. Our website traffic skyrocketed, and lead generation has never been better!",
         rating: 5,
-        image: "./assets/image/Photo-11.jpg",
+        image: "/assets/image/Photo-11.jpg",
     },
     {
         id: 9,
@@ -61,6 +61,6 @@ export const testimonials = [
         title: "COO, BrightWave",
         content: "Highly professional and results-oriented. Marko's expertise in branding and content marketing helped us build a strong online identity.",
         rating: 5,
-        image: "./assets/image/Photo-12.jpg",
+        image: "/assets/image/Photo-12.jpg",
     },
 ];

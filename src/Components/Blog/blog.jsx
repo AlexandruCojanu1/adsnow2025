@@ -9,8 +9,8 @@ function BlogSection() {
         <div className="section">
             <div className="hero-container">
                 <div className="d-flex flex-column gspace-5">
-                    <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5 m-0">
-                        <div className="col col-xl-8 ps-0 pe-0">
+                    <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5 m-0">
+                        <div className="col col-lg-8 ps-0 pe-0">
                             <div
                                 className="d-flex flex-column gspace-2 animate-box animate__animated fast"
                                 data-animate="animate__fadeInLeft"
@@ -22,7 +22,7 @@ function BlogSection() {
                                 <h2 className="title-heading">Latest Digital Marketing Strategies & Tips</h2>
                             </div>
                         </div>
-                        <div className="col col-xl-4 ps-0 pe-0">
+                        <div className="col col-lg-4 ps-0 pe-0">
                             <div
                                 className="d-flex flex-column gspace-2 justify-content-end h-100 animate-box animate__animated"
                                 data-animate="animate__fadeInRight"

@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import HeadTitle from "../../Components/Head/HeadTitle";
 import BannerHomeSection from "../../Components/Banner";
 import ExpertiseSection from "../../Components/Expertise/expertise";
 import ChooseUsSection from "../../Components/ChooseUs/choose";
@@ -17,9 +17,7 @@ import BlogSection from "../../Components/Blog/blog";
 function HomePage(){
     return(
         <>
-            <Helmet>
-                <title>Home - Marko - Digital Marketing Agency</title>
-            </Helmet>
+            <HeadTitle title="Home - Marko - Digital Marketing Agency" />
             <BannerHomeSection />
             <ExpertiseSection />
             <PartnershipSection />

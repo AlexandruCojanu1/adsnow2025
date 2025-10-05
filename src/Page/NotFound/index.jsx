@@ -1,13 +1,11 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import HeadTitle from "../../Components/Head/HeadTitle";
 import NotFoundSection from "../../Components/NotFound/notfound";
 
 function NotFoundPage(){
     return(
         <>
-            <Helmet>
-                <title>Error 404 - Marko - Digital Marketing Agency</title>
-            </Helmet>
+            <HeadTitle title="Error 404 - Marko - Digital Marketing Agency" />
             <NotFoundSection />
         </>
     );

@@ -5,9 +5,9 @@ const BlogPostSection = () => {
   return (
     <div className="section">
         <div className="hero-container">
-            <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5">
-                <div className="col col-xl-4 order-2 order-xl-1">
-                    <div className="d-flex flex-column flex-md-row flex-xl-column gspace-5">
+            <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
+                <div className="col col-lg-4 order-2 order-lg-1">
+                    <div className="d-flex flex-column flex-md-row flex-lg-column gspace-5">
                         <div className="card recent-post">
                             <h4>Recent Blog</h4>
                             {blogs.map((blog) => (
@@ -47,11 +47,11 @@ const BlogPostSection = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col col-xl-8 order-1 order-xl-2">
+                <div className="col col-lg-8 order-1 order-lg-2">
                     <div className="d-flex flex-column gspace-2">
                         <div className="post-image">
                             <img
-                            src="./assets/image/young-people-working-in-the-grunge-office-V55NNM4-1024x683.jpg"
+                            src="/assets/image/young-people-working-in-the-grunge-office-V55NNM4-1024x683.jpg"
                             alt="Recent Post"
                             className="img-fluid"
                             />

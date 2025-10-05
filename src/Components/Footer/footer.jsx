@@ -7,8 +7,8 @@ const Footer = () => {
             <div className="bg-footer">
                 <div className="hero-container position-relative z-2">
                     <div className="d-flex flex-column gspace-2">
-                        <div className="row row-cols-xl-4 row-cols-md-2 row-cols-1 grid-spacer-5">
-                            <div className="col col-xl-4">
+                        <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1 grid-spacer-5">
+                            <div className="col col-lg-4">
                                 <div className="footer-logo-container">
                                     <div className="logo-container-footer">
                                     <img src="/assets/image/marko-logo.png" alt="Logo" className="site-logo img-fluid" />
@@ -20,7 +20,7 @@ const Footer = () => {
                                 </div>
                             </div>
 
-                            <div className="col col-xl-2">
+                            <div className="col col-lg-2">
                                 <div className="footer-quick-links">
                                     <h5>Quick Links</h5>
                                     <ul className="footer-list">
@@ -34,7 +34,7 @@ const Footer = () => {
                                 </div>
                             </div>
 
-                            <div className="col col-xl-3">
+                            <div className="col col-lg-3">
                                 <div className="footer-services-container">
                                     <h5>Services</h5>
                                     <ul className="footer-list">
@@ -48,7 +48,7 @@ const Footer = () => {
                                 </div>
                             </div>
 
-                            <div className="col col-xl-3">
+                            <div className="col col-lg-3">
                                 <div className="footer-contact-container">
                                     <h5>Contact Info</h5>
                                     <ul className="contact-list">

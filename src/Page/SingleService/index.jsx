@@ -1,22 +1,20 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
+import HeadTitle from "../../Components/Head/HeadTitle";
 import BannerInnerSection from "../../Components/Banner/Inner";
-import SingleServiceSection from "../../Components/SingleService/singleservice";
 import NewsletterSection from "../../Components/Form/Newsletter";
 import TestimonialSection from "../../Components/Testimonial/testimonial";
 import FaqSection from "../../Components/FAQs/faq";
+import SingleServiceSection from "../../Components/Services/singleservice";
 
 function SingleServicePage(){
     return(
         <>
-          <Helmet>
-            <title>Single Service - Marko - Digital Marketing Agency</title>
-          </Helmet>
-          <BannerInnerSection title="Social Media Marketing" currentPage="Services Details" />
-          <SingleServiceSection />
-          <TestimonialSection />
-          <NewsletterSection />
-          <FaqSection />
+            <HeadTitle title="Single Service - Marko - Digital Marketing Agency" />
+            <BannerInnerSection title="Social Media Marketing" currentPage="Services Details" />
+            <SingleServiceSection />
+            <TestimonialSection />
+            <NewsletterSection />
+            <FaqSection />
         </>
     );
 }

@@ -115,10 +115,10 @@ function BannerHomeSection() {
                         </h1>
                         <div className="banner-heading">
                             <div
-                                className="banner-video-content order-xl-1 order-2 animate-box animated animate__animated"
+                                className="banner-video-content order-lg-1 order-2 animate-box animated animate__animated"
                                 data-animate="animate__fadeInUp"
                             >
-                                <div className="d-flex flex-column flex-xl-row text-xl-start text-center align-items-center gspace-5">
+                                <div className="d-flex flex-column flex-lg-row text-lg-start text-center align-items-center gspace-5">
                                     <VideoButton videoUrl="https://www.youtube.com/embed/VhBl3dHT5SY?autoplay=1" />
                                     <p>
                                         Watch our video reviews and see how businesses achieve success
@@ -127,7 +127,7 @@ function BannerHomeSection() {
                                 </div>
                             </div>
                             <div
-                                className="banner-content order-xl-2 order-1 animate-box animated animate__animated"
+                                className="banner-content order-lg-2 order-1 animate-box animated animate__animated"
                                 data-animate="animate__fadeInRight"
                             >
                                 <p>
@@ -135,7 +135,7 @@ function BannerHomeSection() {
                                     marketing, innovative branding, and performance focused strategies
                                     trusted by top brands lorem ipsum dolor sit amet consectetur.
                                 </p>
-                                <div className="d-flex flex-md-row flex-column justify-content-center justify-content-xl-start align-self-center align-self-xl-start gspace-3">
+                                <div className="d-flex flex-md-row flex-column justify-content-center justify-content-lg-start align-self-center align-self-lg-start gspace-3">
                                     <a href="./about" className="btn btn-accent">
                                         <div className="btn-title">
                                             <span>Get Started</span>
@@ -146,9 +146,9 @@ function BannerHomeSection() {
                                     </a>
                                     <div className="banner-reviewer">
                                         <div className="d-flex flex-row align-items-center">
-                                            <img src="./assets/image/Photo-14.jpg" alt="Reviewer" className="avatar" />
-                                            <img src="./assets/image/Photo-1.jpg" alt="Reviewer" className="avatar" />
-                                            <img src="./assets/image/Photo-2.jpg" alt="Reviewer" className="avatar" />
+                                            <img src="/assets/image/Photo-14.jpg" alt="Reviewer" className="avatar" />
+                                            <img src="/assets/image/Photo-1.jpg" alt="Reviewer" className="avatar" />
+                                            <img src="/assets/image/Photo-2.jpg" alt="Reviewer" className="avatar" />
                                         </div>
                                         <div className="detail">
                                             <span>2.7k Positive</span>

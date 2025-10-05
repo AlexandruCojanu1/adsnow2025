@@ -11,7 +11,7 @@ const CaseStudiesSection = ({ noPadding }) => {
             <div className="hero-container">
                 <div className="case-studies-layout">
                     <div className="card card-case-studies">
-                        <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5">
+                        <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
                             <div className="col">
                                 <div className="d-flex flex-column gspace-2 animate-box animated animate__animated" data-animate="animate__fadeInLeft">
                                     <div className="sub-heading">
@@ -34,12 +34,12 @@ const CaseStudiesSection = ({ noPadding }) => {
 
                         {/* Cards */}
                         <div className="d-flex flex-column gspace-2">
-                            <div className="d-flex flex-column flex-xl-row gspace-2">
+                            <div className="d-flex flex-column flex-lg-row gspace-2">
                                 {caseStudiesData.slice(0, 2).map((item) => ( 
                                     <CaseStudyCard key={item.id} {...item} />
                                 ))}
                             </div>
-                            <div className="d-flex flex-column flex-xl-row gspace-2">
+                            <div className="d-flex flex-column flex-lg-row gspace-2">
                                 {caseStudiesData.slice(2, 4).map((item) => (
                                     <CaseStudyCard key={item.id} {...item} />
                                 ))}

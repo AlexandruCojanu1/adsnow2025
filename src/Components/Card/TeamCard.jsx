@@ -1,6 +1,6 @@
 import React from "react";
 
-const TeamCard = ({ name, title, image, socials }) => {
+const   TeamCard = ({ name, title, image, socials }) => {
   return (
     <div className="col">
         <div className="d-flex flex-column">

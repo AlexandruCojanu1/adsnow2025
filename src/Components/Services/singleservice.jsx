@@ -10,7 +10,7 @@ const SingleServiceSection = () => {
                 <div className="d-flex flex-column gspace-5">
                     <div className="image-container">
                         <img
-                        src="./assets/image/collaborative-process-of-multicultural-skilled-peo-5EHBQRG-1024x683.jpg"
+                        src="/assets/image/collaborative-process-of-multicultural-skilled-peo-5EHBQRG-1024x683.jpg"
                         alt="Service Image"
                         className="single-service-img"
                         />
@@ -42,8 +42,8 @@ const SingleServiceSection = () => {
                         </div>
                     </div>
 
-                    <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5">
-                        <div className="col col-xl-8">
+                    <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
+                        <div className="col col-lg-8">
                             <div className="d-flex flex-column gspace-2">
                                 <h4>Overview</h4>
                                 <p>
@@ -53,7 +53,7 @@ const SingleServiceSection = () => {
                                     <div className="col">
                                         <div className="image-container">
                                         <img
-                                            src="./assets/image/young-business-team-working-EH8KQ2R-1024x683.jpg"
+                                            src="/assets/image/young-business-team-working-EH8KQ2R-1024x683.jpg"
                                             alt="Service Image"
                                             className="img-fluid"
                                         />
@@ -62,7 +62,7 @@ const SingleServiceSection = () => {
                                     <div className="col">
                                         <div className="image-container">
                                         <img
-                                            src="./assets/image/business-team-working-in-a-start-up-office-8ENVVX5-1024x683.jpg"
+                                            src="/assets/image/business-team-working-in-a-start-up-office-8ENVVX5-1024x683.jpg"
                                             alt="Service Image"
                                             className="img-fluid"
                                         />
@@ -140,8 +140,8 @@ const SingleServiceSection = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col col-xl-4">
-                            <div className="d-flex flex-column flex-md-row flex-xl-column justify-content-between gspace-5">
+                        <div className="col col-lg-4">
+                            <div className="d-flex flex-column flex-md-row flex-lg-column justify-content-between gspace-5">
                                 <div className="card service-recent">
                                 <h4>Recent Services</h4>
                                 <div className="underline-accent-short"></div>

@@ -13,7 +13,7 @@ const DigitalProcessSection = () => {
                 <div className="section digital-process-banner">
                     <div className="hero-container">
                         <div className="digital-process-content">
-                            <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5">
+                            <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
                                 <div className="col">
                                     <div className="d-flex flex-column gspace-2 animate-box animate__animated" data-animate="animate__fadeInDown">
                                         <div className="sub-heading">
@@ -39,7 +39,7 @@ const DigitalProcessSection = () => {
 
                             <div className="digital-process-steps-wrapper">
                                 <div className="digital-process-steps">
-                                    <div className="row row-cols-xl-4 row-cols-md-2 row-cols-1">
+                                    <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1">
                                     {digitalSteps.map((item, index) => (
                                         <DigitalStepCard
                                             key={index}

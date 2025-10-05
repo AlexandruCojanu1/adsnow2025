@@ -5,8 +5,8 @@ const FaqSection = () => {
   return (
     <div className="section">
         <div className="hero-container">
-            <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5">
-                <div className="col col-xl-5">
+            <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
+                <div className="col col-lg-5">
                     <div className="faq-title-container">
                         <div className="sub-heading">
                             <i className="fa-regular fa-circle-dot"></i>
@@ -15,7 +15,7 @@ const FaqSection = () => {
                         <h2 className="title-heading">Got Questions? We've Got Answers.</h2>
                     </div>
                 </div>
-                <div className="col col-xl-7">
+                <div className="col col-lg-7">
                     <div className="d-flex flex-column">
                         <div className="accordion" id="faqAccordion">
                             {faqData.map((item, index) => (

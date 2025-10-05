@@ -5,8 +5,8 @@ const ContactSection = () => {
   return (
     <div className="section">
         <div className="hero-container">
-            <div className="row row-cols-xl-2 row-cols-1 g-5">
-                <div className="col col-xl-5">
+            <div className="row row-cols-lg-2 row-cols-1 g-5">
+                <div className="col col-lg-5">
                     <div className="contact-title-wrapper">
                         <div className="card contact-title">
                             <div className="sub-heading">
@@ -59,7 +59,7 @@ const ContactSection = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col col-xl-7">
+                <div className="col col-lg-7">
                     <div id="success-message" className="alert success hidden">
                         <span className="check-icon">
                             <i className="fa-solid fa-2xl fa-check"></i>

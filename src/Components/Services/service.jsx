@@ -21,7 +21,7 @@ function ServiceSection(){
                             </h2>
                         </div>
                         <div className="card-service-wrapper">
-                            <div className="row row-cols-xl-3 row-cols-md-2 row-cols-1 grid-spacer-2">
+                            <div className="row row-cols-lg-3 row-cols-md-2 row-cols-1 grid-spacer-2">
                                 {services.map((item) => (
                                     <div className="col" key={item.id}>
                                         <ServiceCard 

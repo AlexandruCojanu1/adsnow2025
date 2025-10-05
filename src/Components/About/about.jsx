@@ -9,11 +9,11 @@ function AboutSection(){
     return(
         <div className="section">
             <div className="hero-container">
-                <div className="d-flex flex-column flex-xl-row gspace-5">
+                <div className="d-flex flex-column flex-lg-row gspace-5">
                     <div className="about-img-layout">
                         <div className="image-container about-img">
                             <img
-                                src="./assets/image/working-job-career-casual-showing-SJZWF3N-1024x737.jpg"
+                                src="/assets/image/working-job-career-casual-showing-SJZWF3N-1024x737.jpg"
                                 alt="About Us Image"
                                 className="img-fluid animate-box animated animate__animated"
                                 data-animate="animate__fadeInUp"

@@ -1,7 +1,7 @@
 export const blogs = [
 	{
 		id: 1,
-		image: "./assets/image/collaborative-process-of-multicultural-skilled-peo-AN9FZBQ-1024x683.jpg",
+		image: "/assets/image/collaborative-process-of-multicultural-skilled-peo-AN9FZBQ-1024x683.jpg",
 		date: "April 14, 2025",
 		category: "Social Media",
 		title: "Mastering Instagram and Facebook Ads",
@@ -10,7 +10,7 @@ export const blogs = [
 	},
 	{
 		id: 2,
-		image: "./assets/image/collaborative-process-of-multicultural-skilled-peo-LY58K9U-1024x683.jpg",
+		image: "/assets/image/collaborative-process-of-multicultural-skilled-peo-LY58K9U-1024x683.jpg",
 		date: "April 14, 2025",
 		category: "SEO",
 		title: "Growth Strategies for Digital Business",

@@ -14,7 +14,7 @@ function Navbar() {
 
     return (
         <div className="navbar-wrapper">
-            <nav className="navbar navbar-expand-xl">
+            <nav className="navbar navbar-expand-lg">
                 <div className="navbar-container">
                     <div className="logo-container">
                         <NavLink className="navbar-brand" to="/">

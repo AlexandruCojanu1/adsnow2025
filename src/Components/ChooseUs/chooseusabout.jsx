@@ -10,7 +10,7 @@ function ChooseUsAboutSection(){
         <>
             <div className="section">
                 <div className="hero-container">
-                    <div className="d-flex flex-column flex-xl-row gspace-5">
+                    <div className="d-flex flex-column flex-lg-row gspace-5">
                     <div className="chooseus-card-container">
                         <div className="d-flex flex-column gspace-2">
                             {whychooseus.slice(3, 6).map((item) => (

@@ -14,11 +14,11 @@ const TestimonialSection = () => {
         <div className="section">
             <div className="hero-container">
                 <div className="d-flex flex-column gspace-5">
-                    <div className="row row-cols-xl-2 row-cols-1 grid-spacer-5">
-                        <div className="col col-xl-4">
+                    <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
+                        <div className="col col-lg-4">
                             <div className="testimonial-header-wrapper animate-box animated fast animate__animated" data-animate="animate__fadeInDown">
                                 <div className="card card-testimonial-reviewer">
-                                    <div className="d-flex flex-column flex-md-row flex-xl-column justify-content-between gspace-3">
+                                    <div className="d-flex flex-column flex-md-row flex-lg-column justify-content-between gspace-3">
                                         <div className="testimonial-reviewer">
                                             <div className="avatar-container">
                                                 <img src="/assets/image/Photo-14.jpg" alt="Testimonial Reviewer" className="avatar" />
@@ -49,7 +49,7 @@ const TestimonialSection = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="d-flex flex-column flex-md-row flex-xl-column justify-content-center gspace-2">
+                                    <div className="d-flex flex-column flex-md-row flex-lg-column justify-content-center gspace-2">
                                         <div className="testimonial-header-link-wrapper">
                                             <i className="fa-regular fa-circle-check accent-color"></i>
                                             <a href="#">Social Media Growth</a>
@@ -62,7 +62,7 @@ const TestimonialSection = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col col-xl-8">
+                        <div className="col col-lg-8">
                             <div className="testimonial-header-wrapper-title animate-box animated animate__animated" data-animate="animate__fadeInRight">
                                 <div className="card-testimonial-header-title">
                                     <div className="sub-heading">

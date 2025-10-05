@@ -20,7 +20,7 @@ function PricingPlanSection(){
                             Flexible Pricing Plans for Every Business
                             </h2>
                     </div>
-                    <div className="row row-cols-xl-3 row-cols-1 grid-spacer-2">
+                    <div className="row row-cols-lg-3 row-cols-1 grid-spacer-2">
                         <div className="col">
                             <div className="pricing-container">
                                 <div
