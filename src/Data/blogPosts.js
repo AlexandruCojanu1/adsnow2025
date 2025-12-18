@@ -3,30 +3,6 @@
 
 export const blogPosts = [
   {
-    "id": 2,
-    "slug": "growth-strategies-digital-business",
-    "title": "Growth Strategies for Digital Business",
-    "excerpt": "Strategii dovedite pentru creșterea business-ului digital. De la brand positioning la performance marketing și customer retention.",
-    "content": "\n      <p>Creșterea unui business digital necesită mai mult decât un website și câteva anunțuri. Este nevoie de o strategie integrată care să acopere toate aspectele digitale ale business-ului tău.</p>\n      \n      <h2>Piloni ai Creșterii Digitale</h2>\n      <p>Pentru a crește sustenabil, business-urile digitale trebuie să se concentreze pe trei piloni principali:</p>\n      \n      <h3>1. Brand Positioning</h3>\n      <p>Poziționarea corectă a brandului tău în mintea consumatorilor este esențială pentru succesul pe termen lung.</p>\n      \n      <h3>2. Performance Marketing</h3>\n      <p>Marketing-ul bazat pe performanță te ajută să măsori și să optimizezi fiecare leu investit în publicitate.</p>\n      \n      <h3>3. Customer Retention</h3>\n      <p>Păstrarea clienților existenți este adesea mai profitabilă decât atragerea de noi clienți.</p>\n      \n      <p>Implementând aceste strategii într-un mod integrat, poți crea un motor de creștere sustenabil pentru business-ul tău digital.</p>\n    ",
-    "image": "/assets/images/dummy-img-600x400.jpg",
-    "date": "2025-04-14",
-    "category": "SEO",
-    "author": "Algo Digital Solutions",
-    "tags": [
-      "Growth",
-      "Digital Marketing",
-      "Business Strategy",
-      "SEO"
-    ],
-    "seo": {
-      "metaTitle": "Growth Strategies for Digital Business - Ghid Practic",
-      "metaDescription": "Descoperă strategii dovedite pentru creșterea business-ului digital. De la brand positioning la performance marketing.",
-      "keywords": "digital business growth, marketing strategy, business development"
-    },
-    "published": true,
-    "featured": true
-  },
-  {
     "slug": "custom-code-vs-wordpress-2025-adsnow-design",
     "title": "Custom Code vs WordPress 2025 - AdsNow Design",
     "excerpt": "În 2025, un website nu mai este o simplă carte de vizită digitală. Este motorul tău de vânzări. Mulți antreprenori aleg WordPress pentru costul inițial redus, d",
