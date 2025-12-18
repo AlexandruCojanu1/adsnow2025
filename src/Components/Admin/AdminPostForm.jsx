@@ -7,12 +7,12 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         slug: "",
         date: new Date().toISOString().split('T')[0],
-        author: "Algo Digital Solutions",
         published: true,
         featured: false
     });
     const [isProcessing, setIsProcessing] = useState(false);
     const [automationStatus, setAutomationStatus] = useState(null);
+    const [extractedData, setExtractedData] = useState(null);
 
     useEffect(() => {
         if (post) {
@@ -21,7 +21,6 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             setFormData({
                 slug: post.slug || "",
                 date: post.date || new Date().toISOString().split('T')[0],
-                author: post.author || "Algo Digital Solutions",
                 published: post.published !== undefined ? post.published : true,
                 featured: post.featured || false
             });
@@ -32,17 +31,24 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
         const html = e.target.value;
         setHtmlContent(html);
         
-        // Auto-extract metadata from HTML if not in edit mode
-        if (!post && html.length > 100) {
+        // Auto-extract metadata from HTML
+        if (html.length > 100) {
             try {
                 const parsed = parseHTMLContent(html);
-                setFormData(prev => ({
-                    ...prev,
-                    slug: parsed.slug || prev.slug,
-                }));
+                setExtractedData(parsed);
+                
+                // Auto-update slug if empty
+                if (!formData.slug && parsed.slug) {
+                    setFormData(prev => ({
+                        ...prev,
+                        slug: parsed.slug
+                    }));
+                }
             } catch (error) {
                 console.error('Error parsing HTML:', error);
             }
+        } else {
+            setExtractedData(null);
         }
     };
 
@@ -62,6 +68,11 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             return;
         }
 
+        if (!formData.slug.trim()) {
+            alert("Te rog completează slug-ul (URL) articolului.");
+            return;
+        }
+
         setIsProcessing(true);
         setAutomationStatus(null);
 
@@ -69,18 +80,22 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             // Parse HTML to extract metadata
             const parsed = parseHTMLContent(htmlContent);
             
-            // Prepare post data
+            // Prepare post data - use extracted data from HTML
             const postData = {
-                slug: formData.slug || parsed.slug,
-                title: parsed.title,
-                excerpt: parsed.excerpt,
-                content: htmlContent,
-                image: parsed.image,
+                slug: formData.slug,
+                title: parsed.title || 'Articol fără titlu',
+                excerpt: parsed.excerpt || '',
+                content: htmlContent, // Full HTML content
+                image: parsed.image || '/assets/images/dummy-img-600x400.jpg',
                 date: formData.date,
-                category: parsed.category,
-                author: formData.author,
-                tags: parsed.tags,
-                seo: parsed.seo,
+                category: parsed.category || 'Social Media',
+                author: parsed.author || 'Algo Digital Solutions',
+                tags: parsed.tags || [],
+                seo: parsed.seo || {
+                    metaTitle: parsed.title || '',
+                    metaDescription: parsed.excerpt || '',
+                    keywords: parsed.keywords || ''
+                },
                 published: formData.published,
                 featured: formData.featured
             };
@@ -153,13 +168,13 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                     {/* HTML Content Editor */}
                     <div>
                         <label htmlFor="htmlContent" className="form-label">
-                            Conținut HTML Complet <span className="text-danger">*</span>
+                            Cod HTML Complet <span className="text-danger">*</span>
                         </label>
                         <textarea
                             className="form-control"
                             id="htmlContent"
                             name="htmlContent"
-                            rows="25"
+                            rows="30"
                             value={htmlContent}
                             onChange={handleHTMLChange}
                             required
@@ -170,15 +185,30 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                                 overflowWrap: 'normal',
                                 overflowX: 'auto'
                             }}
-                            placeholder="Lipește aici codul HTML complet al articolului..."
+                            placeholder="Lipește aici codul HTML complet al articolului (cu &lt;!DOCTYPE html&gt;, &lt;head&gt;, &lt;body&gt;, etc.)..."
                             disabled={isProcessing}
                         />
                         <small className="text-muted">
-                            Adaugă codul HTML complet. Metadata (title, description, etc.) va fi extrasă automat din HTML.
+                            Adaugă codul HTML complet. Metadata (title, description, image, etc.) va fi extrasă automat din HTML.
                         </small>
                     </div>
 
-                    {/* Basic Info */}
+                    {/* Extracted Data Preview */}
+                    {extractedData && extractedData.title && (
+                        <div className="alert alert-info" role="alert">
+                            <strong>Metadata extrasă automat:</strong>
+                            <ul className="mb-0 mt-2" style={{ paddingLeft: '1.5rem' }}>
+                                <li><strong>Titlu:</strong> {extractedData.title}</li>
+                                {extractedData.excerpt && <li><strong>Excerpt:</strong> {extractedData.excerpt.substring(0, 100)}...</li>}
+                                {extractedData.category && <li><strong>Categorie:</strong> {extractedData.category}</li>}
+                                {extractedData.tags && extractedData.tags.length > 0 && (
+                                    <li><strong>Tags:</strong> {extractedData.tags.join(', ')}</li>
+                                )}
+                            </ul>
+                        </div>
+                    )}
+
+                    {/* Essential Fields Only */}
                     <div className="row gspace-3">
                         <div className="col-md-6">
                             <label htmlFor="slug" className="form-label">
@@ -213,21 +243,6 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                                 disabled={isProcessing}
                             />
                         </div>
-                    </div>
-
-                    <div>
-                        <label htmlFor="author" className="form-label">
-                            Autor
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="author"
-                            name="author"
-                            value={formData.author}
-                            onChange={handleChange}
-                            disabled={isProcessing}
-                        />
                     </div>
 
                     {/* Options */}
@@ -306,7 +321,8 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                     <div className="alert alert-info" role="alert">
                         <strong>Automatizare:</strong> Când salvezi un articol ca <strong>Publicat</strong>, sistemul va:
                         <ul className="mb-0 mt-2">
-                            <li>Actualiza automat sitemap.xml</li>
+                            <li>Extrae automat metadata din HTML (title, description, image, tags, etc.)</li>
+                            <li>Actualizează automat sitemap.xml</li>
                             <li>Trimite articolul către Google Indexing API pentru indexare rapidă</li>
                         </ul>
                     </div>
