@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { parseHTMLContent, generateSlug } from "../../utils/htmlParser";
-import { automatePostPublishing } from "../../utils/blogAutomation";
+import { automatePostPublishing, generateSitemap } from "../../utils/blogAutomation";
+import { loadPosts, updatePosts } from "../../Data/blogPosts";
 
 const AdminPostForm = ({ post, onSave, onCancel }) => {
     const [htmlContent, setHtmlContent] = useState("");
@@ -8,6 +9,8 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
         published: true,
         featured: false
     });
+    const [githubToken, setGithubToken] = useState("");
+    const [showGithubToken, setShowGithubToken] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [automationStatus, setAutomationStatus] = useState(null);
     const [extractedData, setExtractedData] = useState(null);
@@ -56,6 +59,13 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             return;
         }
 
+        // If publishing, require GitHub token
+        if (formData.published && !githubToken) {
+            setShowGithubToken(true);
+            alert("Pentru a publica articolul, te rog introdu cheia GitHub.");
+            return;
+        }
+
         setIsProcessing(true);
         setAutomationStatus(null);
 
@@ -89,42 +99,96 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                 featured: formData.featured
             };
 
-            // Save post first
+            // If editing, preserve ID
+            if (post && post.id) {
+                postData.id = post.id;
+            }
+
+            // Save post to localStorage first
+            const currentPosts = loadPosts();
+            let updatedPosts;
+            
+            if (post && post.id) {
+                // Update existing post
+                updatedPosts = currentPosts.map(p => 
+                    p.id === post.id ? postData : p
+                );
+            } else {
+                // Create new post
+                const newId = Math.max(...currentPosts.map(p => p.id || 0), 0) + 1;
+                updatedPosts = [...currentPosts, { ...postData, id: newId }];
+            }
+            
+            updatePosts(updatedPosts);
             onSave(postData);
 
-            // Automate sitemap and Google Indexing
-            if (formData.published) {
-                setAutomationStatus({ type: 'info', message: 'Se actualizează sitemap-ul și se trimite către Google...' });
+            // If publishing, commit to GitHub
+            if (formData.published && githubToken) {
+                setAutomationStatus({ 
+                    type: 'info', 
+                    message: 'Se trimite către GitHub și se actualizează sitemap-ul...' 
+                });
                 
-                const automationResults = await automatePostPublishing(postData);
+                // Generate sitemap with all published posts
+                const sitemapXml = generateSitemap(updatedPosts);
                 
-                if (automationResults.sitemap.success && automationResults.googleIndexing.success) {
-                    setAutomationStatus({ 
-                        type: 'success', 
-                        message: '✓ Articol salvat, sitemap actualizat și trimis către Google cu succes!' 
+                // Commit to GitHub
+                try {
+                    const response = await fetch('/api/github-commit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            githubToken: githubToken,
+                            posts: updatedPosts,
+                            sitemapXml: sitemapXml
+                        }),
                     });
-                } else if (automationResults.sitemap.success) {
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Also submit to Google Indexing
+                        const automationResults = await automatePostPublishing(postData);
+                        
+                        if (automationResults.googleIndexing.success) {
+                            setAutomationStatus({ 
+                                type: 'success', 
+                                message: '✓ Articol trimis către GitHub, sitemap actualizat și trimis către Google! Vercel va face auto-deploy.' 
+                            });
+                        } else {
+                            setAutomationStatus({ 
+                                type: 'success', 
+                                message: '✓ Articol trimis către GitHub și sitemap actualizat! Vercel va face auto-deploy. Google Indexing necesită configurare.' 
+                            });
+                        }
+                    } else {
+                        setAutomationStatus({ 
+                            type: 'error', 
+                            message: `Eroare la trimiterea către GitHub: ${result.results?.blogPosts?.error || result.results?.sitemap?.error || result.message}` 
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error committing to GitHub:', error);
                     setAutomationStatus({ 
-                        type: 'warning', 
-                        message: '✓ Articol salvat și sitemap actualizat. Google Indexing necesită configurare API.' 
-                    });
-                } else {
-                    setAutomationStatus({ 
-                        type: 'info', 
-                        message: '✓ Articol salvat. Automatizarea va rula la build.' 
+                        type: 'error', 
+                        message: 'Eroare la trimiterea către GitHub: ' + error.message 
                     });
                 }
             } else {
                 setAutomationStatus({ 
                     type: 'info', 
-                    message: '✓ Articol salvat ca draft. Va fi publicat și trimis către Google când îl marchezi ca publicat.' 
+                    message: '✓ Articol salvat ca draft. Va fi publicat și trimis către GitHub când îl marchezi ca publicat.' 
                 });
             }
 
-            // Reset status after 5 seconds
+            // Reset status after 8 seconds
             setTimeout(() => {
                 setAutomationStatus(null);
-            }, 5000);
+                setShowGithubToken(false);
+                setGithubToken("");
+            }, 8000);
 
         } catch (error) {
             console.error('Error saving post:', error);
@@ -204,6 +268,28 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                         </div>
                     )}
 
+                    {/* GitHub Token - Show when publishing */}
+                    {showGithubToken && formData.published && (
+                        <div className="alert alert-warning" role="alert">
+                            <label htmlFor="githubToken" className="form-label">
+                                <strong>Cheie GitHub (Personal Access Token)</strong> <span className="text-danger">*</span>
+                            </label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="githubToken"
+                                value={githubToken}
+                                onChange={(e) => setGithubToken(e.target.value)}
+                                placeholder="ghp_..."
+                                disabled={isProcessing}
+                                style={{ fontFamily: 'monospace' }}
+                            />
+                            <small className="text-muted d-block mt-2">
+                                Token-ul este necesar pentru a trimite articolul către GitHub. Nu este salvat și este folosit doar pentru acest commit.
+                            </small>
+                        </div>
+                    )}
+
                     {/* Options - Only Published and Featured */}
                     <div className="d-flex flex-row gspace-3">
                         <div className="form-check">
@@ -213,11 +299,16 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                                 id="published"
                                 name="published"
                                 checked={formData.published}
-                                onChange={handleChange}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    if (e.target.checked) {
+                                        setShowGithubToken(true);
+                                    }
+                                }}
                                 disabled={isProcessing}
                             />
                             <label className="form-check-label" htmlFor="published">
-                                Publicat (va fi trimis automat către Google)
+                                Publicat (va fi trimis automat către GitHub și Google)
                             </label>
                         </div>
                         <div className="form-check">

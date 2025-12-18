@@ -9,10 +9,15 @@ const SITE_URL = process.env.REACT_APP_SITE_URL || 'https://adsnow.vercel.app';
 
 /**
  * Generate sitemap.xml
+ * @param {Array} customPosts - Optional array of posts to use instead of loading from storage
  */
-export const generateSitemap = () => {
+export const generateSitemap = (customPosts = null) => {
   try {
-    const posts = getPublishedPosts();
+    let posts = customPosts || getPublishedPosts();
+    // Filter only published posts if custom posts provided
+    if (customPosts) {
+      posts = posts.filter(post => post.published);
+    }
     const currentDate = new Date().toISOString().split('T')[0];
     
     let xml = `<?xml version="1.0" encoding="UTF-8"?>

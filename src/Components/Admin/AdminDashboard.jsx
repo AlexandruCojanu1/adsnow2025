@@ -71,6 +71,21 @@ const AdminDashboard = ({ onLogout }) => {
         handleFormClose();
     };
 
+    const handleExportPosts = () => {
+        const dataStr = JSON.stringify(posts, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `blog-posts-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        alert('✓ Articolele au fost exportate! Acum trebuie să:\n1. Deschizi fișierul JSON\n2. Îl copiezi în src/Data/blogPosts.js (înlocuiește array-ul blogPosts)\n3. Faci commit și push pe GitHub');
+    };
+
     return (
         <div className="section" style={{ minHeight: '100vh', paddingTop: '2rem' }}>
             <div className="hero-container">
@@ -82,6 +97,13 @@ const AdminDashboard = ({ onLogout }) => {
                             <p>Gestionează articolele blog</p>
                         </div>
                         <div className="d-flex flex-row gspace-2">
+                            <button
+                                className="btn btn-outline-primary"
+                                onClick={handleExportPosts}
+                                title="Exportă toate articolele ca JSON pentru commit în Git"
+                            >
+                                <i className="fa-solid fa-download"></i> Exportă Articole
+                            </button>
                             <button
                                 className="btn btn-accent"
                                 onClick={handleCreate}
