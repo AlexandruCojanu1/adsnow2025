@@ -142,7 +142,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                 title: parsed.title || 'Articol fără titlu',
                 excerpt: parsed.excerpt || '',
                 content: htmlContent, // Full HTML content
-                image: parsed.image || '/assets/images/dummy-img-600x400.jpg',
+                image: parsed.image || '/favicon.webp',
                 date: date,
                 category: parsed.category || 'Social Media',
                 author: parsed.author || 'Algo Digital Solutions',

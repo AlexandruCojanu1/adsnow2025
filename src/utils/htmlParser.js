@@ -81,7 +81,7 @@ export const extractImage = (html) => {
     return imgMatch[1].trim();
   }
   
-  return '/assets/images/dummy-img-600x400.jpg';
+  return '/favicon.webp';
 };
 
 /**
