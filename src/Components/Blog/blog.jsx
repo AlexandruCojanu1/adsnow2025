@@ -1,7 +1,4 @@
 import React from "react";
-import BlogCard from "../Card/BlogCard";
-import { getBlogs } from "../../Data/BlogPostData";
-import { getPublishedPosts } from "../../Data/blogPosts";
 import AnimateOnScroll from "../Hooks/AnimateOnScroll";
 
 function BlogSection() {
@@ -37,26 +34,6 @@ function BlogSection() {
                                 </div>
                             </AnimateOnScroll>
                         </div>
-                    </div>
-
-                    <div className="row row-cols-md-2 row-cols-1 grid-spacer-3">
-                        {getPublishedPosts().map((post) => {
-                            const blogs = getBlogs();
-                            const blog = blogs.find(b => b.slug === post.slug) || {
-                                id: post.id,
-                                image: post.image,
-                                date: new Date(post.date).toLocaleDateString('ro-RO', { 
-                                    year: 'numeric', 
-                                    month: 'long', 
-                                    day: 'numeric' 
-                                }),
-                                category: post.category,
-                                title: post.title,
-                                excerpt: post.excerpt,
-                                link: `/blog/${post.slug}`
-                            };
-                            return <BlogCard key={post.id} blog={blog} />;
-                        })}
                     </div>
                 </div>
             </div>
