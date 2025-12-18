@@ -34,6 +34,7 @@ async function getFileSha(token, path) {
       headers: {
         'Authorization': `token ${token}`,
         'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'Vercel-Serverless-Function',
       },
     });
 
@@ -99,6 +100,7 @@ async function updateFile(token, path, content, sha, message) {
       'Authorization': `token ${token}`,
       'Accept': 'application/vnd.github.v3+json',
       'Content-Type': 'application/json',
+      'User-Agent': 'Vercel-Serverless-Function',
     },
     body: JSON.stringify(body),
   });
@@ -261,60 +263,45 @@ export default async function handler(req) {
     const blogPostsContent = generateBlogPostsJs(posts);
     const commitMessage = `Update blog posts and sitemap - ${new Date().toISOString()}`;
 
-    // Get file SHAs in parallel to save time
-    const [blogPostsSha, sitemapSha] = await Promise.all([
-      getFileSha(githubToken, BLOG_POSTS_PATH).catch(err => {
-        console.error('Error getting blogPosts SHA:', err.message);
-        return null;
-      }),
-      getFileSha(githubToken, SITEMAP_PATH).catch(err => {
-        console.error('Error getting sitemap SHA:', err.message);
-        return null;
-      })
-    ]);
-
-    // Update both files in parallel
-    const [blogPostsResult, sitemapResult] = await Promise.allSettled([
-      updateFile(
+    // Update blogPosts.js first
+    try {
+      const blogPostsSha = await getFileSha(githubToken, BLOG_POSTS_PATH);
+      const blogPostsResult = await updateFile(
         githubToken,
         BLOG_POSTS_PATH,
         blogPostsContent,
         blogPostsSha,
         commitMessage
-      ).catch(err => {
-        results.blogPosts.error = err.message;
-        throw err;
-      }),
-      updateFile(
+      );
+      results.blogPosts.success = true;
+      results.blogPosts.message = 'Blog posts updated successfully';
+      results.blogPosts.commitSha = blogPostsResult.commit?.sha;
+      results.blogPosts.commitUrl = blogPostsResult.commit?.html_url;
+    } catch (error) {
+      results.blogPosts.error = error.message;
+      console.error('Error updating blogPosts:', error.message);
+    }
+
+    // Update sitemap.xml second (use new SHA from blogPosts commit if available)
+    try {
+      // Wait a bit to ensure GitHub has processed the first commit
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const sitemapSha = await getFileSha(githubToken, SITEMAP_PATH);
+      const sitemapResult = await updateFile(
         githubToken,
         SITEMAP_PATH,
         sitemapXml,
         sitemapSha,
         commitMessage
-      ).catch(err => {
-        results.sitemap.error = err.message;
-        throw err;
-      })
-    ]);
-
-    // Process blogPosts result
-    if (blogPostsResult.status === 'fulfilled') {
-      results.blogPosts.success = true;
-      results.blogPosts.message = 'Blog posts updated successfully';
-      results.blogPosts.commitSha = blogPostsResult.value.commit?.sha;
-      results.blogPosts.commitUrl = blogPostsResult.value.commit?.html_url;
-    } else {
-      results.blogPosts.error = blogPostsResult.reason?.message || 'Unknown error';
-    }
-
-    // Process sitemap result
-    if (sitemapResult.status === 'fulfilled') {
+      );
       results.sitemap.success = true;
       results.sitemap.message = 'Sitemap updated successfully';
-      results.sitemap.commitSha = sitemapResult.value.commit?.sha;
-      results.sitemap.commitUrl = sitemapResult.value.commit?.html_url;
-    } else {
-      results.sitemap.error = sitemapResult.reason?.message || 'Unknown error';
+      results.sitemap.commitSha = sitemapResult.commit?.sha;
+      results.sitemap.commitUrl = sitemapResult.commit?.html_url;
+    } catch (error) {
+      results.sitemap.error = error.message;
+      console.error('Error updating sitemap:', error.message);
     }
 
     // Return success if at least one file was updated
