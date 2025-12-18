@@ -48,8 +48,9 @@ const AdminDashboard = ({ onLogout }) => {
         setSelectedPost(null);
     };
 
-    const handleFormSave = (postData) => {
+    const handleFormSave = async (postData) => {
         let updatedPosts;
+        const isNewPost = !selectedPost;
         
         if (selectedPost) {
             // Update existing post
@@ -63,6 +64,10 @@ const AdminDashboard = ({ onLogout }) => {
         }
         
         handleSavePosts(updatedPosts);
+        
+        // Note: Automation is handled in AdminPostForm component
+        // This allows for better user feedback during the process
+        
         handleFormClose();
     };
 
