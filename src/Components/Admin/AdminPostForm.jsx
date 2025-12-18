@@ -44,7 +44,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
         const { name, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === "checkbox" ? checked : value
+            [name]: type === "checkbox" ? checked : e.target.value
         }));
     };
 
@@ -276,16 +276,6 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                         </button>
                     </div>
 
-                    {/* Info Box */}
-                    <div className="alert alert-info" role="alert">
-                        <strong>Automatizare completă:</strong> Când salvezi un articol ca <strong>Publicat</strong>, sistemul va:
-                        <ul className="mb-0 mt-2">
-                            <li>Extrae automat toată metadata din HTML (title, description, image, category, tags, SEO)</li>
-                            <li>Generează automat slug-ul din titlu</li>
-                            <li>Actualizează automat sitemap.xml</li>
-                            <li>Trimite automat articolul către Google Indexing API pentru indexare rapidă</li>
-                        </ul>
-                    </div>
                 </div>
             </form>
         </div>
