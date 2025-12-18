@@ -265,12 +265,15 @@ export default async function handler(req) {
 
     // Update blogPosts.js first (with timeout protection)
     try {
+      console.log('Step 1: Getting blogPosts.js SHA...');
       const blogPostsShaPromise = getFileSha(githubToken, BLOG_POSTS_PATH);
       const blogPostsSha = await Promise.race([
         blogPostsShaPromise,
         new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout getting SHA')), 5000))
       ]);
+      console.log('Step 1: ✓ SHA obtained:', blogPostsSha ? 'existing file' : 'new file');
       
+      console.log('Step 2: Updating blogPosts.js in GitHub...');
       const updatePromise = updateFile(
         githubToken,
         BLOG_POSTS_PATH,
@@ -283,24 +286,48 @@ export default async function handler(req) {
         new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout updating file')), 5000))
       ]);
       
-      results.blogPosts.success = true;
-      results.blogPosts.message = 'Blog posts updated successfully';
-      results.blogPosts.commitSha = blogPostsResult.commit?.sha;
-      results.blogPosts.commitUrl = blogPostsResult.commit?.html_url;
+      console.log('Step 2: ✓ File updated, commit SHA:', blogPostsResult.commit?.sha);
+      
+      // Verify commit was successful by checking the file again
+      console.log('Step 3: Verifying commit...');
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s for GitHub to process
+      const verifySha = await getFileSha(githubToken, BLOG_POSTS_PATH);
+      
+      if (verifySha && verifySha !== blogPostsSha) {
+        results.blogPosts.success = true;
+        results.blogPosts.message = 'Blog posts updated and verified in GitHub';
+        results.blogPosts.commitSha = blogPostsResult.commit?.sha;
+        results.blogPosts.commitUrl = blogPostsResult.commit?.html_url;
+        results.blogPosts.verified = true;
+        console.log('Step 3: ✓ Commit verified - file SHA changed');
+      } else if (verifySha === blogPostsResult.commit?.sha || blogPostsResult.commit?.sha) {
+        results.blogPosts.success = true;
+        results.blogPosts.message = 'Blog posts updated in GitHub';
+        results.blogPosts.commitSha = blogPostsResult.commit?.sha;
+        results.blogPosts.commitUrl = blogPostsResult.commit?.html_url;
+        results.blogPosts.verified = true;
+        console.log('Step 3: ✓ Commit confirmed');
+      } else {
+        throw new Error('Commit verification failed - file not updated');
+      }
     } catch (error) {
       results.blogPosts.error = error.message;
-      console.error('Error updating blogPosts:', error.message);
+      results.blogPosts.verified = false;
+      console.error('✗ Error updating blogPosts:', error.message);
     }
 
     // Update sitemap.xml second (only if blogPosts succeeded, with timeout)
     if (results.blogPosts.success) {
       try {
+        console.log('Step 4: Getting sitemap.xml SHA...');
         const sitemapShaPromise = getFileSha(githubToken, SITEMAP_PATH);
         const sitemapSha = await Promise.race([
           sitemapShaPromise,
           new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout getting SHA')), 5000))
         ]);
+        console.log('Step 4: ✓ SHA obtained:', sitemapSha ? 'existing file' : 'new file');
         
+        console.log('Step 5: Updating sitemap.xml in GitHub...');
         const updatePromise = updateFile(
           githubToken,
           SITEMAP_PATH,
@@ -313,16 +340,38 @@ export default async function handler(req) {
           new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout updating file')), 5000))
         ]);
         
-        results.sitemap.success = true;
-        results.sitemap.message = 'Sitemap updated successfully';
-        results.sitemap.commitSha = sitemapResult.commit?.sha;
-        results.sitemap.commitUrl = sitemapResult.commit?.html_url;
+        console.log('Step 5: ✓ File updated, commit SHA:', sitemapResult.commit?.sha);
+        
+        // Verify commit was successful
+        console.log('Step 6: Verifying sitemap commit...');
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1s for GitHub to process
+        const verifySitemapSha = await getFileSha(githubToken, SITEMAP_PATH);
+        
+        if (verifySitemapSha && verifySitemapSha !== sitemapSha) {
+          results.sitemap.success = true;
+          results.sitemap.message = 'Sitemap updated and verified in GitHub';
+          results.sitemap.commitSha = sitemapResult.commit?.sha;
+          results.sitemap.commitUrl = sitemapResult.commit?.html_url;
+          results.sitemap.verified = true;
+          console.log('Step 6: ✓ Sitemap commit verified - file SHA changed');
+        } else if (verifySitemapSha === sitemapResult.commit?.sha || sitemapResult.commit?.sha) {
+          results.sitemap.success = true;
+          results.sitemap.message = 'Sitemap updated in GitHub';
+          results.sitemap.commitSha = sitemapResult.commit?.sha;
+          results.sitemap.commitUrl = sitemapResult.commit?.html_url;
+          results.sitemap.verified = true;
+          console.log('Step 6: ✓ Sitemap commit confirmed');
+        } else {
+          throw new Error('Sitemap commit verification failed - file not updated');
+        }
       } catch (error) {
         results.sitemap.error = error.message;
-        console.error('Error updating sitemap:', error.message);
+        results.sitemap.verified = false;
+        console.error('✗ Error updating sitemap:', error.message);
       }
     } else {
       results.sitemap.error = 'Skipped - blogPosts update failed';
+      results.sitemap.verified = false;
     }
 
     // Return success if at least one file was updated
