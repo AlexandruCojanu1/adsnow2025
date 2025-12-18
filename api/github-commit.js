@@ -263,16 +263,26 @@ export default async function handler(req) {
     const blogPostsContent = generateBlogPostsJs(posts);
     const commitMessage = `Update blog posts and sitemap - ${new Date().toISOString()}`;
 
-    // Update blogPosts.js first
+    // Update blogPosts.js first (with timeout protection)
     try {
-      const blogPostsSha = await getFileSha(githubToken, BLOG_POSTS_PATH);
-      const blogPostsResult = await updateFile(
+      const blogPostsShaPromise = getFileSha(githubToken, BLOG_POSTS_PATH);
+      const blogPostsSha = await Promise.race([
+        blogPostsShaPromise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout getting SHA')), 5000))
+      ]);
+      
+      const updatePromise = updateFile(
         githubToken,
         BLOG_POSTS_PATH,
         blogPostsContent,
         blogPostsSha,
         commitMessage
       );
+      const blogPostsResult = await Promise.race([
+        updatePromise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout updating file')), 5000))
+      ]);
+      
       results.blogPosts.success = true;
       results.blogPosts.message = 'Blog posts updated successfully';
       results.blogPosts.commitSha = blogPostsResult.commit?.sha;
@@ -282,26 +292,37 @@ export default async function handler(req) {
       console.error('Error updating blogPosts:', error.message);
     }
 
-    // Update sitemap.xml second (use new SHA from blogPosts commit if available)
-    try {
-      // Wait a bit to ensure GitHub has processed the first commit
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const sitemapSha = await getFileSha(githubToken, SITEMAP_PATH);
-      const sitemapResult = await updateFile(
-        githubToken,
-        SITEMAP_PATH,
-        sitemapXml,
-        sitemapSha,
-        commitMessage
-      );
-      results.sitemap.success = true;
-      results.sitemap.message = 'Sitemap updated successfully';
-      results.sitemap.commitSha = sitemapResult.commit?.sha;
-      results.sitemap.commitUrl = sitemapResult.commit?.html_url;
-    } catch (error) {
-      results.sitemap.error = error.message;
-      console.error('Error updating sitemap:', error.message);
+    // Update sitemap.xml second (only if blogPosts succeeded, with timeout)
+    if (results.blogPosts.success) {
+      try {
+        const sitemapShaPromise = getFileSha(githubToken, SITEMAP_PATH);
+        const sitemapSha = await Promise.race([
+          sitemapShaPromise,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout getting SHA')), 5000))
+        ]);
+        
+        const updatePromise = updateFile(
+          githubToken,
+          SITEMAP_PATH,
+          sitemapXml,
+          sitemapSha,
+          commitMessage
+        );
+        const sitemapResult = await Promise.race([
+          updatePromise,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout updating file')), 5000))
+        ]);
+        
+        results.sitemap.success = true;
+        results.sitemap.message = 'Sitemap updated successfully';
+        results.sitemap.commitSha = sitemapResult.commit?.sha;
+        results.sitemap.commitUrl = sitemapResult.commit?.html_url;
+      } catch (error) {
+        results.sitemap.error = error.message;
+        console.error('Error updating sitemap:', error.message);
+      }
+    } else {
+      results.sitemap.error = 'Skipped - blogPosts update failed';
     }
 
     // Return success if at least one file was updated
