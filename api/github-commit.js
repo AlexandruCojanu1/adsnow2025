@@ -30,6 +30,7 @@ async function getFileSha(token, path) {
   const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`;
   
   try {
+    console.log(`Fetching SHA for: ${path}`);
     const response = await fetch(url, {
       headers: {
         'Authorization': `token ${token}`,
@@ -38,7 +39,10 @@ async function getFileSha(token, path) {
       },
     });
 
+    console.log(`Response status for ${path}:`, response.status);
+
     if (response.status === 404) {
+      console.log(`File ${path} does not exist, will create new`);
       return null; // File doesn't exist yet
     }
 
@@ -50,12 +54,15 @@ async function getFileSha(token, path) {
       } catch {
         errorData = { message: errorText };
       }
+      console.error(`Error getting SHA for ${path}:`, errorData);
       throw new Error(`Failed to get file SHA (${response.status}): ${errorData.message || response.statusText}`);
     }
 
     const data = await response.json();
+    console.log(`✓ SHA obtained for ${path}:`, data.sha?.substring(0, 7) + '...');
     return data.sha;
   } catch (error) {
+    console.error(`Error in getFileSha for ${path}:`, error);
     throw new Error(`Error getting file SHA: ${error.message}`);
   }
 }
@@ -94,6 +101,8 @@ async function updateFile(token, path, content, sha, message) {
     body.sha = sha;
   }
 
+  console.log(`Updating file: ${path}, content length: ${content.length}, has SHA: ${!!sha}`);
+  
   const response = await fetch(url, {
     method: 'PUT',
     headers: {
@@ -105,6 +114,8 @@ async function updateFile(token, path, content, sha, message) {
     body: JSON.stringify(body),
   });
 
+  console.log(`Update response status for ${path}:`, response.status);
+
   if (!response.ok) {
     const errorText = await response.text();
     let errorData;
@@ -113,10 +124,13 @@ async function updateFile(token, path, content, sha, message) {
     } catch {
       errorData = { message: errorText };
     }
+    console.error(`Error updating ${path}:`, errorData);
     throw new Error(`Failed to update file (${response.status}): ${errorData.message || response.statusText}`);
   }
 
-  return await response.json();
+  const result = await response.json();
+  console.log(`✓ File ${path} updated successfully, commit SHA:`, result.commit?.sha?.substring(0, 7) + '...');
+  return result;
 }
 
 /**
@@ -182,6 +196,11 @@ export const updatePosts = (newPosts) => {
  * Main handler
  */
 export default async function handler(req) {
+  const startTime = Date.now();
+  console.log('=== GitHub Commit API Handler Started ===');
+  console.log('Method:', req.method);
+  console.log('URL:', req.url);
+  
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, {
@@ -208,8 +227,16 @@ export default async function handler(req) {
   }
 
   try {
+    console.log('Parsing request body...');
     const body = await req.json();
     const { githubToken, posts, sitemapXml } = body;
+    
+    console.log('Request parsed:', {
+      hasToken: !!githubToken,
+      tokenPrefix: githubToken?.substring(0, 7) + '...',
+      postsCount: posts?.length || 0,
+      sitemapLength: sitemapXml?.length || 0
+    });
 
     // Validate inputs
     if (!githubToken) {
@@ -374,16 +401,37 @@ export default async function handler(req) {
       results.sitemap.verified = false;
     }
 
-    // Return success if at least one file was updated
-    const success = results.blogPosts.success || results.sitemap.success;
+    // Return success if at least one file was updated and verified
+    const success = (results.blogPosts.success && results.blogPosts.verified) || 
+                    (results.sitemap.success && results.sitemap.verified);
+    const bothVerified = results.blogPosts.verified && results.sitemap.verified;
+
+    let message = '';
+    if (bothVerified) {
+      message = '✓ Articol și sitemap actualizate cu succes în GitHub! Vercel va face auto-deploy în câteva minute.';
+    } else if (results.blogPosts.verified) {
+      message = '✓ Articol actualizat în GitHub! Sitemap a eșuat. Vercel va face auto-deploy.';
+    } else if (results.sitemap.verified) {
+      message = '⚠ Sitemap actualizat, dar articolul a eșuat. Verifică erorile.';
+    } else {
+      message = '✗ Actualizarea a eșuat. Verifică erorile de mai jos.';
+    }
 
     return new Response(
       JSON.stringify({
         success,
         results,
-        message: success 
-          ? 'Files updated successfully. Vercel will auto-deploy.' 
-          : 'Failed to update files',
+        message,
+        verified: {
+          blogPosts: results.blogPosts.verified || false,
+          sitemap: results.sitemap.verified || false,
+          both: bothVerified
+        },
+        githubUrls: {
+          blogPosts: results.blogPosts.commitUrl || null,
+          sitemap: results.sitemap.commitUrl || null,
+          repository: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
+        }
       }),
       {
         status: success ? 200 : 500,
