@@ -67,7 +67,6 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
         featured: false
     });
     const [githubToken, setGithubToken] = useState("");
-    const [showGithubToken, setShowGithubToken] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
     const [automationStatus, setAutomationStatus] = useState(null);
     const [extractedData, setExtractedData] = useState(null);
@@ -116,12 +115,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             return;
         }
 
-        // If publishing, require GitHub token
-        if (formData.published && !githubToken) {
-            setShowGithubToken(true);
-            alert("Pentru a publica articolul, te rog introdu cheia GitHub.");
-            return;
-        }
+            // If publishing, try to commit to GitHub if token is provided
 
         setIsProcessing(true);
         setAutomationStatus(null);
@@ -437,7 +431,6 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             // Reset status after 8 seconds
             setTimeout(() => {
                 setAutomationStatus(null);
-                setShowGithubToken(false);
                 setGithubToken("");
             }, 8000);
 
@@ -520,55 +513,21 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                     )}
 
                     {/* GitHub Token - Show when publishing */}
-                    {showGithubToken && formData.published && (
-                        <div className="alert alert-warning" role="alert">
+                    {formData.published && (
+                        <div className="alert alert-info" role="alert">
                             <label htmlFor="githubToken" className="form-label">
-                                <strong>Cheie GitHub (Personal Access Token)</strong> <span className="text-danger">*</span>
+                                <strong>Cheie GitHub (Personal Access Token)</strong>
                             </label>
-                            <div className="d-flex flex-row gspace-2">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="githubToken"
-                                    value={githubToken}
-                                    onChange={(e) => setGithubToken(e.target.value)}
-                                    placeholder="ghp_..."
-                                    disabled={isProcessing}
-                                    style={{ fontFamily: 'monospace' }}
-                                />
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-primary"
-                                    onClick={async () => {
-                                        if (!githubToken) {
-                                            alert('Te rog introdu token-ul mai întâi');
-                                            return;
-                                        }
-                                        try {
-                                            const response = await fetch('/api/test-github', {
-                                                method: 'POST',
-                                                headers: { 'Content-Type': 'application/json' },
-                                                body: JSON.stringify({ githubToken })
-                                            });
-                                            const result = await response.json();
-                                            if (result.success) {
-                                                alert('✓ Token valid! Toate testele au trecut.\n\n' + 
-                                                      `User: ${result.tests.token.user}\n` +
-                                                      `Repository: ${result.tests.repository.name}\n` +
-                                                      `File Access: ${result.tests.fileAccess.success ? 'OK' : 'Failed'}`);
-                                            } else {
-                                                alert('✗ Token invalid sau fără permisiuni:\n' + result.error);
-                                            }
-                                        } catch (error) {
-                                            alert('Eroare la testare: ' + error.message);
-                                        }
-                                    }}
-                                    disabled={isProcessing || !githubToken}
-                                    title="Testează token-ul GitHub"
-                                >
-                                    <i className="fa-solid fa-check"></i> Testează
-                                </button>
-                            </div>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="githubToken"
+                                value={githubToken}
+                                onChange={(e) => setGithubToken(e.target.value)}
+                                placeholder="ghp_..."
+                                disabled={isProcessing}
+                                style={{ fontFamily: 'monospace' }}
+                            />
                             <small className="text-muted d-block mt-2">
                                 Token-ul este necesar pentru a trimite articolul către GitHub. Nu este salvat și este folosit doar pentru acest commit.
                                 <br />
@@ -586,12 +545,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                                 id="published"
                                 name="published"
                                 checked={formData.published}
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    if (e.target.checked) {
-                                        setShowGithubToken(true);
-                                    }
-                                }}
+                                onChange={handleChange}
                                 disabled={isProcessing}
                             />
                             <label className="form-check-label" htmlFor="published">
