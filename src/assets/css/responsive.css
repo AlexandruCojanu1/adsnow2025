@@ -275,6 +275,93 @@
 /* 02 Mobile (max-width:: 767px) */
 
 @media screen and (max-width: 767px){
+    /* Eliminare completă header pe mobil - doar logo mare */
+    .navbar-wrapper{
+        padding: 20px 20px 0px 20px !important;
+        background: transparent !important;
+        border: none !important;
+    }
+    .navbar{
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+    .navbar-container{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .nav-btn{
+        display: none !important;
+    }
+    .navbar-action-container{
+        display: none !important;
+    }
+    .navbar-collapse{
+        display: none !important;
+    }
+    
+    /* Logo mare centrat fără header */
+    .logo-container{
+        width: 100% !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-left: 0 !important;
+        display: flex !important;
+        text-align: center !important;
+    }
+    .logo-container img{
+        width: 70% !important;
+        max-width: 350px !important;
+        min-width: 250px !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Eliminare gradient din spatele textului Your Online Identity Advisor */
+    .banner-video-container .hero-container{
+        background: transparent !important;
+    }
+    .banner-video-container::before{
+        display: none !important;
+    }
+    .title-heading-banner{
+        background-image: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        background-color: transparent !important;
+        color: #fffff0 !important;
+        text-align: center !important;
+        display: block !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+    }
+    .banner-video-container .hero-container .d-flex.flex-column.gspace-2{
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    .banner-video-container .hero-container{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+    /* Reducere padding pentru banner-video-container pe mobil */
+    .banner-video-container {
+        padding: 60px 20px 40px 20px !important;
+    }
+    
+    /* Optimizare animații pe mobil - reducere durată pentru performanță */
+    .animate__animated {
+        animation-duration: 0.8s !important;
+    }
+    
+    /* Asigură z-index corect pentru elementele animate peste video */
+    .banner-video-container .hero-container > * {
+        position: relative;
+        z-index: 2;
+    }
+    
     h1{
         font-size: var(--font-size-10xl);
     }
@@ -308,6 +395,11 @@
     .banner-video-content p{
         font-size: var(--font-size-xs);
         max-width: 100%;
+    }
+    .banner-content p{
+        font-size: var(--font-size-base);
+        line-height: var(--line-height-relaxed);
+        margin-bottom: 1.5em;
     }
     .section-banner{
         padding: 0px 20px 0px 20px;
@@ -499,6 +591,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        gap: 15px 15px !important;
     }
     .footer-quick-links{
         align-items: center;
@@ -514,6 +607,23 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+    }
+    
+    /* Reducere spațiu liber în footer pe mobil */
+    .bg-footer {
+        padding: 30px 20px 0px 20px !important;
+    }
+    
+    .footer-content-spacer {
+        height: 10px !important;
+    }
+    
+    .section-footer .hero-container .d-flex.flex-column.gspace-2 {
+        gap: 20px 20px !important;
+    }
+    
+    .section-footer .row.grid-spacer-5 {
+        gap: 20px 20px !important;
     }
     .footer-list li{
         justify-content: center;

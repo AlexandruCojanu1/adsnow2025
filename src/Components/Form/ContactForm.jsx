@@ -30,14 +30,14 @@ const ContactForm = () => {
   return (
     <div className="form-layout-wrapper">
         <div className="card form-layout">
-            <h3 className="title-heading">Let's Talk About Your Next Project</h3>
+            <h3 className="title-heading">Let's see if we Click</h3>
 
             {successMessageVisible && (
             <div id="success-message" className="alert success">
                 <span className="check-icon">
-                <i className="fa-solid fa-check"></i>
+                    <i className="fa-solid fa-check"></i>
                 </span>
-                <p className="text-center">Thank you! Message sent successfully.</p>
+                <p className="text-center">Mulțumim! În 24 de ore îți vom răspunde dacă facem click.</p>
             </div>
             )}
 
@@ -86,10 +86,10 @@ const ContactForm = () => {
                 <div className="form-button-container">
                         <button type="submit" className="btn btn-accent">
                             <span className="btn-title">
-                                <span>Send a Message</span>
+                                <span>Programează o întâlnire</span>
                             </span>
                             <span className="icon-circle">
-                                <i className="fa-solid fa-arrow-right"></i>
+                                <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
                             </span>
                         </button>
                 </div>

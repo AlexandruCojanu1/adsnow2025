@@ -1,5 +1,6 @@
 import React from "react";
-import { blogs } from "../../Data/BlogPostData";
+import { getBlogs } from "../../Data/BlogPostData";
+import { getPublishedPosts } from "../../Data/blogPosts";
 
 const BlogPostSection = () => {
   return (
@@ -10,7 +11,22 @@ const BlogPostSection = () => {
                     <div className="d-flex flex-column flex-md-row flex-lg-column gspace-5">
                         <div className="card recent-post">
                             <h4>Recent Blog</h4>
-                            {blogs.map((blog) => (
+                            {getPublishedPosts().slice(0, 3).map((post) => {
+                                const blogs = getBlogs();
+                                const blog = blogs.find(b => b.slug === post.slug) || {
+                                    id: post.id,
+                                    image: post.image,
+                                    date: new Date(post.date).toLocaleDateString('ro-RO', { 
+                                        year: 'numeric', 
+                                        month: 'long', 
+                                        day: 'numeric' 
+                                    }),
+                                    category: post.category,
+                                    title: post.title,
+                                    excerpt: post.excerpt,
+                                    link: `/blog/${post.slug}`
+                                };
+                                return (
                                 <div
                                     className="d-flex flex-row w-100 gspace-1"
                                     key={blog.id}
@@ -32,7 +48,8 @@ const BlogPostSection = () => {
                                         </a>
                                     </div>
                                 </div>
-                                ))}
+                                );
+                            })}
                         </div>
                         <div className="cta-service-banner">
                             <div className="spacer"></div>
@@ -42,7 +59,7 @@ const BlogPostSection = () => {
                             </p>
                             <div className="link-wrapper">
                                 <a href="about">Read More</a>
-                                <i className="fa-solid fa-circle-arrow-right"></i>
+                                <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
                             </div>
                         </div>
                     </div>
@@ -51,7 +68,7 @@ const BlogPostSection = () => {
                     <div className="d-flex flex-column gspace-2">
                         <div className="post-image">
                             <img
-                            src="/assets/images/young-people-working-in-the-grunge-office-V55NNM4-1024x683.jpg"
+                            src="/assets/images/dummy-img-600x400.jpg"
                             alt="Recent Post"
                             className="img-fluid"
                             />

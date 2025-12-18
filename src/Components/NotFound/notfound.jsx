@@ -1,20 +1,18 @@
 import React from "react";
-import useAnimateOnScroll from "../Hooks/useAnimateOnScroll";
+import AnimateOnScroll from "../Hooks/AnimateOnScroll";
 
 const NotFoundSection = () => {
-    
-    useAnimateOnScroll();
 
     return (
         <div className="section-404">
             <div className="banner-layout-404">
                 <div className="layout-404">
-                    <span
-                        className="text-404 title-heading animate-box animated animate__animated"
-                        data-animate="animate__fadeInRight"
-                    >
-                        404
-                    </span>
+
+                    <AnimateOnScroll>
+                        <span className="text-404 title-heading">
+                            404
+                        </span>
+                    </AnimateOnScroll>
                     <h3>Oops! Page Not Found</h3>
                     <p>
                         We couldn't find the page you're looking for. It might have been
@@ -26,7 +24,7 @@ const NotFoundSection = () => {
                                 <span>Back to Home</span>
                             </div>
                             <div className="icon-circle">
-                                <i className="fa-solid fa-arrow-right"></i>
+                                <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
                             </div>
                         </a>
                     </div>

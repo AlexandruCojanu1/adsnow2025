@@ -1,49 +1,62 @@
 import React from "react";
 import BlogCard from "../Card/BlogCard";
-import { blogs } from "../../Data/BlogPostData";
-import useAnimateOnScroll from "../Hooks/useAnimateOnScroll";
+import { getBlogs } from "../../Data/BlogPostData";
+import { getPublishedPosts } from "../../Data/blogPosts";
+import AnimateOnScroll from "../Hooks/AnimateOnScroll";
 
 function BlogSection() {
-    useAnimateOnScroll();
     return (
         <div className="section">
             <div className="hero-container">
                 <div className="d-flex flex-column gspace-5">
                     <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5 m-0">
                         <div className="col col-lg-8 ps-0 pe-0">
-                            <div
-                                className="d-flex flex-column gspace-2 animate-box animate__animated fast"
-                                data-animate="animate__fadeInLeft"
-                            >
-                                <div className="sub-heading">
-                                    <i className="fa-regular fa-circle-dot"></i>
-                                    <span>Insights & Trends</span>
+                            <AnimateOnScroll animation="fadeInLeft" speed="fast">
+                                <div
+                                    className="d-flex flex-column gspace-2">
+                                    <div className="sub-heading">
+                                        <i className="fa-regular fa-circle-dot"></i>
+                                        <span>Perspective & Tendințe</span>
+                                    </div>
+                                    <h2 className="title-heading">Ultimele Strategii și Sfaturi de Marketing Digital</h2>
                                 </div>
-                                <h2 className="title-heading">Latest Digital Marketing Strategies & Tips</h2>
-                            </div>
+                            </AnimateOnScroll>
                         </div>
                         <div className="col col-lg-4 ps-0 pe-0">
-                            <div
-                                className="d-flex flex-column gspace-2 justify-content-end h-100 animate-box animate__animated"
-                                data-animate="animate__fadeInRight"
-                            >
-                                <p>
-                                    Explore our latest blog articles covering industry trends,
-                                    expert insights, and actionable strategies to elevate your
-                                    digital marketing game.
-                                </p>
-                                <div className="link-wrapper">
-                                    <a href="./blog">View All Articles</a>
-                                    <i className="fa-solid fa-circle-arrow-right"></i>
+                            <AnimateOnScroll animation="fadeInRight" speed="normal">
+                                <div
+                                    className="d-flex flex-column gspace-2 justify-content-end h-100">
+                                    <p>
+                                        Explorează cele mai recente articole de pe blog care acoperă tendințele din industrie,
+                                        perspective experte și strategii practice pentru a-ți ridica jocul de marketing digital.
+                                    </p>
+                                    <div className="link-wrapper">
+                                        <a href="./blog">Vezi Toate Articolele</a>
+                                        <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                    </div>
                                 </div>
-                            </div>
+                            </AnimateOnScroll>
                         </div>
                     </div>
 
                     <div className="row row-cols-md-2 row-cols-1 grid-spacer-3">
-                        {blogs.map((blog) => (
-                            <BlogCard key={blog.id} blog={blog} />
-                        ))}
+                        {getPublishedPosts().map((post) => {
+                            const blogs = getBlogs();
+                            const blog = blogs.find(b => b.slug === post.slug) || {
+                                id: post.id,
+                                image: post.image,
+                                date: new Date(post.date).toLocaleDateString('ro-RO', { 
+                                    year: 'numeric', 
+                                    month: 'long', 
+                                    day: 'numeric' 
+                                }),
+                                category: post.category,
+                                title: post.title,
+                                excerpt: post.excerpt,
+                                link: `/blog/${post.slug}`
+                            };
+                            return <BlogCard key={post.id} blog={blog} />;
+                        })}
                     </div>
                 </div>
             </div>

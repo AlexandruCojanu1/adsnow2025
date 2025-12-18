@@ -1,24 +1,29 @@
 import React from "react";
-import useAnimateOnScroll from "../Hooks/useAnimateOnScroll";
-import VideoButton from "../Video/VideoButton";
+import AnimateOnScroll from "../Hooks/AnimateOnScroll";
 
 function GuideBannerSection(){
-    useAnimateOnScroll();
     return(
         <>
             <div className="section-guide">
                 <div className="guide-banner">
+                    <video 
+                        className="guide-banner-video"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                    >
+                        <source src="/assets/videos/Generare_Video_Scurt_cu_Elemente_Specifice.mp4" type="video/mp4" />
+                    </video>
                     <div className="hero-container">
-                    <div className="guide-content animate-box animated animate__animated" data-animate="animate__fadeInUp">
-                        <div className="guide-video-container">
-                            <VideoButton videoUrl="https://www.youtube.com/embed/VhBl3dHT5SY?autoplay=1" />
-                            <p>See How We Help Brands Grow</p>
-                        </div>
-                        <div className="d-flex flex-column gspace-2">
-                            <h3 className="title-heading">Transform Your Business with Marko!</h3>
-                            <p>Take your digital marketing to the next level with data-driven strategies and innovative solutions. Let's create something amazing together!</p>
-                        </div>
-                    </div>
+                        <AnimateOnScroll animation="fadeInUp" speed="normal">
+                            <div className="guide-content">
+                                <div className="d-flex flex-column gspace-2">
+                                    <h3 className="title-heading">Ești Pregătit să-ți Construiești Identitatea Digitală?</h3>
+                                    <p>Construim experiențe digitale care rămân simple pentru tine, transparente pentru parteneri și relevante pentru public. Aplică acum și în <strong>24h</strong> îți spunem dacă facem click.</p>
+                                </div>
+                            </div>
+                        </AnimateOnScroll>
                     </div>
                 </div>
             </div>

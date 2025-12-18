@@ -7,76 +7,46 @@ const Footer = () => {
             <div className="bg-footer">
                 <div className="hero-container position-relative z-2">
                     <div className="d-flex flex-column gspace-2">
-                        <div className="row row-cols-lg-4 row-cols-md-2 row-cols-1 grid-spacer-5">
-                            <div className="col col-lg-4">
+                        <div className="row row-cols-lg-3 row-cols-md-2 row-cols-1 grid-spacer-5">
+                            <div className="col col-lg-5">
                                 <div className="footer-logo-container">
                                     <div className="logo-container-footer">
-                                    <img src="/assets/images/marko-logo.png" alt="Logo" className="site-logo img-fluid" />
+                                    <img src="/assets/images/logo1.png" alt="Logo" className="site-logo img-fluid" />
                                     </div>
-                                    <h4>Driving Digital Growth with Innovation & Strategy</h4>
+                                    <h4>Construim Identități Digitale pentru Profesioniști și Branduri care Aduc Valoare</h4>
                                     <p>
-                                    Lorem ipsum dolor si consectetur adipiscing elit ut elit tellus luctus nec ullamcorper mattis pulvinar dapibus leo.
+                                    Nu vindem servicii. Alegem parteneri. Experiențe digitale care rămân simple pentru tine, transparente pentru parteneri și relevante pentru public.
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="col col-lg-2">
-                                <div className="footer-quick-links">
-                                    <h5>Quick Links</h5>
-                                    <ul className="footer-list">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="/about">About Us</a></li>
-                                        <li><a href="/service">Service</a></li>
-                                        <li><a href="/case_studies">Case Studies</a></li>
-                                        <li><a href="/blog">Blog</a></li>
-                                        <li><a href="/contact">Contact Us</a></li>
-                                    </ul>
-                                </div>
+                            <div className="col col-lg-3">
                             </div>
 
-                            <div className="col col-lg-3">
-                                <div className="footer-services-container">
-                                    <h5>Services</h5>
-                                    <ul className="footer-list">
-                                        <li><a href="/single_services">Social Media Marketing</a></li>
-                                        <li><a href="/single_services">SEO Optimization</a></li>
-                                        <li><a href="/single_services">PPC Advertising</a></li>
-                                        <li><a href="/single_services">Content Marketing</a></li>
-                                        <li><a href="/single_services">Branding Strategy</a></li>
-                                        <li><a href="/single_services">Email Marketing</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div className="col col-lg-3">
+                            <div className="col col-lg-4">
                                 <div className="footer-contact-container">
-                                    <h5>Contact Info</h5>
+                                    <h5>Informații Contact</h5>
                                     <ul className="contact-list">
-                                        <li>hello@markoagency.com</li>
-                                        <li>+1 234 567 890</li>
-                                        <li>123 Digital Street, New York, USA</li>
+                                        <li>algodigitalsolutions@gmail.com</li>
+                                        <li>0771587498</li>
+                                        <li>Brașov, Romania</li>
                                     </ul>
                                     <div className="d-flex flex-column gspace-1">
-                                        <h5>Social Media</h5>
+                                        <h5>Rețele Sociale</h5>
                                         <div className="social-container">
                                             <div className="social-item-wrapper">
-                                                <a href="https://facebook.com" className="social-item">
+                                                <a href="https://www.facebook.com/adsnow.ro" target="_blank" rel="noopener noreferrer" className="social-item">
                                                     <i className="fa-brands fa-facebook"></i>
                                                 </a>
                                             </div>
                                             <div className="social-item-wrapper">
-                                                <a href="https://youtube.com" className="social-item">
-                                                    <i className="fa-brands fa-youtube"></i>
+                                                <a href="https://www.tiktok.com/@adsnow.ro?_r=1&_t=ZN-92KN3Zaggdj" target="_blank" rel="noopener noreferrer" className="social-item">
+                                                    <i className="fa-brands fa-tiktok"></i>
                                                 </a>
                                             </div>
                                             <div className="social-item-wrapper">
-                                                <a href="https://instagram.com" className="social-item">
+                                                <a href="https://www.instagram.com/adsnow.ro/" target="_blank" rel="noopener noreferrer" className="social-item">
                                                     <i className="fa-brands fa-instagram"></i>
-                                                </a>
-                                            </div>
-                                            <div className="social-item-wrapper">
-                                                <a href="https://linkedin.com" className="social-item">
-                                                    <i className="fa-brands fa-linkedin"></i>
                                                 </a>
                                             </div>
                                         </div>
@@ -89,10 +59,10 @@ const Footer = () => {
                     </div>
 
                     <div className="copyright-container">
-                        <span className="copyright">© 2025 Marko. Fox Creation All Rights Reserved.</span>
+                        <span className="copyright">© 2025 Algo Digital Solutions SRL. Toate drepturile rezervate.</span>
                         <div className="d-flex flex-row gspace-2">
-                            <a href="#" className="legal-link">Terms of Service</a>
-                            <a href="#" className="legal-link">Privacy Policy</a>
+                            <a href="https://consumer-redress.ec.europa.eu/site-relocation_en" target="_blank" rel="noopener noreferrer" className="legal-link">Politica de Confidențialitate</a>
+                            <a href="https://anpc.ro/" target="_blank" rel="noopener noreferrer" className="legal-link">ANPC</a>
                         </div>
                     </div>
 

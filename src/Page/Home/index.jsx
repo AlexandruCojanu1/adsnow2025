@@ -1,5 +1,6 @@
 import React from "react";
 import HeadTitle from "../../Components/Head/HeadTitle";
+import { OrganizationSchema, WebsiteSchema, ServiceSchema } from "../../Components/SEO/StructuredData";
 import BannerHomeSection from "../../Components/Banner";
 import ExpertiseSection from "../../Components/Expertise/expertise";
 import ChooseUsSection from "../../Components/ChooseUs/choose";
@@ -17,7 +18,14 @@ import BlogSection from "../../Components/Blog/blog";
 function HomePage(){
     return(
         <>
-            <HeadTitle title="Home - Marko - Digital Marketing Agency" />
+            <HeadTitle 
+                title="Consultanță în Identitate Digitală și Marketing Online | Your Online Identity Advisor"
+                description="Construim identități digitale pentru profesioniști și branduri care aduc valoare. Nu vindem servicii. Alegem parteneri."
+                keywords="marketing digital, identitate digitală, branding, SEO, social media, web design, Brașov, performance marketing, brand strategy"
+            />
+            <OrganizationSchema />
+            <WebsiteSchema />
+            <ServiceSchema />
             <BannerHomeSection />
             <ExpertiseSection />
             <PartnershipSection />
@@ -26,7 +34,6 @@ function HomePage(){
             <ModalVideoSection />
             <ServiceSection />
             <CaseStudiesSection noPadding={true} />
-            <TestimonialSection />
             <DigitalProcessSection />
             <PricingPlanSection />
             <NewsletterSection />
