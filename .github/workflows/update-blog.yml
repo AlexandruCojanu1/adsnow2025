@@ -1,0 +1,95 @@
+name: Update Blog Posts
+
+on:
+  repository_dispatch:
+    types: [update-blog]
+  workflow_dispatch:
+    inputs:
+      posts_json:
+        description: 'Blog posts JSON'
+        required: true
+      sitemap_xml:
+        description: 'Sitemap XML'
+        required: true
+
+jobs:
+  update-blog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update blogPosts.js
+        run: |
+          echo '${{ github.event.inputs.posts_json || github.event.client_payload.posts_json }}' > /tmp/posts.json
+          node -e "
+            const fs = require('fs');
+            const posts = JSON.parse(fs.readFileSync('/tmp/posts.json', 'utf8'));
+            const postsJson = JSON.stringify(posts, null, 2);
+            const content = \`// Blog posts data structure
+// Each post should have: id, slug, title, excerpt, content, image, date, category, author, tags, seo
+
+export const blogPosts = \${postsJson};
+
+// Helper function to get post by slug
+export const getPostBySlug = (slug) => {
+  const posts = loadPosts();
+  return posts.find(post => post.slug === slug);
+};
+
+// Helper function to get all published posts
+export const getPublishedPosts = () => {
+  const posts = loadPosts();
+  return posts.filter(post => post.published);
+};
+
+// Helper function to get featured posts
+export const getFeaturedPosts = () => {
+  const posts = loadPosts();
+  return posts.filter(post => post.featured && post.published);
+};
+
+// Helper function to get posts by category
+export const getPostsByCategory = (category) => {
+  const posts = loadPosts();
+  return posts.filter(post => post.category === category && post.published);
+};
+
+// Function to load posts from localStorage or use default
+export const loadPosts = () => {
+  try {
+    const savedPosts = localStorage.getItem('blog_posts');
+    if (savedPosts) {
+      return JSON.parse(savedPosts);
+    }
+  } catch (e) {
+    console.error('Error loading posts from localStorage:', e);
+  }
+  return blogPosts;
+};
+
+// Export posts with localStorage support
+export let blogPostsData = loadPosts();
+
+// Update function for admin
+export const updatePosts = (newPosts) => {
+  blogPostsData = newPosts;
+  localStorage.setItem('blog_posts', JSON.stringify(newPosts));
+};
+\`;
+            fs.writeFileSync('src/Data/blogPosts.js', content);
+          "
+
+      - name: Update sitemap.xml
+        run: |
+          echo '${{ github.event.inputs.sitemap_xml || github.event.client_payload.sitemap_xml }}' > public/sitemap.xml
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/Data/blogPosts.js public/sitemap.xml
+          git diff --staged --quiet || git commit -m "Update blog posts and sitemap - $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
