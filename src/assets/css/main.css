@@ -4608,6 +4608,21 @@ body.lightmode .cta-service-banner::before{
     font-size: var(--font-size-lg);
 }
 
+/* Blog Post Section Styles */
+.blog-post-section {
+    position: relative;
+}
+
+.blog-post-container {
+    position: relative;
+}
+
+/* Blog Post Iframe Styles */
+.blog-post-iframe-wrapper {
+    position: relative;
+    overflow-x: hidden;
+}
+
 /* Badge Styles */
 .badge {
     display: inline-block;

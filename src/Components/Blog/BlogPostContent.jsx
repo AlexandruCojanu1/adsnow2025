@@ -28,6 +28,29 @@ const BlogPostContent = ({ post }) => {
       doc.write(post.content);
       doc.close();
       
+      // Add mobile-specific styles to iframe content
+      const style = doc.createElement('style');
+      style.textContent = `
+        @media screen and (max-width: 767px) {
+          body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          * {
+            box-sizing: border-box;
+          }
+        }
+      `;
+      doc.head.appendChild(style);
+      
       // Adjust iframe height to content
       const adjustHeight = () => {
         try {
@@ -52,8 +75,8 @@ const BlogPostContent = ({ post }) => {
   }, [post.content, isFullHTML]);
 
   return (
-    <div className="section">
-      <div className="hero-container">
+    <div className="section blog-post-section">
+      <div className="hero-container blog-post-container">
         <div className="row">
           {/* Main Content */}
           <div className="col-12">
@@ -110,15 +133,18 @@ const BlogPostContent = ({ post }) => {
                 {/* Content */}
                 {isFullHTML ? (
                   // Full HTML document - render in iframe
-                  <div style={{ width: '100%', minHeight: '600px', border: 'none' }}>
+                  <div className="blog-post-iframe-wrapper" style={{ width: '100%', minHeight: '600px', border: 'none', margin: 0, padding: 0 }}>
                     <iframe
                       ref={iframeRef}
                       title={post.title}
+                      className="blog-post-iframe"
                       style={{
                         width: '100%',
                         border: 'none',
                         minHeight: '600px',
-                        display: 'block'
+                        display: 'block',
+                        margin: 0,
+                        padding: 0
                       }}
                       sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
                     />
