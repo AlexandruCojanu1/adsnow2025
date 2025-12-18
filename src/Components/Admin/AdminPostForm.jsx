@@ -3,6 +3,63 @@ import { parseHTMLContent, generateSlug } from "../../utils/htmlParser";
 import { automatePostPublishing, generateSitemap } from "../../utils/blogAutomation";
 import { loadPosts, updatePosts } from "../../Data/blogPosts";
 
+// Helper function to generate blogPosts.js content (same as in API)
+function generateBlogPostsJsContent(posts) {
+  const postsJson = JSON.stringify(posts, null, 2);
+  
+  return `// Blog posts data structure
+// Each post should have: id, slug, title, excerpt, content, image, date, category, author, tags, seo
+
+export const blogPosts = ${postsJson};
+
+// Helper function to get post by slug
+export const getPostBySlug = (slug) => {
+  const posts = loadPosts();
+  return posts.find(post => post.slug === slug);
+};
+
+// Helper function to get all published posts
+export const getPublishedPosts = () => {
+  const posts = loadPosts();
+  return posts.filter(post => post.published);
+};
+
+// Helper function to get featured posts
+export const getFeaturedPosts = () => {
+  const posts = loadPosts();
+  return posts.filter(post => post.featured && post.published);
+};
+
+// Helper function to get posts by category
+export const getPostsByCategory = (category) => {
+  const posts = loadPosts();
+  return posts.filter(post => post.category === category && post.published);
+};
+
+// Function to load posts from localStorage or use default
+export const loadPosts = () => {
+  try {
+    const savedPosts = localStorage.getItem('blog_posts');
+    if (savedPosts) {
+      return JSON.parse(savedPosts);
+    }
+  } catch (e) {
+    console.error('Error loading posts from localStorage:', e);
+  }
+  return blogPosts;
+};
+
+// Export posts with localStorage support
+export let blogPostsData = loadPosts();
+
+// Update function for admin
+export const updatePosts = (newPosts) => {
+  blogPostsData = newPosts;
+  localStorage.setItem('blog_posts', JSON.stringify(newPosts));
+};
+`;
+}
+
 const AdminPostForm = ({ post, onSave, onCancel }) => {
     const [htmlContent, setHtmlContent] = useState("");
     const [formData, setFormData] = useState({
@@ -122,7 +179,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
             updatePosts(updatedPosts);
             onSave(postData);
 
-            // If publishing, commit to GitHub
+            // If publishing, commit to GitHub using GitHub API directly
             if (formData.published && githubToken) {
                 setAutomationStatus({ 
                     type: 'info', 
@@ -132,7 +189,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                 // Generate sitemap with all published posts
                 const sitemapXml = generateSitemap(updatedPosts);
                 
-                // Commit to GitHub
+                // Try GitHub API first, fallback to direct fetch if API route fails
                 try {
                     console.log('=== Starting GitHub Commit ===');
                     console.log('Sending request to /api/github-commit...');
@@ -258,11 +315,117 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                         });
                     }
                 } catch (error) {
-                    console.error('Error committing to GitHub:', error);
-                    setAutomationStatus({ 
-                        type: 'error', 
-                        message: `✗ Eroare la trimiterea către GitHub: ${error.message}. Verifică conexiunea la internet și că API-ul este accesibil.` 
-                    });
+                    console.error('Error committing to GitHub via API:', error);
+                    
+                    // Fallback: Try direct GitHub API call from client
+                    try {
+                        console.log('Trying direct GitHub API call as fallback...');
+                        setAutomationStatus({ 
+                            type: 'info', 
+                            message: 'Încearcă metoda alternativă...' 
+                        });
+                        
+                        // Direct GitHub API call
+                        const blogPostsContent = generateBlogPostsJsContent(updatedPosts);
+                        const base64Content = btoa(unescape(encodeURIComponent(blogPostsContent)));
+                        const base64Sitemap = btoa(unescape(encodeURIComponent(sitemapXml)));
+                        
+                        // Get current SHA for blogPosts.js
+                        const blogPostsShaResponse = await fetch(
+                            `https://api.github.com/repos/AlexandruCojanu1/adsnow2025/contents/src/Data/blogPosts.js`,
+                            {
+                                headers: {
+                                    'Authorization': `token ${githubToken}`,
+                                    'Accept': 'application/vnd.github.v3+json',
+                                }
+                            }
+                        );
+                        const blogPostsSha = blogPostsShaResponse.ok ? (await blogPostsShaResponse.json()).sha : null;
+                        
+                        // Update blogPosts.js
+                        const blogPostsUpdateResponse = await fetch(
+                            `https://api.github.com/repos/AlexandruCojanu1/adsnow2025/contents/src/Data/blogPosts.js`,
+                            {
+                                method: 'PUT',
+                                headers: {
+                                    'Authorization': `token ${githubToken}`,
+                                    'Accept': 'application/vnd.github.v3+json',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    message: `Update blog posts - ${new Date().toISOString()}`,
+                                    content: base64Content,
+                                    branch: 'main',
+                                    ...(blogPostsSha && { sha: blogPostsSha })
+                                })
+                            }
+                        );
+                        
+                        if (!blogPostsUpdateResponse.ok) {
+                            throw new Error(`GitHub API error: ${blogPostsUpdateResponse.status}`);
+                        }
+                        
+                        const blogPostsResult = await blogPostsUpdateResponse.json();
+                        console.log('✓ BlogPosts updated directly:', blogPostsResult.commit?.sha);
+                        
+                        // Get current SHA for sitemap.xml
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                        const sitemapShaResponse = await fetch(
+                            `https://api.github.com/repos/AlexandruCojanu1/adsnow2025/contents/public/sitemap.xml`,
+                            {
+                                headers: {
+                                    'Authorization': `token ${githubToken}`,
+                                    'Accept': 'application/vnd.github.v3+json',
+                                }
+                            }
+                        );
+                        const sitemapSha = sitemapShaResponse.ok ? (await sitemapShaResponse.json()).sha : null;
+                        
+                        // Update sitemap.xml
+                        const sitemapUpdateResponse = await fetch(
+                            `https://api.github.com/repos/AlexandruCojanu1/adsnow2025/contents/public/sitemap.xml`,
+                            {
+                                method: 'PUT',
+                                headers: {
+                                    'Authorization': `token ${githubToken}`,
+                                    'Accept': 'application/vnd.github.v3+json',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    message: `Update sitemap - ${new Date().toISOString()}`,
+                                    content: base64Sitemap,
+                                    branch: 'main',
+                                    ...(sitemapSha && { sha: sitemapSha })
+                                })
+                            }
+                        );
+                        
+                        if (!sitemapUpdateResponse.ok) {
+                            throw new Error(`Sitemap update error: ${sitemapUpdateResponse.status}`);
+                        }
+                        
+                        const sitemapResult = await sitemapUpdateResponse.json();
+                        console.log('✓ Sitemap updated directly:', sitemapResult.commit?.sha);
+                        
+                        // Success via direct API
+                        const automationResults = await automatePostPublishing(postData);
+                        
+                        setAutomationStatus({ 
+                            type: 'success', 
+                            message: `✓ Articol și sitemap publicate direct în GitHub! 
+                            <a href="${blogPostsResult.commit?.html_url}" target="_blank">Commit blogPosts</a> | 
+                            <a href="${sitemapResult.commit?.html_url}" target="_blank">Commit sitemap</a>
+                            Vercel va face auto-deploy.` 
+                        });
+                        
+                    } catch (fallbackError) {
+                        console.error('Fallback also failed:', fallbackError);
+                        setAutomationStatus({ 
+                            type: 'error', 
+                            message: `✗ Eroare la trimiterea către GitHub: ${fallbackError.message}. 
+                            Verifică token-ul GitHub și permisiunile (repo scope necesar).` 
+                        });
+                    }
                 }
             } else {
                 setAutomationStatus({ 
