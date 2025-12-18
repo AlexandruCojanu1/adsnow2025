@@ -179,34 +179,63 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                     console.log('Message:', result.message);
 
                     if (result.success) {
-                        // Check if both files were updated
-                        const blogPostsOk = result.results?.blogPosts?.success;
-                        const sitemapOk = result.results?.sitemap?.success;
+                        // Check verification status
+                        const blogPostsVerified = result.verified?.blogPosts;
+                        const sitemapVerified = result.verified?.sitemap;
+                        const bothVerified = result.verified?.both;
                         
-                        if (blogPostsOk && sitemapOk) {
+                        if (bothVerified) {
+                            // Both files updated and verified
+                            const commitUrls = [];
+                            if (result.githubUrls?.blogPosts) {
+                                commitUrls.push(`<a href="${result.githubUrls.blogPosts}" target="_blank" rel="noopener noreferrer">Commit blogPosts.js</a>`);
+                            }
+                            if (result.githubUrls?.sitemap) {
+                                commitUrls.push(`<a href="${result.githubUrls.sitemap}" target="_blank" rel="noopener noreferrer">Commit sitemap.xml</a>`);
+                            }
+                            
                             // Also submit to Google Indexing
                             const automationResults = await automatePostPublishing(postData);
                             
-                            if (automationResults.googleIndexing.success) {
-                                setAutomationStatus({ 
-                                    type: 'success', 
-                                    message: '✓ Articol trimis către GitHub, sitemap actualizat și trimis către Google! Vercel va face auto-deploy în câteva minute.' 
-                                });
-                            } else {
-                                setAutomationStatus({ 
-                                    type: 'success', 
-                                    message: '✓ Articol trimis către GitHub și sitemap actualizat! Vercel va face auto-deploy în câteva minute. Google Indexing necesită configurare.' 
-                                });
+                            let statusMessage = '✓ Articol și sitemap publicate cu succes în GitHub! ';
+                            if (commitUrls.length > 0) {
+                                statusMessage += `Verifică commit-urile: ${commitUrls.join(' | ')}. `;
                             }
-                        } else {
-                            // Partial success
-                            const errors = [];
-                            if (!blogPostsOk) errors.push(`blogPosts.js: ${result.results?.blogPosts?.error || 'Failed'}`);
-                            if (!sitemapOk) errors.push(`sitemap.xml: ${result.results?.sitemap?.error || 'Failed'}`);
+                            statusMessage += 'Vercel va face auto-deploy în câteva minute.';
+                            
+                            if (automationResults.googleIndexing.success) {
+                                statusMessage += ' Trimis către Google Indexing.';
+                            }
+                            
+                            setAutomationStatus({ 
+                                type: 'success', 
+                                message: statusMessage
+                            });
+                        } else if (blogPostsVerified) {
+                            // Only blogPosts verified
+                            let statusMessage = '✓ Articol publicat în GitHub! ';
+                            if (result.githubUrls?.blogPosts) {
+                                statusMessage += `<a href="${result.githubUrls.blogPosts}" target="_blank" rel="noopener noreferrer">Verifică commit-ul</a>. `;
+                            }
+                            statusMessage += 'Sitemap a eșuat. Vercel va face auto-deploy.';
                             
                             setAutomationStatus({ 
                                 type: 'warning', 
-                                message: `⚠ Eroare parțială: ${errors.join(', ')}. Verifică token-ul GitHub și permisiunile.` 
+                                message: statusMessage
+                            });
+                        } else {
+                            // Partial or no success
+                            const errors = [];
+                            if (!blogPostsVerified) {
+                                errors.push(`blogPosts.js: ${result.results?.blogPosts?.error || 'Nu s-a putut verifica commit-ul'}`);
+                            }
+                            if (!sitemapVerified && result.results?.sitemap?.error) {
+                                errors.push(`sitemap.xml: ${result.results.sitemap.error}`);
+                            }
+                            
+                            setAutomationStatus({ 
+                                type: 'error', 
+                                message: `✗ Eroare: ${errors.join(' | ')}. Verifică token-ul GitHub și permisiunile.` 
                             });
                         }
                     } else {
@@ -333,16 +362,50 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                             <label htmlFor="githubToken" className="form-label">
                                 <strong>Cheie GitHub (Personal Access Token)</strong> <span className="text-danger">*</span>
                             </label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="githubToken"
-                                value={githubToken}
-                                onChange={(e) => setGithubToken(e.target.value)}
-                                placeholder="ghp_..."
-                                disabled={isProcessing}
-                                style={{ fontFamily: 'monospace' }}
-                            />
+                            <div className="d-flex flex-row gspace-2">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="githubToken"
+                                    value={githubToken}
+                                    onChange={(e) => setGithubToken(e.target.value)}
+                                    placeholder="ghp_..."
+                                    disabled={isProcessing}
+                                    style={{ fontFamily: 'monospace' }}
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-primary"
+                                    onClick={async () => {
+                                        if (!githubToken) {
+                                            alert('Te rog introdu token-ul mai întâi');
+                                            return;
+                                        }
+                                        try {
+                                            const response = await fetch('/api/test-github', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ githubToken })
+                                            });
+                                            const result = await response.json();
+                                            if (result.success) {
+                                                alert('✓ Token valid! Toate testele au trecut.\n\n' + 
+                                                      `User: ${result.tests.token.user}\n` +
+                                                      `Repository: ${result.tests.repository.name}\n` +
+                                                      `File Access: ${result.tests.fileAccess.success ? 'OK' : 'Failed'}`);
+                                            } else {
+                                                alert('✗ Token invalid sau fără permisiuni:\n' + result.error);
+                                            }
+                                        } catch (error) {
+                                            alert('Eroare la testare: ' + error.message);
+                                        }
+                                    }}
+                                    disabled={isProcessing || !githubToken}
+                                    title="Testează token-ul GitHub"
+                                >
+                                    <i className="fa-solid fa-check"></i> Testează
+                                </button>
+                            </div>
                             <small className="text-muted d-block mt-2">
                                 Token-ul este necesar pentru a trimite articolul către GitHub. Nu este salvat și este folosit doar pentru acest commit.
                                 <br />
