@@ -134,6 +134,10 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                 
                 // Commit to GitHub
                 try {
+                    console.log('Sending request to /api/github-commit...');
+                    console.log('Posts count:', updatedPosts.length);
+                    console.log('Sitemap length:', sitemapXml.length);
+                    
                     const response = await fetch('/api/github-commit', {
                         method: 'POST',
                         headers: {
@@ -145,7 +149,22 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                             sitemapXml: sitemapXml
                         }),
                     });
-
+                    
+                    console.log('Response status:', response.status);
+                    console.log('Response ok:', response.ok);
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('API Error Response:', errorText);
+                        let errorData;
+                        try {
+                            errorData = JSON.parse(errorText);
+                        } catch {
+                            errorData = { message: errorText, status: response.status };
+                        }
+                        throw new Error(errorData.message || `HTTP ${response.status}: ${errorText}`);
+                    }
+                    
                     const result = await response.json();
                     
                     console.log('GitHub API Response:', result);

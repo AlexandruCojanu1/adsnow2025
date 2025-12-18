@@ -180,6 +180,8 @@ export const updatePosts = (newPosts) => {
  * Main handler
  */
 export default async function handler(req) {
+  console.log('GitHub Commit API called:', req.method, req.url);
+  
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, {
@@ -206,7 +208,17 @@ export default async function handler(req) {
   }
 
   try {
-    const { githubToken, posts, sitemapXml } = await req.json();
+    console.log('Parsing request body...');
+    const body = await req.json();
+    const { githubToken, posts, sitemapXml } = body;
+    
+    console.log('Request received:', {
+      hasToken: !!githubToken,
+      tokenLength: githubToken?.length || 0,
+      postsCount: posts?.length || 0,
+      hasSitemap: !!sitemapXml,
+      sitemapLength: sitemapXml?.length || 0
+    });
 
     // Validate inputs
     if (!githubToken) {
@@ -301,8 +313,11 @@ export default async function handler(req) {
 
     // Update blogPosts.js
     try {
+      console.log('=== Starting blogPosts.js update ===');
       console.log('Generating blogPosts.js content...');
       const blogPostsContent = generateBlogPostsJs(posts);
+      console.log('Content generated, length:', blogPostsContent.length);
+      
       console.log('Getting file SHA for blogPosts.js...');
       const blogPostsSha = await getFileSha(githubToken, BLOG_POSTS_PATH);
       console.log('BlogPosts SHA:', blogPostsSha || 'File does not exist, will create new');
@@ -316,18 +331,26 @@ export default async function handler(req) {
         `Update blog posts - ${new Date().toISOString()}`
       );
       
+      console.log('GitHub API response:', JSON.stringify(blogPostsResult, null, 2));
+      
       results.blogPosts.success = true;
       results.blogPosts.message = 'Blog posts updated successfully';
       results.blogPosts.commitSha = blogPostsResult.commit?.sha;
-      console.log('✓ Blog posts updated successfully:', blogPostsResult.commit?.sha);
+      results.blogPosts.commitUrl = blogPostsResult.commit?.html_url;
+      console.log('✓ Blog posts updated successfully!');
+      console.log('  Commit SHA:', blogPostsResult.commit?.sha);
+      console.log('  Commit URL:', blogPostsResult.commit?.html_url);
     } catch (error) {
       results.blogPosts.error = error.message;
       results.blogPosts.details = error.stack;
       console.error('✗ Error updating blog posts:', error);
+      console.error('  Error message:', error.message);
+      console.error('  Error stack:', error.stack);
     }
 
     // Update sitemap.xml
     try {
+      console.log('=== Starting sitemap.xml update ===');
       console.log('Getting file SHA for sitemap.xml...');
       const sitemapSha = await getFileSha(githubToken, SITEMAP_PATH);
       console.log('Sitemap SHA:', sitemapSha || 'File does not exist, will create new');
@@ -341,14 +364,21 @@ export default async function handler(req) {
         `Update sitemap - ${new Date().toISOString()}`
       );
       
+      console.log('GitHub API response:', JSON.stringify(sitemapResult, null, 2));
+      
       results.sitemap.success = true;
       results.sitemap.message = 'Sitemap updated successfully';
       results.sitemap.commitSha = sitemapResult.commit?.sha;
-      console.log('✓ Sitemap updated successfully:', sitemapResult.commit?.sha);
+      results.sitemap.commitUrl = sitemapResult.commit?.html_url;
+      console.log('✓ Sitemap updated successfully!');
+      console.log('  Commit SHA:', sitemapResult.commit?.sha);
+      console.log('  Commit URL:', sitemapResult.commit?.html_url);
     } catch (error) {
       results.sitemap.error = error.message;
       results.sitemap.details = error.stack;
       console.error('✗ Error updating sitemap:', error);
+      console.error('  Error message:', error.message);
+      console.error('  Error stack:', error.stack);
     }
 
     // Return success if at least one file was updated
