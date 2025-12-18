@@ -42,8 +42,14 @@ async function getFileSha(token, path) {
     }
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`Failed to get file SHA: ${error.message || response.statusText}`);
+      const errorText = await response.text();
+      let errorData;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch {
+        errorData = { message: errorText };
+      }
+      throw new Error(`Failed to get file SHA (${response.status}): ${errorData.message || response.statusText}`);
     }
 
     const data = await response.json();
@@ -98,8 +104,14 @@ async function updateFile(token, path, content, sha, message) {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`Failed to update file: ${error.message || response.statusText}`);
+    const errorText = await response.text();
+    let errorData;
+    try {
+      errorData = JSON.parse(errorText);
+    } catch {
+      errorData = { message: errorText };
+    }
+    throw new Error(`Failed to update file (${response.status}): ${errorData.message || response.statusText}`);
   }
 
   return await response.json();
@@ -236,17 +248,67 @@ export default async function handler(req) {
       );
     }
 
+    // Verify GitHub token first
+    try {
+      console.log('Verifying GitHub token...');
+      const verifyResponse = await fetch(`https://api.github.com/user`, {
+        headers: {
+          'Authorization': `token ${githubToken}`,
+          'Accept': 'application/vnd.github.v3+json',
+        },
+      });
+      
+      if (!verifyResponse.ok) {
+        const errorData = await verifyResponse.json().catch(() => ({}));
+        return new Response(
+          JSON.stringify({ 
+            error: 'Invalid GitHub token',
+            message: errorData.message || 'Token-ul GitHub nu este valid sau nu are permisiunile necesare. Verifică că token-ul are scope "repo".',
+            details: errorData
+          }),
+          {
+            status: 401,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+          }
+        );
+      }
+      
+      const userData = await verifyResponse.json();
+      console.log('✓ GitHub token verified for user:', userData.login);
+    } catch (error) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'Failed to verify GitHub token',
+          message: error.message 
+        }),
+        {
+          status: 401,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      );
+    }
+
     const results = {
-      blogPosts: { success: false },
-      sitemap: { success: false },
+      blogPosts: { success: false, error: null },
+      sitemap: { success: false, error: null },
     };
 
     // Update blogPosts.js
     try {
+      console.log('Generating blogPosts.js content...');
       const blogPostsContent = generateBlogPostsJs(posts);
+      console.log('Getting file SHA for blogPosts.js...');
       const blogPostsSha = await getFileSha(githubToken, BLOG_POSTS_PATH);
+      console.log('BlogPosts SHA:', blogPostsSha || 'File does not exist, will create new');
       
-      await updateFile(
+      console.log('Updating blogPosts.js in GitHub...');
+      const blogPostsResult = await updateFile(
         githubToken,
         BLOG_POSTS_PATH,
         blogPostsContent,
@@ -256,16 +318,22 @@ export default async function handler(req) {
       
       results.blogPosts.success = true;
       results.blogPosts.message = 'Blog posts updated successfully';
+      results.blogPosts.commitSha = blogPostsResult.commit?.sha;
+      console.log('✓ Blog posts updated successfully:', blogPostsResult.commit?.sha);
     } catch (error) {
       results.blogPosts.error = error.message;
-      console.error('Error updating blog posts:', error);
+      results.blogPosts.details = error.stack;
+      console.error('✗ Error updating blog posts:', error);
     }
 
     // Update sitemap.xml
     try {
+      console.log('Getting file SHA for sitemap.xml...');
       const sitemapSha = await getFileSha(githubToken, SITEMAP_PATH);
+      console.log('Sitemap SHA:', sitemapSha || 'File does not exist, will create new');
       
-      await updateFile(
+      console.log('Updating sitemap.xml in GitHub...');
+      const sitemapResult = await updateFile(
         githubToken,
         SITEMAP_PATH,
         sitemapXml,
@@ -275,9 +343,12 @@ export default async function handler(req) {
       
       results.sitemap.success = true;
       results.sitemap.message = 'Sitemap updated successfully';
+      results.sitemap.commitSha = sitemapResult.commit?.sha;
+      console.log('✓ Sitemap updated successfully:', sitemapResult.commit?.sha);
     } catch (error) {
       results.sitemap.error = error.message;
-      console.error('Error updating sitemap:', error);
+      results.sitemap.details = error.stack;
+      console.error('✗ Error updating sitemap:', error);
     }
 
     // Return success if at least one file was updated

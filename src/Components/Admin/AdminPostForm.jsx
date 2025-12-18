@@ -147,33 +147,64 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                     });
 
                     const result = await response.json();
+                    
+                    console.log('GitHub API Response:', result);
 
                     if (result.success) {
-                        // Also submit to Google Indexing
-                        const automationResults = await automatePostPublishing(postData);
+                        // Check if both files were updated
+                        const blogPostsOk = result.results?.blogPosts?.success;
+                        const sitemapOk = result.results?.sitemap?.success;
                         
-                        if (automationResults.googleIndexing.success) {
-                            setAutomationStatus({ 
-                                type: 'success', 
-                                message: '✓ Articol trimis către GitHub, sitemap actualizat și trimis către Google! Vercel va face auto-deploy.' 
-                            });
+                        if (blogPostsOk && sitemapOk) {
+                            // Also submit to Google Indexing
+                            const automationResults = await automatePostPublishing(postData);
+                            
+                            if (automationResults.googleIndexing.success) {
+                                setAutomationStatus({ 
+                                    type: 'success', 
+                                    message: '✓ Articol trimis către GitHub, sitemap actualizat și trimis către Google! Vercel va face auto-deploy în câteva minute.' 
+                                });
+                            } else {
+                                setAutomationStatus({ 
+                                    type: 'success', 
+                                    message: '✓ Articol trimis către GitHub și sitemap actualizat! Vercel va face auto-deploy în câteva minute. Google Indexing necesită configurare.' 
+                                });
+                            }
                         } else {
+                            // Partial success
+                            const errors = [];
+                            if (!blogPostsOk) errors.push(`blogPosts.js: ${result.results?.blogPosts?.error || 'Failed'}`);
+                            if (!sitemapOk) errors.push(`sitemap.xml: ${result.results?.sitemap?.error || 'Failed'}`);
+                            
                             setAutomationStatus({ 
-                                type: 'success', 
-                                message: '✓ Articol trimis către GitHub și sitemap actualizat! Vercel va face auto-deploy. Google Indexing necesită configurare.' 
+                                type: 'warning', 
+                                message: `⚠ Eroare parțială: ${errors.join(', ')}. Verifică token-ul GitHub și permisiunile.` 
                             });
                         }
                     } else {
+                        // Full failure
+                        const errorDetails = [];
+                        if (result.results?.blogPosts?.error) {
+                            errorDetails.push(`blogPosts.js: ${result.results.blogPosts.error}`);
+                        }
+                        if (result.results?.sitemap?.error) {
+                            errorDetails.push(`sitemap.xml: ${result.results.sitemap.error}`);
+                        }
+                        
+                        const errorMessage = errorDetails.length > 0 
+                            ? errorDetails.join(' | ')
+                            : result.message || result.error || 'Eroare necunoscută';
+                            
                         setAutomationStatus({ 
                             type: 'error', 
-                            message: `Eroare la trimiterea către GitHub: ${result.results?.blogPosts?.error || result.results?.sitemap?.error || result.message}` 
+                            message: `✗ Eroare la trimiterea către GitHub: ${errorMessage}. Verifică token-ul GitHub și permisiunile (repo scope necesar).` 
                         });
                     }
                 } catch (error) {
                     console.error('Error committing to GitHub:', error);
                     setAutomationStatus({ 
                         type: 'error', 
-                        message: 'Eroare la trimiterea către GitHub: ' + error.message 
+                        message: `✗ Eroare la trimiterea către GitHub: ${error.message}. Verifică conexiunea la internet și că API-ul este accesibil.` 
                     });
                 }
             } else {
@@ -286,6 +317,8 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                             />
                             <small className="text-muted d-block mt-2">
                                 Token-ul este necesar pentru a trimite articolul către GitHub. Nu este salvat și este folosit doar pentru acest commit.
+                                <br />
+                                <strong>Permisiuni necesare:</strong> repo (Full control of private repositories)
                             </small>
                         </div>
                     )}
