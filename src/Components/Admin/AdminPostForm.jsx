@@ -548,6 +548,7 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                                     }}
                                     placeholder="ghp_..."
                                     disabled={isProcessing}
+                                    autoComplete="new-password"
                                     style={{ fontFamily: 'monospace' }}
                                 />
                                 {githubToken && (

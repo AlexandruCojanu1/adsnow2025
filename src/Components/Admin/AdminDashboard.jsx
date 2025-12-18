@@ -35,10 +35,57 @@ const AdminDashboard = ({ onLogout }) => {
         setShowForm(true);
     };
 
-    const handleDelete = (postId) => {
-        if (window.confirm("Ești sigur că vrei să ștergi acest articol?")) {
+    const handleDelete = async (postId) => {
+        const postToDelete = posts.find(p => p.id === postId);
+        if (!postToDelete) return;
+        
+        if (window.confirm(`Ești sigur că vrei să ștergi articolul "${postToDelete.title}"?\n\nAceastă acțiune va șterge articolul din localStorage și va actualiza GitHub.`)) {
             const updatedPosts = posts.filter(p => p.id !== postId);
             handleSavePosts(updatedPosts);
+            
+            // If post was published, update GitHub
+            if (postToDelete.published) {
+                try {
+                    // Get saved GitHub token
+                    const githubToken = localStorage.getItem('github_token');
+                    if (githubToken) {
+                        // Generate sitemap with updated posts
+                        const { generateSitemap } = await import('../../utils/blogAutomation');
+                        const sitemapXml = generateSitemap(updatedPosts);
+                        
+                        // Update GitHub
+                        const response = await fetch('/api/github-commit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                githubToken: githubToken,
+                                posts: updatedPosts,
+                                sitemapXml: sitemapXml
+                            }),
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (result.success) {
+                                alert('✓ Articol șters cu succes! Modificările au fost trimise către GitHub.');
+                            } else {
+                                alert('⚠ Articol șters local, dar actualizarea GitHub a eșuat. Verifică erorile.');
+                            }
+                        } else {
+                            alert('⚠ Articol șters local, dar actualizarea GitHub a eșuat. Verifică token-ul GitHub.');
+                        }
+                    } else {
+                        alert('⚠ Articol șters doar local. Pentru a șterge și din GitHub, adaugă token-ul GitHub în formularul de publicare.');
+                    }
+                } catch (error) {
+                    console.error('Error updating GitHub after delete:', error);
+                    alert('⚠ Articol șters local, dar actualizarea GitHub a eșuat: ' + error.message);
+                }
+            } else {
+                alert('✓ Articol draft șters cu succes!');
+            }
         }
     };
 
