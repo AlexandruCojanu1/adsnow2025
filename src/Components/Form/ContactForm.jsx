@@ -89,7 +89,7 @@ const ContactForm = () => {
                                 <span>Programează o întâlnire</span>
                             </span>
                             <span className="icon-circle">
-                                <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                             </span>
                         </button>
                 </div>

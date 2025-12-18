@@ -67,7 +67,7 @@ const BlogPostContent = ({ post }) => {
                   >
                     Aplică acum
                   </a>
-                  <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                  <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                 </div>
               </div>
             </div>

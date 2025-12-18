@@ -59,7 +59,7 @@ const BlogPostSection = () => {
                             </p>
                             <div className="link-wrapper">
                                 <a href="about">Read More</a>
-                                <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                             </div>
                         </div>
                     </div>

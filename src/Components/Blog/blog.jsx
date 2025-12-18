@@ -32,7 +32,7 @@ function BlogSection() {
                                     </p>
                                     <div className="link-wrapper">
                                         <a href="./blog">Vezi Toate Articolele</a>
-                                        <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                        <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                     </div>
                                 </div>
                             </AnimateOnScroll>

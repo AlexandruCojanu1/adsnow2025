@@ -32,7 +32,7 @@ const DigitalProcessSection = () => {
                                         </p>
                                         <div className="link-wrapper">
                                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Aplică acum</a>
-                                            <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                            <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                         </div>
                                     </div>
                                 </AnimateOnScroll>

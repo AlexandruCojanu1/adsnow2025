@@ -27,7 +27,7 @@ function PricingPlanSection(){
                                             <h3 className="title-heading">Să Găsim Strategia Potrivită pentru Tine!</h3>
                                             <div className="link-wrapper">
                                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Rezervă o Consultație Gratuită</a>
-                                            <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                            <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                             </div>
                                         </div>
                                     </div>
@@ -98,15 +98,15 @@ function PricingPlanSection(){
                                             <div className="d-flex flex-column gspace-2">
                                                 <div className="pricing-highlights">
                                                     <a href="#">Marketing Digital Bazat pe Date</a>
-                                                    <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                                    <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                                 <div className="pricing-highlights">
                                                     <a href="#">Strategii Dovedite pentru Rezultate Mai Bune</a>
-                                                    <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                                    <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                                 <div className="pricing-highlights">
                                                     <a href="#">Soluție Scalabilă pentru Fiecare Business</a>
-                                                    <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                                    <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                             </div>
                                         </div>

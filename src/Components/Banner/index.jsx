@@ -49,7 +49,7 @@ function BannerHomeSection() {
                                                     <span>Let's see if we Click</span>
                                                 </div>
                                                 <div className="icon-circle">
-                                                    <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                                    <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                             </a>
                                             <div className="banner-reviewer">

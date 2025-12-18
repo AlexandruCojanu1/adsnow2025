@@ -35,7 +35,7 @@ function ChooseUsSection(){
                                     </div>
                                 </AnimateOnScroll>
                                 <div className="image-container">
-                                    <img src="/assets/images/Gemini_Generated_Image_kzt06fkzt06fkzt0.png" alt="Why Choose Us Image" className="chooseus-img" />
+                                    <img src="/assets/images/Gemini_Generated_Image_kzt06fkzt06fkzt0.webp" alt="Why Choose Us Image" className="chooseus-img" />
                                     <div className="card-chooseus-cta-layout">
                                         <div className="chooseus-cta-spacer"></div>
                                         <div className="d-flex flex-column align-items-end">
@@ -47,7 +47,7 @@ function ChooseUsSection(){
                                                         <h5>Ești pregătit să-ți construiești identitatea digitală?</h5>
                                                         <div className="link-wrapper">
                                                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Aplică acum</a>
-                                                            <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                                            <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                         </div>
                                                     </div>
                                                 </AnimateOnScroll>

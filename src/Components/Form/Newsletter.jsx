@@ -30,7 +30,7 @@ function NewsletterSection() {
                                         <span>Aplică acum</span>
                                     </span>
                                     <span className="icon-circle">
-                                        <img src="/assets/images/cursor.png" alt="arrow" className="cursor-icon" />
+                                        <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                     </span>
                                 </a>
                             </AnimateOnScroll>
