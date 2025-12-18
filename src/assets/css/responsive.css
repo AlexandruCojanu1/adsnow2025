@@ -646,7 +646,7 @@
         font-size: var(--font-size-xs);
     }
     
-    /* Blog Post - Full Width on Mobile (No Margins) */
+    /* Blog post content - full width on mobile (no margins) */
     .blog-post-section {
         padding: 0 !important;
         margin: 0 !important;
@@ -661,7 +661,6 @@
     
     .blog-post-section .row {
         margin: 0 !important;
-        padding: 0 !important;
     }
     
     .blog-post-section .col-12 {
@@ -669,8 +668,9 @@
         margin: 0 !important;
     }
     
-    /* Iframe wrapper and iframe full width on mobile - break out of container */
-    .blog-post-iframe-wrapper {
+    /* Iframe and content full width */
+    .blog-post-section iframe,
+    .blog-post-section .blog-post-content {
         width: 100vw !important;
         max-width: 100vw !important;
         margin-left: calc(-50vw + 50%) !important;
@@ -678,38 +678,13 @@
         padding: 0 !important;
     }
     
-    .blog-post-section iframe,
-    .blog-post-iframe {
+    /* Iframe wrapper */
+    .blog-post-section > .blog-post-container > .row > .col-12 > div {
         width: 100vw !important;
         max-width: 100vw !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        display: block !important;
-    }
-    
-    /* Blog post content full width */
-    .blog-post-content {
-        width: 100% !important;
-        max-width: 100% !important;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
         padding: 0 !important;
-        margin: 0 !important;
-    }
-    
-    /* Container inside blog post content (from HTML articles) - full width */
-    .blog-post-content .container {
-        max-width: 100% !important;
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    
-    /* Fix for iframe content containers */
-    .blog-post-section iframe body,
-    .blog-post-section iframe body .container {
-        max-width: 100% !important;
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
     }
 }
 
