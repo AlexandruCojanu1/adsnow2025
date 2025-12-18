@@ -1,70 +1,11 @@
 import React from "react";
-import { getBlogs } from "../../Data/BlogPostData";
-import { getPublishedPosts } from "../../Data/blogPosts";
 
 const BlogPostSection = () => {
   return (
     <div className="section">
         <div className="hero-container">
-            <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
-                <div className="col col-lg-4 order-2 order-lg-1">
-                    <div className="d-flex flex-column flex-md-row flex-lg-column gspace-5">
-                        <div className="card recent-post">
-                            <h4>Recent Blog</h4>
-                            {getPublishedPosts().slice(0, 3).map((post) => {
-                                const blogs = getBlogs();
-                                const blog = blogs.find(b => b.slug === post.slug) || {
-                                    id: post.id,
-                                    image: post.image,
-                                    date: new Date(post.date).toLocaleDateString('ro-RO', { 
-                                        year: 'numeric', 
-                                        month: 'long', 
-                                        day: 'numeric' 
-                                    }),
-                                    category: post.category,
-                                    title: post.title,
-                                    excerpt: post.excerpt,
-                                    link: `/blog/${post.slug}`
-                                };
-                                return (
-                                <div
-                                    className="d-flex flex-row w-100 gspace-1"
-                                    key={blog.id}
-                                >
-                                    <div className="image-container">
-                                    <img
-                                        src={blog.image}
-                                        alt={blog.title}
-                                        className="img-fluid"
-                                    />
-                                    </div>
-                                    <div className="d-grid">
-                                        <div className="d-flex flex-row gspace-1 align-items-center">
-                                            <i className="fa-solid fa-calendar accent-color"></i>
-                                            <span className="meta-data-post">{blog.date}</span>
-                                        </div>
-                                        <a href={blog.link} className="blog-link-post">
-                                            {blog.title}
-                                        </a>
-                                    </div>
-                                </div>
-                                );
-                            })}
-                        </div>
-                        <div className="cta-service-banner">
-                            <div className="spacer"></div>
-                            <h3 className="title-heading">Transform Your Business with Marko!</h3>
-                            <p>
-                                Take your digital marketing to the next level with data-driven strategies and innovative solutions. Let's create something amazing together!
-                            </p>
-                            <div className="link-wrapper">
-                                <a href="about">Read More</a>
-                                <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col col-lg-8 order-1 order-lg-2">
+            <div className="row">
+                <div className="col-12">
                     <div className="d-flex flex-column gspace-2">
                         <div className="post-image">
                             <img

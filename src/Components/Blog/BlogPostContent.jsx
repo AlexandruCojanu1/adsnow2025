@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { getPublishedPosts } from "../../Data/blogPosts";
 import AnimateOnScroll from "../Hooks/AnimateOnScroll";
 
 const BlogPostContent = ({ post }) => {
@@ -15,10 +13,6 @@ const BlogPostContent = ({ post }) => {
       day: 'numeric' 
     });
   };
-
-  const recentPosts = getPublishedPosts()
-    .filter(p => p.id !== post.id)
-    .slice(0, 3);
 
   // Check if content is full HTML document or just body content
   const isFullHTML = post.content && post.content.trim().startsWith('<!DOCTYPE html>');
@@ -60,61 +54,9 @@ const BlogPostContent = ({ post }) => {
   return (
     <div className="section">
       <div className="hero-container">
-        <div className="row row-cols-lg-2 row-cols-1 grid-spacer-5">
-          {/* Sidebar */}
-          <div className="col col-lg-4 order-2 order-lg-1">
-            <div className="d-flex flex-column flex-md-row flex-lg-column gspace-5">
-              {/* Recent Posts */}
-              <div className="card recent-post">
-                <h4>Articole Recente</h4>
-                {recentPosts.map((recentPost) => (
-                  <div
-                    className="d-flex flex-row w-100 gspace-1"
-                    key={recentPost.id}
-                  >
-                    <div className="image-container">
-                      <img
-                        src={recentPost.image}
-                        alt={recentPost.title}
-                        className="img-fluid"
-                      />
-                    </div>
-                    <div className="d-grid">
-                      <div className="d-flex flex-row gspace-1 align-items-center">
-                        <i className="fa-solid fa-calendar accent-color"></i>
-                        <span className="meta-data-post">{formatDate(recentPost.date)}</span>
-                      </div>
-                      <Link to={`/blog/${recentPost.slug}`} className="blog-link-post">
-                        {recentPost.title}
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA Banner */}
-              <div className="cta-service-banner">
-                <div className="spacer"></div>
-                <h3 className="title-heading">Transformă Business-ul Tău cu Algo Digital Solutions!</h3>
-                <p>
-                  Du marketing-ul digital la următorul nivel cu strategii bazate pe date și soluții inovatoare. Să creăm ceva uimitor împreună!
-                </p>
-                <div className="link-wrapper">
-                  <a 
-                    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    Aplică acum
-                  </a>
-                  <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div className="row">
           {/* Main Content */}
-          <div className="col col-lg-8 order-1 order-lg-2">
+          <div className="col-12">
             <AnimateOnScroll animation="fadeInUp" speed="normal">
               <div className="d-flex flex-column gspace-2">
                 {/* Meta Information - Only show if not full HTML */}
