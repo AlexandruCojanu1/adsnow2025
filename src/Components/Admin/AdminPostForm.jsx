@@ -134,10 +134,13 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                 
                 // Commit to GitHub
                 try {
+                    console.log('=== Starting GitHub Commit ===');
                     console.log('Sending request to /api/github-commit...');
                     console.log('Posts count:', updatedPosts.length);
                     console.log('Sitemap length:', sitemapXml.length);
+                    console.log('Token length:', githubToken.length);
                     
+                    const startTime = Date.now();
                     const response = await fetch('/api/github-commit', {
                         method: 'POST',
                         headers: {
@@ -150,8 +153,11 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                         }),
                     });
                     
+                    const elapsed = Date.now() - startTime;
+                    console.log(`Response received in ${elapsed}ms`);
                     console.log('Response status:', response.status);
                     console.log('Response ok:', response.ok);
+                    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
                     
                     if (!response.ok) {
                         const errorText = await response.text();
@@ -167,7 +173,10 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                     
                     const result = await response.json();
                     
-                    console.log('GitHub API Response:', result);
+                    console.log('=== GitHub API Response ===');
+                    console.log('Success:', result.success);
+                    console.log('Results:', result.results);
+                    console.log('Message:', result.message);
 
                     if (result.success) {
                         // Check if both files were updated
