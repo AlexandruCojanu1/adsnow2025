@@ -180,11 +180,6 @@ export const updatePosts = (newPosts) => {
  * Main handler
  */
 export default async function handler(req) {
-  // Set timeout to ensure we respond before Vercel's 10s limit
-  const timeoutPromise = new Promise((_, reject) => 
-    setTimeout(() => reject(new Error('Function timeout - operation took too long')), 9000)
-  );
-  
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, {
@@ -211,12 +206,7 @@ export default async function handler(req) {
   }
 
   try {
-    // Race against timeout
-    const body = await Promise.race([
-      req.json(),
-      timeoutPromise
-    ]);
-    
+    const body = await req.json();
     const { githubToken, posts, sitemapXml } = body;
 
     // Validate inputs
@@ -271,46 +261,40 @@ export default async function handler(req) {
     const blogPostsContent = generateBlogPostsJs(posts);
     const commitMessage = `Update blog posts and sitemap - ${new Date().toISOString()}`;
 
-    // Get file SHAs in parallel to save time (with timeout)
-    const [blogPostsSha, sitemapSha] = await Promise.race([
-      Promise.all([
-        getFileSha(githubToken, BLOG_POSTS_PATH).catch(err => {
-          console.error('Error getting blogPosts SHA:', err.message);
-          return null;
-        }),
-        getFileSha(githubToken, SITEMAP_PATH).catch(err => {
-          console.error('Error getting sitemap SHA:', err.message);
-          return null;
-        })
-      ]),
-      timeoutPromise
+    // Get file SHAs in parallel to save time
+    const [blogPostsSha, sitemapSha] = await Promise.all([
+      getFileSha(githubToken, BLOG_POSTS_PATH).catch(err => {
+        console.error('Error getting blogPosts SHA:', err.message);
+        return null;
+      }),
+      getFileSha(githubToken, SITEMAP_PATH).catch(err => {
+        console.error('Error getting sitemap SHA:', err.message);
+        return null;
+      })
     ]);
 
-    // Update both files in parallel (with timeout)
-    const [blogPostsResult, sitemapResult] = await Promise.race([
-      Promise.allSettled([
-        updateFile(
-          githubToken,
-          BLOG_POSTS_PATH,
-          blogPostsContent,
-          blogPostsSha,
-          commitMessage
-        ).catch(err => {
-          results.blogPosts.error = err.message;
-          throw err;
-        }),
-        updateFile(
-          githubToken,
-          SITEMAP_PATH,
-          sitemapXml,
-          sitemapSha,
-          commitMessage
-        ).catch(err => {
-          results.sitemap.error = err.message;
-          throw err;
-        })
-      ]),
-      timeoutPromise
+    // Update both files in parallel
+    const [blogPostsResult, sitemapResult] = await Promise.allSettled([
+      updateFile(
+        githubToken,
+        BLOG_POSTS_PATH,
+        blogPostsContent,
+        blogPostsSha,
+        commitMessage
+      ).catch(err => {
+        results.blogPosts.error = err.message;
+        throw err;
+      }),
+      updateFile(
+        githubToken,
+        SITEMAP_PATH,
+        sitemapXml,
+        sitemapSha,
+        commitMessage
+      ).catch(err => {
+        results.sitemap.error = err.message;
+        throw err;
+      })
     ]);
 
     // Process blogPosts result
