@@ -3,30 +3,6 @@
 
 export const blogPosts = [
   {
-    "id": 1,
-    "slug": "mastering-instagram-facebook-ads",
-    "title": "Mastering Instagram and Facebook Ads",
-    "excerpt": "Descoperă cum să creezi campanii publicitare eficiente pe Instagram și Facebook care aduc rezultate reale pentru business-ul tău.",
-    "content": "\n      <p>În lumea digitală de astăzi, rețelele sociale joacă un rol crucial în succesul oricărui business. Instagram și Facebook sunt două dintre cele mai puternice platforme pentru marketing digital, oferind acces la miliarde de utilizatori potențiali.</p>\n      \n      <h2>De ce Instagram și Facebook Ads?</h2>\n      <p>Aceste platforme oferă targeting precis, analitici detaliate și multiple formate publicitare care te ajută să-ți atingi obiectivele de business.</p>\n      \n      <h3>Strategii Eficiente</h3>\n      <ul>\n        <li>Targeting precis bazat pe demografie și interese</li>\n        <li>Utilizarea formatelor video pentru engagement mai mare</li>\n        <li>Testarea continuă și optimizarea campaniilor</li>\n        <li>Măsurarea ROI-ului pentru fiecare campanie</li>\n      </ul>\n      \n      <p>Cu strategia corectă și execuție atentă, poți transforma investiția în publicitate într-un motor de creștere pentru business-ul tău.</p>\n    ",
-    "image": "/assets/images/dummy-img-600x400.jpg",
-    "date": "2025-04-14",
-    "category": "Social Media",
-    "author": "Algo Digital Solutions",
-    "tags": [
-      "Instagram",
-      "Facebook",
-      "Social Media",
-      "Advertising"
-    ],
-    "seo": {
-      "metaTitle": "Mastering Instagram and Facebook Ads - Ghid Complet",
-      "metaDescription": "Învață cum să creezi campanii publicitare eficiente pe Instagram și Facebook. Strategii practice și sfaturi pentru rezultate reale.",
-      "keywords": "instagram ads, facebook ads, social media marketing, advertising"
-    },
-    "published": true,
-    "featured": true
-  },
-  {
     "id": 2,
     "slug": "growth-strategies-digital-business",
     "title": "Growth Strategies for Digital Business",
