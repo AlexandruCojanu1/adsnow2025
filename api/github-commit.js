@@ -180,7 +180,10 @@ export const updatePosts = (newPosts) => {
  * Main handler
  */
 export default async function handler(req) {
-  console.log('GitHub Commit API called:', req.method, req.url);
+  // Set timeout to ensure we respond before Vercel's 10s limit
+  const timeoutPromise = new Promise((_, reject) => 
+    setTimeout(() => reject(new Error('Function timeout - operation took too long')), 9000)
+  );
   
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -208,17 +211,13 @@ export default async function handler(req) {
   }
 
   try {
-    console.log('Parsing request body...');
-    const body = await req.json();
-    const { githubToken, posts, sitemapXml } = body;
+    // Race against timeout
+    const body = await Promise.race([
+      req.json(),
+      timeoutPromise
+    ]);
     
-    console.log('Request received:', {
-      hasToken: !!githubToken,
-      tokenLength: githubToken?.length || 0,
-      postsCount: posts?.length || 0,
-      hasSitemap: !!sitemapXml,
-      sitemapLength: sitemapXml?.length || 0
-    });
+    const { githubToken, posts, sitemapXml } = body;
 
     // Validate inputs
     if (!githubToken) {
@@ -260,125 +259,78 @@ export default async function handler(req) {
       );
     }
 
-    // Verify GitHub token first
-    try {
-      console.log('Verifying GitHub token...');
-      const verifyResponse = await fetch(`https://api.github.com/user`, {
-        headers: {
-          'Authorization': `token ${githubToken}`,
-          'Accept': 'application/vnd.github.v3+json',
-        },
-      });
-      
-      if (!verifyResponse.ok) {
-        const errorData = await verifyResponse.json().catch(() => ({}));
-        return new Response(
-          JSON.stringify({ 
-            error: 'Invalid GitHub token',
-            message: errorData.message || 'Token-ul GitHub nu este valid sau nu are permisiunile necesare. Verifică că token-ul are scope "repo".',
-            details: errorData
-          }),
-          {
-            status: 401,
-            headers: {
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-            },
-          }
-        );
-      }
-      
-      const userData = await verifyResponse.json();
-      console.log('✓ GitHub token verified for user:', userData.login);
-    } catch (error) {
-      return new Response(
-        JSON.stringify({ 
-          error: 'Failed to verify GitHub token',
-          message: error.message 
-        }),
-        {
-          status: 401,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      );
-    }
+    // Skip token verification to save time - will fail on actual API calls if invalid
+    // Token will be validated when we try to get file SHA
 
     const results = {
       blogPosts: { success: false, error: null },
       sitemap: { success: false, error: null },
     };
 
-    // Update blogPosts.js
-    try {
-      console.log('=== Starting blogPosts.js update ===');
-      console.log('Generating blogPosts.js content...');
-      const blogPostsContent = generateBlogPostsJs(posts);
-      console.log('Content generated, length:', blogPostsContent.length);
-      
-      console.log('Getting file SHA for blogPosts.js...');
-      const blogPostsSha = await getFileSha(githubToken, BLOG_POSTS_PATH);
-      console.log('BlogPosts SHA:', blogPostsSha || 'File does not exist, will create new');
-      
-      console.log('Updating blogPosts.js in GitHub...');
-      const blogPostsResult = await updateFile(
-        githubToken,
-        BLOG_POSTS_PATH,
-        blogPostsContent,
-        blogPostsSha,
-        `Update blog posts - ${new Date().toISOString()}`
-      );
-      
-      console.log('GitHub API response:', JSON.stringify(blogPostsResult, null, 2));
-      
+    // Generate content first (synchronous, fast)
+    const blogPostsContent = generateBlogPostsJs(posts);
+    const commitMessage = `Update blog posts and sitemap - ${new Date().toISOString()}`;
+
+    // Get file SHAs in parallel to save time (with timeout)
+    const [blogPostsSha, sitemapSha] = await Promise.race([
+      Promise.all([
+        getFileSha(githubToken, BLOG_POSTS_PATH).catch(err => {
+          console.error('Error getting blogPosts SHA:', err.message);
+          return null;
+        }),
+        getFileSha(githubToken, SITEMAP_PATH).catch(err => {
+          console.error('Error getting sitemap SHA:', err.message);
+          return null;
+        })
+      ]),
+      timeoutPromise
+    ]);
+
+    // Update both files in parallel (with timeout)
+    const [blogPostsResult, sitemapResult] = await Promise.race([
+      Promise.allSettled([
+        updateFile(
+          githubToken,
+          BLOG_POSTS_PATH,
+          blogPostsContent,
+          blogPostsSha,
+          commitMessage
+        ).catch(err => {
+          results.blogPosts.error = err.message;
+          throw err;
+        }),
+        updateFile(
+          githubToken,
+          SITEMAP_PATH,
+          sitemapXml,
+          sitemapSha,
+          commitMessage
+        ).catch(err => {
+          results.sitemap.error = err.message;
+          throw err;
+        })
+      ]),
+      timeoutPromise
+    ]);
+
+    // Process blogPosts result
+    if (blogPostsResult.status === 'fulfilled') {
       results.blogPosts.success = true;
       results.blogPosts.message = 'Blog posts updated successfully';
-      results.blogPosts.commitSha = blogPostsResult.commit?.sha;
-      results.blogPosts.commitUrl = blogPostsResult.commit?.html_url;
-      console.log('✓ Blog posts updated successfully!');
-      console.log('  Commit SHA:', blogPostsResult.commit?.sha);
-      console.log('  Commit URL:', blogPostsResult.commit?.html_url);
-    } catch (error) {
-      results.blogPosts.error = error.message;
-      results.blogPosts.details = error.stack;
-      console.error('✗ Error updating blog posts:', error);
-      console.error('  Error message:', error.message);
-      console.error('  Error stack:', error.stack);
+      results.blogPosts.commitSha = blogPostsResult.value.commit?.sha;
+      results.blogPosts.commitUrl = blogPostsResult.value.commit?.html_url;
+    } else {
+      results.blogPosts.error = blogPostsResult.reason?.message || 'Unknown error';
     }
 
-    // Update sitemap.xml
-    try {
-      console.log('=== Starting sitemap.xml update ===');
-      console.log('Getting file SHA for sitemap.xml...');
-      const sitemapSha = await getFileSha(githubToken, SITEMAP_PATH);
-      console.log('Sitemap SHA:', sitemapSha || 'File does not exist, will create new');
-      
-      console.log('Updating sitemap.xml in GitHub...');
-      const sitemapResult = await updateFile(
-        githubToken,
-        SITEMAP_PATH,
-        sitemapXml,
-        sitemapSha,
-        `Update sitemap - ${new Date().toISOString()}`
-      );
-      
-      console.log('GitHub API response:', JSON.stringify(sitemapResult, null, 2));
-      
+    // Process sitemap result
+    if (sitemapResult.status === 'fulfilled') {
       results.sitemap.success = true;
       results.sitemap.message = 'Sitemap updated successfully';
-      results.sitemap.commitSha = sitemapResult.commit?.sha;
-      results.sitemap.commitUrl = sitemapResult.commit?.html_url;
-      console.log('✓ Sitemap updated successfully!');
-      console.log('  Commit SHA:', sitemapResult.commit?.sha);
-      console.log('  Commit URL:', sitemapResult.commit?.html_url);
-    } catch (error) {
-      results.sitemap.error = error.message;
-      results.sitemap.details = error.stack;
-      console.error('✗ Error updating sitemap:', error);
-      console.error('  Error message:', error.message);
-      console.error('  Error stack:', error.stack);
+      results.sitemap.commitSha = sitemapResult.value.commit?.sha;
+      results.sitemap.commitUrl = sitemapResult.value.commit?.html_url;
+    } else {
+      results.sitemap.error = sitemapResult.reason?.message || 'Unknown error';
     }
 
     // Return success if at least one file was updated
