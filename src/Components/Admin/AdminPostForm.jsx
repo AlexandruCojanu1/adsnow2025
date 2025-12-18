@@ -72,6 +72,12 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
     const [extractedData, setExtractedData] = useState(null);
 
     useEffect(() => {
+        // Load saved GitHub token from localStorage
+        const savedToken = localStorage.getItem('github_token');
+        if (savedToken) {
+            setGithubToken(savedToken);
+        }
+
         if (post) {
             // Edit mode - populate form with post data
             setHtmlContent(post.content || "");
@@ -421,6 +427,12 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                         });
                     }
                 }
+            } else if (formData.published && !githubToken) {
+                // Published but no token - warn user
+                setAutomationStatus({ 
+                    type: 'warning', 
+                    message: '⚠ Articol salvat doar local (în browser). Pentru publicare pe GitHub și site-ul live, introdu token-ul GitHub mai sus.' 
+                });
             } else {
                 setAutomationStatus({ 
                     type: 'info', 
@@ -428,10 +440,10 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                 });
             }
 
-            // Reset status after 8 seconds
+            // Reset status after 8 seconds (but keep token)
             setTimeout(() => {
                 setAutomationStatus(null);
-                setGithubToken("");
+                // Don't clear token - it's saved in localStorage
             }, 8000);
 
         } catch (error) {
@@ -518,18 +530,54 @@ const AdminPostForm = ({ post, onSave, onCancel }) => {
                             <label htmlFor="githubToken" className="form-label">
                                 <strong>Cheie GitHub (Personal Access Token)</strong>
                             </label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="githubToken"
-                                value={githubToken}
-                                onChange={(e) => setGithubToken(e.target.value)}
-                                placeholder="ghp_..."
-                                disabled={isProcessing}
-                                style={{ fontFamily: 'monospace' }}
-                            />
+                            <div className="d-flex flex-row gspace-2">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="githubToken"
+                                    value={githubToken}
+                                    onChange={(e) => {
+                                        const token = e.target.value;
+                                        setGithubToken(token);
+                                        // Save token to localStorage when changed
+                                        if (token) {
+                                            localStorage.setItem('github_token', token);
+                                        } else {
+                                            localStorage.removeItem('github_token');
+                                        }
+                                    }}
+                                    placeholder="ghp_..."
+                                    disabled={isProcessing}
+                                    style={{ fontFamily: 'monospace' }}
+                                />
+                                {githubToken && (
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger"
+                                        onClick={() => {
+                                            setGithubToken("");
+                                            localStorage.removeItem('github_token');
+                                        }}
+                                        disabled={isProcessing}
+                                        title="Șterge token-ul"
+                                    >
+                                        <i className="fa-solid fa-trash"></i>
+                                    </button>
+                                )}
+                            </div>
                             <small className="text-muted d-block mt-2">
-                                Token-ul este necesar pentru a trimite articolul către GitHub. Nu este salvat și este folosit doar pentru acest commit.
+                                {githubToken ? (
+                                    <>
+                                        <span className="text-success">✓ Token salvat. Va fi folosit automat la publicare.</span>
+                                        <br />
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="text-warning">⚠ Token lipsă. Articolul va fi salvat doar local (nu pe GitHub).</span>
+                                        <br />
+                                    </>
+                                )}
+                                Token-ul este salvat în browser pentru a evita reintroducerea la fiecare publicare.
                                 <br />
                                 <strong>Permisiuni necesare:</strong> repo (Full control of private repositories)
                             </small>

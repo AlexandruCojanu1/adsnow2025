@@ -196,41 +196,32 @@ export const updatePosts = (newPosts) => {
 
 /**
  * Main handler
+ * Vercel Node.js Runtime format
  */
-export default async function handler(req) {
+export default async function handler(req, res) {
   const startTime = Date.now();
   console.log('=== GitHub Commit API Handler Started ===');
   console.log('Method:', req.method);
   console.log('URL:', req.url);
   
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    });
+    return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
-    return new Response(
-      JSON.stringify({ error: 'Method not allowed' }),
-      {
-        status: 405,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    );
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
     console.log('Parsing request body...');
-    const body = await req.json();
+    // In Vercel Node.js runtime, body is automatically parsed if Content-Type is application/json
+    const body = req.body || {};
     const { githubToken, posts, sitemapXml } = body;
     
     console.log('Request parsed:', {
@@ -242,42 +233,15 @@ export default async function handler(req) {
 
     // Validate inputs
     if (!githubToken) {
-      return new Response(
-        JSON.stringify({ error: 'GitHub token is required' }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      );
+      return res.status(400).json({ error: 'GitHub token is required' });
     }
 
     if (!posts || !Array.isArray(posts)) {
-      return new Response(
-        JSON.stringify({ error: 'Posts array is required' }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      );
+      return res.status(400).json({ error: 'Posts array is required' });
     }
 
     if (!sitemapXml) {
-      return new Response(
-        JSON.stringify({ error: 'Sitemap XML is required' }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-        }
-      );
+      return res.status(400).json({ error: 'Sitemap XML is required' });
     }
 
     // Skip token verification to save time - will fail on actual API calls if invalid
@@ -460,30 +424,21 @@ export default async function handler(req) {
       message = '✗ Actualizarea a eșuat. Verifică erorile de mai jos.';
     }
 
-    return new Response(
-      JSON.stringify({
-        success,
-        results,
-        message,
-        verified: {
-          blogPosts: results.blogPosts.verified || false,
-          sitemap: results.sitemap.verified || false,
-          both: bothVerified
-        },
-        githubUrls: {
-          blogPosts: results.blogPosts.commitUrl || null,
-          sitemap: results.sitemap.commitUrl || null,
-          repository: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
-        }
-      }),
-      {
-        status: success ? 200 : 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
+    return res.status(success ? 200 : 500).json({
+      success,
+      results,
+      message,
+      verified: {
+        blogPosts: results.blogPosts.verified || false,
+        sitemap: results.sitemap.verified || false,
+        both: bothVerified
+      },
+      githubUrls: {
+        blogPosts: results.blogPosts.commitUrl || null,
+        sitemap: results.sitemap.commitUrl || null,
+        repository: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/commits/${GITHUB_BRANCH}`
       }
-    );
+    });
 
   } catch (error) {
     console.error('Error in github-commit handler:', error);
@@ -507,19 +462,10 @@ export default async function handler(req) {
       statusCode = 404;
     }
     
-    return new Response(
-      JSON.stringify({ 
-        error: 'Internal server error',
-        message: errorMessage,
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
-      }),
-      {
-        status: statusCode,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      }
-    );
+    return res.status(statusCode).json({ 
+      error: 'Internal server error',
+      message: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 }
