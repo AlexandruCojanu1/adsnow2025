@@ -19,7 +19,7 @@ export const services = [
         id: 3,
         icon: "/assets/images/Icon-8.png",
         title: "Paid ADS",
-        content: "Crestem audiente care duc la vanzari.",
+        content: "Identificam si crestem audiente care aduc valoare.",
         speed: "fast",
         link: "single_services",
     },
@@ -42,7 +42,7 @@ export const services = [
     {
         id: 6,
         icon: "/assets/images/Icon-4.png",
-        title: "Web development & design",
+        title: "Web dev & design",
         content: "Dezvoltam casa digitala a afacerii tale si ii dam aspectul modern pe care il merita.",
         speed: "fast",
         link: "single_services",

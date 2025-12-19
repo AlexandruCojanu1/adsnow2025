@@ -48,7 +48,7 @@ function ExpertiseSection(){
 
                             <AnimateOnScroll animation="fadeInRight" speed="normal">
                                 <h2 className="title-heading">
-                                    construim si consolidam identitati digitale
+                                    Construim si consolidam identitati digitale
                                 </h2>
                             </AnimateOnScroll>
                             <p>

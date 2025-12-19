@@ -44,7 +44,7 @@ function ChooseUsSection(){
                                                 <AnimateOnScroll animation="fadeInUp" speed="normal">
 
                                                     <div className="card card-chooseus-cta">
-                                                        <h5>ai aflat care este identitatea businessului tau?</h5>
+                                                        <h5>Ai aflat care este identitatea busiinessului tau?</h5>
                                                         <div className="link-wrapper">
                                                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Aplică acum</a>
                                                             <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
