@@ -6,7 +6,7 @@ const ServiceCard = ({icon, title, content, link, speed = ""}) => {
         <>
             <AnimateOnScroll animation="fadeInLeft" speed={speed}>
                 <div className="card card-service">
-                    <div className="d-flex flex-row justify-content-between gspace-2 gspace-md-3 align-items-center">
+                    <div className="d-flex flex-row gspace-2 gspace-md-3 align-items-center">
                         <div>
                             <div className="service-icon-wrapper">
                                 <div className="service-icon">

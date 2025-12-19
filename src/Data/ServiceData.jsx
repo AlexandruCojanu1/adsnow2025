@@ -2,7 +2,7 @@ export const services = [
     {
         id: 1,
         icon: "/assets/images/Icon-7.png",
-        title: "Social Media Managemant",
+        title: "Social Media Management",
         content: "Asigurăm consistența brandului tău pe rețelele sociale.",
         speed: "slow",
         link: "single_services",
@@ -10,7 +10,7 @@ export const services = [
     {
         id: 2,
         icon: "/assets/images/digital-marketing-icons-F4LJ4W8.png",
-        title: "Content creation",
+        title: "Content Creation",
         content: "Creem conținut audio și vizual în ton cu viziunea brandului tău.",
         speed: "normal",
         link: "single_services",
@@ -42,7 +42,7 @@ export const services = [
     {
         id: 6,
         icon: "/assets/images/Icon-4.png",
-        title: "Web dev & design",
+        title: "Web Development",
         content: "Dezvoltăm casa digitală a afacerii tale și îi dăm aspectul modern pe care îl merită.",
         speed: "fast",
         link: "single_services",
