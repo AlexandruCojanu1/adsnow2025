@@ -6,11 +6,11 @@
  * Environment variables required:
  * - GOOGLE_CLIENT_EMAIL: Service account email
  * - GOOGLE_PRIVATE_KEY: Service account private key
- * - SITE_URL: Your website URL (e.g., https://adsnow.vercel.app)
+ * - SITE_URL: Your website URL (e.g., https://adsnow.ro)
  * 
  * Usage:
  * POST /api/google-indexing
- * Body: { "url": "https://adsnow.vercel.app/blog/article-slug" }
+ * Body: { "url": "https://adsnow.ro/blog/article-slug" }
  */
 
 import jwt from 'jsonwebtoken';
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
   const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
   const siteUrl = process.env.SITE_URL || (process.env.VERCEL_URL 
     ? `https://${process.env.VERCEL_URL}` 
-    : 'https://adsnow.vercel.app');
+    : 'https://adsnow.ro');
 
   // Validate environment variables
   if (!clientEmail || !privateKey) {

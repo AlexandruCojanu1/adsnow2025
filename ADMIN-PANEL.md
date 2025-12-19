@@ -6,7 +6,7 @@ Acest ghid te ajută să folosești panoul de administrare pentru gestionarea ar
 
 ### URL
 ```
-https://adsnow.vercel.app/admin
+https://adsnow.ro/admin
 ```
 
 ### Autentificare

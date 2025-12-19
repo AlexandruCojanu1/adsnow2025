@@ -7,8 +7,8 @@ import { updatePosts, getPublishedPosts } from '../Data/blogPosts';
 
 // Use import.meta.env for Vite (browser) or process.env for Node.js (build time)
 const SITE_URL = typeof window !== 'undefined' 
-  ? (import.meta.env.VITE_SITE_URL || 'https://adsnow.vercel.app')
-  : (process.env.REACT_APP_SITE_URL || process.env.VITE_SITE_URL || 'https://adsnow.vercel.app');
+  ? (import.meta.env.VITE_SITE_URL || 'https://adsnow.ro')
+  : (process.env.REACT_APP_SITE_URL || process.env.VITE_SITE_URL || 'https://adsnow.ro');
 
 /**
  * Generate sitemap.xml

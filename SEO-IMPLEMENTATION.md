@@ -80,7 +80,7 @@ Acest document descrie toate elementele SEO implementate în proiect.
 {
   "@type": "Organization",
   "name": "Algo Digital Solutions",
-  "url": "https://adsnow.vercel.app",
+  "url": "https://adsnow.ro",
   "logo": "...",
   "address": {...},
   "contactPoint": {...},
@@ -131,7 +131,7 @@ Structured data este adăugat automat în `BlogPostPage`. Doar asigură-te că a
 ### Google Search Console
 1. Adaugă proprietatea în [Google Search Console](https://search.google.com/search-console)
 2. Verifică proprietatea
-3. Trimite sitemap-ul: `https://adsnow.vercel.app/sitemap.xml`
+3. Trimite sitemap-ul: `https://adsnow.ro/sitemap.xml`
 
 ### Google Rich Results Test
 Testează structured data la: https://search.google.com/test/rich-results

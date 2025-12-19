@@ -31,7 +31,7 @@
 - [ ] Verifică că există (dacă sunt necesare):
   - `GOOGLE_CLIENT_EMAIL` (pentru Google Indexing)
   - `GOOGLE_PRIVATE_KEY` (pentru Google Indexing)
-  - `SITE_URL` (opțional, default: https://adsnow.vercel.app)
+  - `SITE_URL` (opțional, default: https://adsnow.ro)
 
 ### 5. **Build Configuration**
 - [ ] Mergi în **Settings** > **General**

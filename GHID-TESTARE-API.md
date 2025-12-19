@@ -1,7 +1,7 @@
 # 🧪 Ghid Testare API Endpoints
 
 ## 🌐 URL-ul Site-ului
-**Site Live**: `https://adsnow.vercel.app`
+**Site Live**: `https://adsnow.ro`
 
 ---
 
@@ -9,7 +9,7 @@
 
 ### Pasul 1: Deschide Browser-ul
 1. Deschide Chrome, Firefox sau Safari
-2. Mergi la: `https://adsnow.vercel.app/api/test`
+2. Mergi la: `https://adsnow.ro/api/test`
 
 ### Pasul 2: Verifică Răspunsul
 **Răspuns așteptat**:
@@ -37,7 +37,7 @@
 
 ### Pasul 2: Rulează Comanda
 ```bash
-curl https://adsnow.vercel.app/api/test
+curl https://adsnow.ro/api/test
 ```
 
 ### Pasul 3: Verifică Răspunsul
@@ -81,7 +81,7 @@ Ar trebui să vezi:
 ## ✅ Metoda 4: Testare cu Browser DevTools
 
 ### Pasul 1: Deschide Site-ul
-1. Mergi la: `https://adsnow.vercel.app`
+1. Mergi la: `https://adsnow.ro`
 2. Deschide **DevTools** (F12 sau Cmd+Option+I)
 
 ### Pasul 2: Testează în Console
@@ -130,22 +130,22 @@ curl http://localhost:3000/api/test
 
 ### Test 1: GitHub Test Endpoint
 ```bash
-curl -X POST https://adsnow.vercel.app/api/test-github \
+curl -X POST https://adsnow.ro/api/test-github \
   -H "Content-Type: application/json" \
   -d '{"githubToken": "ghp_YOUR_TOKEN"}'
 ```
 
 ### Test 2: Verificare CORS
 ```bash
-curl -X OPTIONS https://adsnow.vercel.app/api/github-commit \
-  -H "Origin: https://adsnow.vercel.app" \
+curl -X OPTIONS https://adsnow.ro/api/github-commit \
+  -H "Origin: https://adsnow.ro" \
   -H "Access-Control-Request-Method: POST" \
   -v
 ```
 
 ### Test 3: Verificare Headers
 ```bash
-curl -I https://adsnow.vercel.app/api/test
+curl -I https://adsnow.ro/api/test
 ```
 
 ---
@@ -203,8 +203,8 @@ După toate testele, ar trebui să ai:
 
 ## 🔗 Link-uri Utile
 
-- **Site Live**: https://adsnow.vercel.app
-- **API Test**: https://adsnow.vercel.app/api/test
+- **Site Live**: https://adsnow.ro
+- **API Test**: https://adsnow.ro/api/test
 - **Vercel Dashboard**: https://vercel.com/dashboard
 - **Vercel Functions Docs**: https://vercel.com/docs/functions
 

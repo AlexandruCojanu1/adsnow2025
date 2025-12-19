@@ -5,7 +5,7 @@
  * The sitemap helps search engines discover and index your blog posts.
  * 
  * Usage:
- * node scripts/generate-sitemap.js [--url=https://adsnow.vercel.app] [--output=public/sitemap.xml]
+ * node scripts/generate-sitemap.js [--url=https://adsnow.ro] [--output=public/sitemap.xml]
  */
 
 import { getPublishedPosts } from '../src/Data/blogPosts.js';
@@ -16,7 +16,7 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const SITE_URL = process.env.SITE_URL || 'https://adsnow.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://adsnow.ro';
 
 /**
  * Generate sitemap XML content

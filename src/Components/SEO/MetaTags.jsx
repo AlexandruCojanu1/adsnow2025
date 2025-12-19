@@ -13,7 +13,7 @@ const MetaTags = ({
   type = "website"
 }) => {
   const location = useLocation();
-  const siteUrl = "https://adsnow.vercel.app";
+  const siteUrl = "https://adsnow.ro";
   const fullUrl = `${siteUrl}${location.pathname}`;
   const fullImage = image 
     ? (image.startsWith('http') ? image : `${siteUrl}${image}`)

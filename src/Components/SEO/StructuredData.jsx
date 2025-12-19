@@ -6,7 +6,7 @@ import React from "react";
  */
 
 // Organization Schema
-export const OrganizationSchema = ({ siteUrl = "https://adsnow.vercel.app" }) => {
+export const OrganizationSchema = ({ siteUrl = "https://adsnow.ro" }) => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -42,7 +42,7 @@ export const OrganizationSchema = ({ siteUrl = "https://adsnow.vercel.app" }) =>
 };
 
 // Website Schema
-export const WebsiteSchema = ({ siteUrl = "https://adsnow.vercel.app" }) => {
+export const WebsiteSchema = ({ siteUrl = "https://adsnow.ro" }) => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -72,7 +72,7 @@ export const WebsiteSchema = ({ siteUrl = "https://adsnow.vercel.app" }) => {
 };
 
 // Blog Post Schema
-export const BlogPostSchema = ({ post, siteUrl = "https://adsnow.vercel.app" }) => {
+export const BlogPostSchema = ({ post, siteUrl = "https://adsnow.ro" }) => {
   if (!post) return null;
 
   const schema = {
@@ -113,7 +113,7 @@ export const BlogPostSchema = ({ post, siteUrl = "https://adsnow.vercel.app" }) 
 };
 
 // Breadcrumb Schema
-export const BreadcrumbSchema = ({ items, siteUrl = "https://adsnow.vercel.app" }) => {
+export const BreadcrumbSchema = ({ items, siteUrl = "https://adsnow.ro" }) => {
   if (!items || items.length === 0) return null;
 
   const schema = {
@@ -136,7 +136,7 @@ export const BreadcrumbSchema = ({ items, siteUrl = "https://adsnow.vercel.app" 
 };
 
 // Service Schema
-export const ServiceSchema = ({ siteUrl = "https://adsnow.vercel.app" }) => {
+export const ServiceSchema = ({ siteUrl = "https://adsnow.ro" }) => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",

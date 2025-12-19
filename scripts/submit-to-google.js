@@ -5,12 +5,12 @@
  * to automatically submit new blog posts to Google for indexing.
  * 
  * Usage:
- * node scripts/submit-to-google.js [--url=https://adsnow.vercel.app] [--post-slug=article-slug]
+ * node scripts/submit-to-google.js [--url=https://adsnow.ro] [--post-slug=article-slug]
  * 
  * Environment variables required:
  * - GOOGLE_CLIENT_EMAIL: Service account email
  * - GOOGLE_PRIVATE_KEY: Service account private key
- * - SITE_URL: Your website URL (defaults to https://adsnow.vercel.app)
+ * - SITE_URL: Your website URL (defaults to https://adsnow.ro)
  */
 
 import { getPublishedPosts } from '../src/Data/blogPosts.js';
@@ -23,7 +23,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 dotenv.config({ path: join(__dirname, '..', '.env') });
 
-const SITE_URL = process.env.SITE_URL || 'https://adsnow.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://adsnow.ro';
 const API_ENDPOINT = process.env.API_ENDPOINT || `${SITE_URL}/api/google-indexing`;
 
 /**

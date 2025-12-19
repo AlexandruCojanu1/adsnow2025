@@ -58,10 +58,10 @@ GOOGLE_CLIENT_EMAIL=your-service-account@project-id.iam.gserviceaccount.com
 GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 
 # Site URL
-SITE_URL=https://adsnow.vercel.app
+SITE_URL=https://adsnow.ro
 
 # API Endpoint (optional, defaults to SITE_URL/api/google-indexing)
-API_ENDPOINT=https://adsnow.vercel.app/api/google-indexing
+API_ENDPOINT=https://adsnow.ro/api/google-indexing
 ```
 
 **⚠️ Important:** 

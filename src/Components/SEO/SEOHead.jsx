@@ -12,7 +12,7 @@ const SEOHead = ({
   image,
   url,
   type = "website",
-  siteUrl = "https://adsnow.vercel.app"
+  siteUrl = "https://adsnow.ro"
 }) => {
   const fullTitle = title 
     ? `${title} | ADSNOW - Your Online Identity Advisor`

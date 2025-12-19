@@ -14,7 +14,7 @@ function BlogPostPage() {
         return <Navigate to="/blog" replace />;
     }
 
-    const siteUrl = "https://adsnow.vercel.app";
+    const siteUrl = "https://adsnow.ro";
     const breadcrumbItems = [
         { name: "Acasă", url: "/" },
         { name: "Blog", url: "/blog" },

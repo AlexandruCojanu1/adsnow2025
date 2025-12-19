@@ -1,4 +1,4 @@
-# robots.txt for adsnow.vercel.app
+# robots.txt for adsnow.ro
 
 User-agent: *
 Allow: /
@@ -8,7 +8,7 @@ Disallow: /api/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://adsnow.vercel.app/sitemap.xml
+Sitemap: https://adsnow.ro/sitemap.xml
 
 # Crawl-delay (optional, helps prevent server overload)
 Crawl-delay: 1
