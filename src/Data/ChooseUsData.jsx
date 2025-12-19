@@ -2,24 +2,24 @@ export const whychooseus = [
     {
         id: 1,
         icon: "/assets/images/Icon-2.png",
-        title: "Marketing in timp real",
-        content: "Folosim tehnici si strategii actuale in piata pentru a-ti oferii un avantaj acum.",
+        title: "Marketing în timp real",
+        content: "Folosim tehnici și strategii actuale în piață pentru a-ți oferi un avantaj acum.",
         link: "#",
         speed: "fast"
     },
     {
         id: 2,
         icon: "/assets/images/icon-1.png",
-        title: "Imaginatia este la ea acasa",
-        content: "Avem o fire creativa, experienta in domeniu si indragim ceea ce facem.",
+        title: "Imaginația este la ea acasă",
+        content: "Avem o fire creativă, experiență în domeniu și îndrăgim ceea ce facem.",
         link: "#",
         speed: "normal"
     },
     {
         id: 3,
         icon: "/assets/images/Icon-3.png",
-        title: "Metricile sunt prietenii nostri",
-        content: "Ne folosim de indicatoare de performanta pentru a da o viziune clara directiei in care ar trebui sa se indrepte afacerea ta.",
+        title: "Metricile sunt prietenii noștri",
+        content: "Ne folosim de indicatoare de performanță pentru a da o viziune clară direcției în care ar trebui să se îndrepte afacerea ta.",
         link: "#",
         speed: "slow"
     },

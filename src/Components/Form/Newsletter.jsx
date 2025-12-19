@@ -12,7 +12,7 @@ function NewsletterSection() {
                         <div className="d-flex flex-column gspace-5 position-relative z-2">
                             <AnimateOnScroll animation="fadeInLeft" speed="normal">
                                 <div className="d-flex flex-column gspace-2">
-                                    <h3 className="title-heading">Experienta brandului tau incepe acum</h3>
+                                    <h3 className="title-heading">Experiența brandului tău începe acum</h3>
                                     <p>
                                         Nu vindem servicii. Alegem parteneri. Tu ce alegi?
                                     </p>

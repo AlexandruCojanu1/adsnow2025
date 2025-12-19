@@ -10,10 +10,10 @@ function PricingPlanSection(){
                         <div className="d-flex flex-column gspace-2">
                             <div className="sub-heading align-self-center">
                                 <i className="fa-regular fa-circle-dot"></i>
-                                <span>Solutiile noastre</span>
+                                <span>Soluțiile noastre</span>
                             </div>
                             <h2 className="title-heading heading-container heading-container-short">
-                                Optiunile tale
+                                Opțiunile tale
                             </h2>
                         </div>
                     </AnimateOnScroll>
@@ -24,9 +24,9 @@ function PricingPlanSection(){
                                     <div className="card card-pricing-title">
                                         <div className="spacer" />
                                         <div className="content">
-                                            <h3 className="title-heading">Alege experienta brandului tau.</h3>
+                                            <h3 className="title-heading">Alege experiența brandului tău.</h3>
                                             <div className="link-wrapper">
-                                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Te asteptam la o cafea</a>
+                                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Te așteptăm la o cafea</a>
                                             <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                             </div>
                                         </div>
@@ -36,7 +36,7 @@ function PricingPlanSection(){
                                 <AnimateOnScroll animation="fadeInUp" speed="normal">
                                     <div className="card card-pricing">
                                         <h4>Social Media Managemant</h4>
-                                        <p>Lasa audienta sa iti cunoasca brandul mai bine.</p>
+                                        <p>Lasă audiența să îți cunoască brandul mai bine.</p>
                                         <div className="d-flex flex-row gspace-1 align-items-center h-100">
                                             <p>de la</p>
                                             <h3>450 EUR</h3>
@@ -45,7 +45,7 @@ function PricingPlanSection(){
                                         <ul className="check-list">
                                             <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Branding ( banner, PFP, bio, 4 postari)</a></li>
                                             <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Content planning & posting (copywriting)</a></li>
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Crestere organica (prezenta zilnica)</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Creștere organică (prezența zilnică)</a></li>
                                         </ul>
                                     </div>
                                 </AnimateOnScroll>
@@ -56,7 +56,7 @@ function PricingPlanSection(){
                                 <div className="card card-pricing pricing-highlight">
                                     <div className="spacer" />
                                     <h4>Website Development</h4>
-                                    <p>Design; Performanta; on-site SEO</p>
+                                    <p>Design; Performanță; on-site SEO</p>
                                     <div className="d-flex flex-row gspace-1 align-items-center">
                                         <p>de la</p>
                                         <h3>800 EUR</h3>
@@ -69,7 +69,7 @@ function PricingPlanSection(){
                                         </div>
                                         <div className="benefit">
                                             <i className="fa-brands fa-accessible-icon"></i>
-                                            <a href="#">personalizat in cod (nu Wordpress)</a>
+                                            <a href="#">personalizat în cod (nu Wordpress)</a>
                                         </div>
                                         <div className="benefit">
                                             <i className="fa-solid fa-bug"></i>
@@ -79,8 +79,8 @@ function PricingPlanSection(){
 
                                     <ul className="check-list">
                                         <li><a href="#">Landing-Page; Multi-Page; E-commerce</a></li>
-                                        <li><a href="#">Integrari sisteme de plata (Stripe)</a></li>
-                                        <li><a href="#">Sistem de rezervari & programari</a></li>
+                                        <li><a href="#">Integrări sisteme de plată (Stripe)</a></li>
+                                        <li><a href="#">Sistem de rezervări & programări</a></li>
                                         <li><a href="#">Integrare Dashboard, Admin-Page</a></li>
                                         <li><a href="#">SEO automatizat (pentru Blog)</a></li>
                                         <li><a href="#">Elemente de design avansate</a></li>
@@ -93,14 +93,14 @@ function PricingPlanSection(){
                                 <AnimateOnScroll animation="fadeInRight" speed="normal">
                                     <div className="card pricing-highlight-box">
                                         <div className="d-flex flex-column gspace-2 w-100">
-                                            <h5>Brandul tau, o experienta memorabila!</h5>
+                                            <h5>Brandul tău, o experiență memorabilă!</h5>
                                             <div className="d-flex flex-column gspace-2">
                                                 <div className="pricing-highlights">
                                                     <a href="#">Branding consistent</a>
                                                     <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                                 <div className="pricing-highlights">
-                                                    <a href="#">Imagine unica</a>
+                                                    <a href="#">Imagine unică</a>
                                                     <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                                 <div className="pricing-highlights">
@@ -116,7 +116,7 @@ function PricingPlanSection(){
                                 <AnimateOnScroll animation="fadeInUp" speed="normal">
                                     <div className="card card-pricing">
                                         <h4>Content Creation</h4>
-                                        <p>Imaginea statica sau dinamica a brandului tau</p>
+                                        <p>Imaginea statică sau dinamică a brandului tău</p>
                                         <div className="d-flex flex-row gspace-1 align-items-center h-100">
                                             <p>de la</p>
                                             <h3>950 EUR</h3>

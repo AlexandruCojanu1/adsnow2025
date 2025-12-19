@@ -42,23 +42,23 @@ function ExpertiseSection(){
                             <AnimateOnScroll animation="fadeInRight" speed="normal">
                                 <div className="sub-heading">
                                     <i className="fa-regular fa-circle-dot"></i>
-                                    <span>identitatea noastra</span>
+                                    <span>identitatea noastră</span>
                                 </div>
                             </AnimateOnScroll>
 
                             <AnimateOnScroll animation="fadeInRight" speed="normal">
                                 <h2 className="title-heading">
-                                    Construim si consolidam identitati digitale
+                                    Construim și consolidăm identități digitale
                                 </h2>
                             </AnimateOnScroll>
                             <p>
-                                Suntem consultantul si creatorul tau de imagine in online. Identificam punctele forte si vulnerabilitatile business ului tau. Elaboram strategii gandite sa iti atinga potentialul.
+                                Suntem consultantul și creatorul tău de imagine în online. Identificăm punctele forte și vulnerabilitățile business-ului tău. Elaborăm strategii gândite să îți atingă potențialul.
                             </p>
                             <div className="d-flex flex-column flex-md-row gspace-2">
                                 <div className="expertise-list">
-                                    <h5>Ce iubim sa facem:</h5>
+                                    <h5>Ce iubim să facem:</h5>
                                     <ul className="check-list">
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">identitate vizuala</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">identitate vizuală</a></li>
                                         <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">website design (UI/UX)</a></li>
                                         <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">website development</a></li>
                                         <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">SEO (on-site & off-site)</a></li>
@@ -78,7 +78,7 @@ function ExpertiseSection(){
                                             <h6>Cine suntem noi</h6>
                                         </div>
                                         <p>
-                                            Suntem brașoveni, dedicați construirii identităților digitale memorabile pentru branduri care vor sa fie vazute pentru exact ceea ce sunt.
+                                            Suntem brașoveni, dedicați construirii identităților digitale memorabile pentru branduri care vor să fie văzute pentru exact ceea ce sunt.
                                         </p>
                                     </div>
                                 </AnimateOnScroll>

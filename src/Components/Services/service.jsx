@@ -14,7 +14,7 @@ function ServiceSection(){
                             <AnimateOnScroll animation="fadeInDown" speed="normal">    
                                 <div className="sub-heading align-self-center">
                                     <i className="fa-regular fa-circle-dot"></i>
-                                    <span>Ce ne place sa facem</span>
+                                    <span>Ce ne place să facem</span>
                                 </div>
                             </AnimateOnScroll>
 
@@ -41,7 +41,7 @@ function ServiceSection(){
                         </div>
                         <div className="service-link-footer">
                             <p>
-                                Vrei sa vinzi "ceva" sau sa creezi experiente memorabile?
+                                Vrei să vinzi "ceva" sau să creezi experiențe memorabile?
                             </p>
                         </div>
                     </div>

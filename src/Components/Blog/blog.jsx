@@ -16,7 +16,7 @@ function BlogSection() {
                                     className="d-flex flex-column gspace-2">
                                     <div className="sub-heading">
                                         <i className="fa-regular fa-circle-dot"></i>
-                                        <span>Perspectiva noastra</span>
+                                        <span>Perspectiva noastră</span>
                                     </div>
                                     <h2 className="title-heading">Marketing 101</h2>
                                 </div>
@@ -27,7 +27,7 @@ function BlogSection() {
                                 <div
                                     className="d-flex flex-column gspace-2 justify-content-end h-100">
                                     <p>
-                                        Nu reinventam roata ci doar alegem traiectoria.
+                                        Nu reinventăm roata ci doar alegem traiectoria.
                                     </p>
                                     <div className="link-wrapper">
                                         <a href="./blog">Vezi Toate Articolele</a>
