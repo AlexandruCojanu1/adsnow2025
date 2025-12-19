@@ -13,7 +13,8 @@ function GuideBannerSection(){
                         muted
                         playsInline
                     >
-                        <source src="/assets/videos/Generare_Video_Scurt_cu_Elemente_Specifice.mp4" type="video/mp4" />
+                        <source src="/assets/videos/Adsnow.mov" type="video/quicktime" />
+                        <source src="/assets/videos/Adsnow.mov" type="video/mp4" />
                     </video>
                     <div className="hero-container">
                         <AnimateOnScroll animation="fadeInUp" speed="normal">
