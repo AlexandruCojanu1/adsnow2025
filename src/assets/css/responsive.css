@@ -607,6 +607,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        margin-top: 0 !important; /* Elimină margin-top mare pe mobil */
     }
     
     /* Reducere spațiu liber în footer pe mobil */
@@ -624,6 +625,16 @@
     
     .section-footer .row.grid-spacer-5 {
         gap: 20px 20px !important;
+    }
+    
+    /* Elimină coloana goală pe mobil */
+    .section-footer .row .col-lg-3:empty {
+        display: none !important;
+    }
+    
+    /* Reducere gap între coloane pe mobil */
+    .section-footer .row {
+        gap: 20px 0 !important;
     }
     .footer-list li{
         justify-content: center;
