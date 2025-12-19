@@ -14,13 +14,13 @@ function ServiceSection(){
                             <AnimateOnScroll animation="fadeInDown" speed="normal">    
                                 <div className="sub-heading align-self-center">
                                     <i className="fa-regular fa-circle-dot"></i>
-                                    <span>Serviciile Noastre</span>
+                                    <span>Ce ne place sa facem</span>
                                 </div>
                             </AnimateOnScroll>
 
                             <AnimateOnScroll animation="fadeInDown" speed="normal">
                                 <h2 className="title-heading heading-container heading-container-medium">
-                                    Strategie Digitală Integrată: Branding, Web, Social, SEO, ADS
+                                    Strategie Digitală: Branding, Web, Content Creation, Social, SEO, ADS
                                 </h2>
                             </AnimateOnScroll>
                         </div>
@@ -41,8 +41,7 @@ function ServiceSection(){
                         </div>
                         <div className="service-link-footer">
                             <p>
-                                Nu orice business merită să fie în online. Doar cele care aduc <strong>valoare</strong>. 
-                                <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer"> Scrie-ne numele companiei</a> și în <strong>24 de ore</strong> primești un răspuns dacă brandul tău este compatibil cu filozofia noastră.
+                                Vrei sa vinzi "ceva" sau sa creezi experiente memorabile?
                             </p>
                         </div>
                     </div>

@@ -41,7 +41,7 @@ function BannerHomeSection() {
                                 <AnimateOnScroll animation="fadeInRight" speed="normal">
                                     <div className="banner-content order-lg-2 order-1">
                                         <p>
-                                            Construim <strong>identități digitale</strong> pentru <strong>profesioniști</strong> și <strong>branduri</strong> care aduc <strong>valoare</strong>. <strong>Nu vindem servicii. Alegem parteneri.</strong> <strong>Simplu. Transparent. Relevant.</strong> Experiențe digitale care rămân simple pentru tine, transparente pentru parteneri și relevante pentru public.
+                                            Construim identități digitale pentru branduri. Nu vindem servicii. Alegem parteneri.
                                         </p>
                                         <div className="d-flex flex-md-row flex-column justify-content-center justify-content-lg-start align-self-center align-self-lg-start gspace-3">
                                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer" className="btn btn-accent">

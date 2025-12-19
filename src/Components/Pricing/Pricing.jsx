@@ -10,10 +10,10 @@ function PricingPlanSection(){
                         <div className="d-flex flex-column gspace-2">
                             <div className="sub-heading align-self-center">
                                 <i className="fa-regular fa-circle-dot"></i>
-                                <span>Serviciile Noastre Principale</span>
+                                <span>Solutiile noastre</span>
                             </div>
                             <h2 className="title-heading heading-container heading-container-short">
-                                Planuri de Prețuri Flexibile pentru Fiecare Business
+                                Optiunile tale
                             </h2>
                         </div>
                     </AnimateOnScroll>
@@ -24,9 +24,9 @@ function PricingPlanSection(){
                                     <div className="card card-pricing-title">
                                         <div className="spacer" />
                                         <div className="content">
-                                            <h3 className="title-heading">Să Găsim Strategia Potrivită pentru Tine!</h3>
+                                            <h3 className="title-heading">Alege experienta brandului tau.</h3>
                                             <div className="link-wrapper">
-                                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Rezervă o Consultație Gratuită</a>
+                                            <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Te asteptam la o cafea</a>
                                             <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                             </div>
                                         </div>
@@ -35,17 +35,17 @@ function PricingPlanSection(){
 
                                 <AnimateOnScroll animation="fadeInUp" speed="normal">
                                     <div className="card card-pricing">
-                                        <h4>Starter</h4>
-                                        <p>Perfect pentru startup-uri și afaceri mici</p>
+                                        <h4>Social Media Managemant</h4>
+                                        <p>Lasa audienta sa iti cunoasca brandul mai bine.</p>
                                         <div className="d-flex flex-row gspace-1 align-items-center h-100">
                                             <p>de la</p>
-                                            <h3>$99</h3>
-                                            <p>/Lună</p>
+                                            <h3>450EUR</h3>
+                                            <p>/luna</p>
                                         </div>
                                         <ul className="check-list">
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">SEO și Marketing de Bază</a></li>
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Management Rețele Sociale (1 Platformă)</a></li>
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Raport Lunar de Performanță</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Branding ( banner, PFP, bio, 4 postari)</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Content planning & posting (copywriting)</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Crestere organica (prezenta zilnica)</a></li>
                                         </ul>
                                     </div>
                                 </AnimateOnScroll>
@@ -55,36 +55,35 @@ function PricingPlanSection(){
                             <AnimateOnScroll animation="fadeInUp" speed="slow">
                                 <div className="card card-pricing pricing-highlight">
                                     <div className="spacer" />
-                                    <h4>Enterprise</h4>
-                                    <p>Marketing complet pentru impact maxim</p>
+                                    <h4>Website Development</h4>
+                                    <p>Design; Performanta; on-site SEO</p>
                                     <div className="d-flex flex-row gspace-1 align-items-center">
                                         <p>de la</p>
-                                        <h3>$399</h3>
-                                        <p>/Lună</p>
+                                        <h3>800 EUR</h3>
                                     </div>
 
                                     <div className="core-benefits">
                                         <div className="benefit">
                                             <i className="fa-solid fa-brain"></i>
-                                            <a href="#">Manager de Cont Dedicat</a>
+                                            <a href="#">UI/UX unic</a>
                                         </div>
                                         <div className="benefit">
                                             <i className="fa-brands fa-accessible-icon"></i>
-                                            <a href="#">Suport Priorititar 24/7</a>
+                                            <a href="#">personalizat in cod (nu Wordpress)</a>
                                         </div>
                                         <div className="benefit">
                                             <i className="fa-solid fa-bug"></i>
-                                            <a href="#">Strategie de Creștere Personalizată</a>
+                                            <a href="#">hosting performant (server propriu)</a>
                                         </div>
                                     </div>
 
                                     <ul className="check-list">
-                                        <li><a href="#">Suite Completă de Marketing Digital</a></li>
-                                        <li><a href="#">Management Anunțuri Plătite</a></li>
-                                        <li><a href="#">Manager de Cont Dedicat</a></li>
-                                        <li><a href="#">Marketing prin Email și Automatizare</a></li>
-                                        <li><a href="#">Manager de Cont Dedicat</a></li>
-                                        <li><a href="#">Perspective Săptămânale de Performanță</a></li>
+                                        <li><a href="#">Landing-Page; Multi-Page; E-commerce</a></li>
+                                        <li><a href="#">Integrari sisteme de plata (Stripe)</a></li>
+                                        <li><a href="#">Sistem de rezervari & programari</a></li>
+                                        <li><a href="#">Integrare Dashboard, Admin-Page</a></li>
+                                        <li><a href="#">SEO automatizat (pentru Blog)</a></li>
+                                        <li><a href="#">Elemente de design avansate</a></li>
                                     </ul>
                                 </div>
                             </AnimateOnScroll>
@@ -94,18 +93,18 @@ function PricingPlanSection(){
                                 <AnimateOnScroll animation="fadeInRight" speed="normal">
                                     <div className="card pricing-highlight-box">
                                         <div className="d-flex flex-column gspace-2 w-100">
-                                            <h5>Creșterea Ta, Prioritatea Noastră!</h5>
+                                            <h5>Brandul tau, o experienta memorabila!</h5>
                                             <div className="d-flex flex-column gspace-2">
                                                 <div className="pricing-highlights">
-                                                    <a href="#">Marketing Digital Bazat pe Date</a>
+                                                    <a href="#">Branding consistent</a>
                                                     <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                                 <div className="pricing-highlights">
-                                                    <a href="#">Strategii Dovedite pentru Rezultate Mai Bune</a>
+                                                    <a href="#">Imagine unica</a>
                                                     <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                                 <div className="pricing-highlights">
-                                                    <a href="#">Soluție Scalabilă pentru Fiecare Business</a>
+                                                    <a href="#">Conturul afacerii tale</a>
                                                     <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
                                                 </div>
                                             </div>
@@ -116,17 +115,16 @@ function PricingPlanSection(){
 
                                 <AnimateOnScroll animation="fadeInUp" speed="normal">
                                     <div className="card card-pricing">
-                                        <h4>Creștere</h4>
-                                        <p>Cel mai bun pentru afaceri în creștere</p>
+                                        <h4>Content Creation</h4>
+                                        <p>Imaginea statica sau dinamica a brandului tau</p>
                                         <div className="d-flex flex-row gspace-1 align-items-center h-100">
                                             <p>de la</p>
-                                            <h3>$299</h3>
-                                            <p>/Lună</p>
+                                            <h3>950 EUR</h3>
                                         </div>
                                         <ul className="check-list">
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">SEO și Marketing de Bază</a></li>
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Management Rețele Sociale (1 Platformă)</a></li>
-                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Raport Lunar de Performanță</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">o sesiune foto & video</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">3 videoclipuri (15-60 sec)</a></li>
+                                            <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">30 fotografii (personalizate)</a></li>
                                         </ul>
                                     </div>
                                 </AnimateOnScroll>

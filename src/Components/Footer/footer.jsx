@@ -13,7 +13,7 @@ const Footer = () => {
                                     <div className="logo-container-footer">
                                     <img src="/assets/images/logo1.png" alt="Logo" className="site-logo img-fluid" />
                                     </div>
-                                    <h4>Construim Identități Digitale pentru Profesioniști și Branduri care Aduc Valoare</h4>
+                                    <h4>Your Online Identity Advisor</h4>
                                     <p>
                                     Nu vindem servicii. Alegem parteneri. Experiențe digitale care rămân simple pentru tine, transparente pentru parteneri și relevante pentru public.
                                     </p>

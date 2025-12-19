@@ -42,28 +42,28 @@ function ExpertiseSection(){
                             <AnimateOnScroll animation="fadeInRight" speed="normal">
                                 <div className="sub-heading">
                                     <i className="fa-regular fa-circle-dot"></i>
-                                    <span>Our Expertise</span>
+                                    <span>identitatea noastra</span>
                                 </div>
                             </AnimateOnScroll>
 
                             <AnimateOnScroll animation="fadeInRight" speed="normal">
                                 <h2 className="title-heading">
-                                    Construim Identități Digitale care Aduc Valoare
+                                    construim si consolidam identitati digitale
                                 </h2>
                             </AnimateOnScroll>
                             <p>
-                                <strong>Nu vindem servicii. Alegem parteneri.</strong> Analizăm împreună poziționarea, nevoile și potențialul tău în online, oferind <strong>strategii digitale integrate</strong> adaptate obiectivelor tale de business.
+                                Suntem consultantul si creatorul tau de imagine in online. Identificam punctele forte si vulnerabilitatile business ului tau. Elaboram strategii gandite sa iti atinga potentialul.
                             </p>
                             <div className="d-flex flex-column flex-md-row gspace-2">
                                 <div className="expertise-list">
-                                    <h5>What We Do Best</h5>
+                                    <h5>Ce iubim sa facem:</h5>
                                     <ul className="check-list">
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Performance Marketing</a></li>
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Social Media Growth</a></li>
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Content Marketing</a></li>
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Anunțuri Plătite</a></li>
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Brand Strategy</a></li>
-                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Conversion Optimization</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">identitate vizuala</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">website design (UI/UX)</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">website development</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">SEO (on-site & off-site)</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">content creation</a></li>
+                                        <li><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">strategie ADS</a></li>
                                     </ul>
                                 </div>
 
@@ -75,10 +75,10 @@ function ExpertiseSection(){
                                                 <span className="counter-detail">+</span>
                                             </span>
                                             </div>
-                                            <h6>Marketing Digital și Branding</h6>
+                                            <h6>Cine suntem noi</h6>
                                         </div>
                                         <p>
-                                            Suntem <strong>brașoveni</strong>, dedicați construirii <strong>identităților digitale memorabile</strong> pentru <strong>profesioniști</strong> și <strong>branduri</strong> care aduc <strong>valoare reală</strong> în online.
+                                            Suntem brașoveni, dedicați construirii identităților digitale memorabile pentru branduri care vor sa fie vazute pentru exact ceea ce sunt.
                                         </p>
                                     </div>
                                 </AnimateOnScroll>

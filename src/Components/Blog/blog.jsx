@@ -16,9 +16,9 @@ function BlogSection() {
                                     className="d-flex flex-column gspace-2">
                                     <div className="sub-heading">
                                         <i className="fa-regular fa-circle-dot"></i>
-                                        <span>Perspective & Tendințe</span>
+                                        <span>Perspectiva noastra</span>
                                     </div>
-                                    <h2 className="title-heading">Ultimele Strategii și Sfaturi de Marketing Digital</h2>
+                                    <h2 className="title-heading">Marketing 101</h2>
                                 </div>
                             </AnimateOnScroll>
                         </div>
@@ -27,8 +27,7 @@ function BlogSection() {
                                 <div
                                     className="d-flex flex-column gspace-2 justify-content-end h-100">
                                     <p>
-                                        Explorează cele mai recente articole de pe blog care acoperă tendințele din industrie,
-                                        perspective experte și strategii practice pentru a-ți ridica jocul de marketing digital.
+                                        Nu reinventam roata ci doar alegem traiectoria.
                                     </p>
                                     <div className="link-wrapper">
                                         <a href="./blog">Vezi Toate Articolele</a>

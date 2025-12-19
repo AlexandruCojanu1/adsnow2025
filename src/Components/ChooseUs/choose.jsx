@@ -28,10 +28,10 @@ function ChooseUsSection(){
                                     <div className="d-flex flex-column gspace-2">
                                         <div className="sub-heading">
                                             <i className="fa-regular fa-circle-dot"></i>
-                                            <span>De Ce Să Ne Alegeți</span>
+                                            <span>Cea mai buna alegere pentru brandul tau</span>
                                         </div>
                                         <h2 className="title-heading"><strong>Vizibilitate. Stabilitate. Predictibilitate.</strong></h2>
-                                        <p className="mb-0"><strong>Strategie digitală integrată</strong> (branding, web, social, SEO, ADS) construită să-ți ofere <strong>direcție clară</strong>. <strong>Execuție rapidă și calitate</strong>. <strong>Siguranță</strong>. Un partener care îți spune și ce să nu faci, nu doar ce vrei să auzi.</p>
+                                        <p className="mb-0">Execuție rapidă. La cel mai inalt standard. Un partener care îți spune și ce să nu faci, nu doar ce vrei să auzi.</p>
                                     </div>
                                 </AnimateOnScroll>
                                 <div className="image-container">
@@ -44,7 +44,7 @@ function ChooseUsSection(){
                                                 <AnimateOnScroll animation="fadeInUp" speed="normal">
 
                                                     <div className="card card-chooseus-cta">
-                                                        <h5>Ești pregătit să-ți construiești identitatea digitală?</h5>
+                                                        <h5>ai aflat care este identitatea businessului tau?</h5>
                                                         <div className="link-wrapper">
                                                             <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ38JrGsAlyvinUx2IY6KHYyI7IQ-QaifvAz9diIDscT3oKh-S-_tG2_Kgkv_CYFaGW_RxtNrH73" target="_blank" rel="noopener noreferrer">Aplică acum</a>
                                                             <img src="/assets/images/cursor.webp" alt="arrow" className="cursor-icon" />
