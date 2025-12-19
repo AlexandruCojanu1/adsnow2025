@@ -2314,9 +2314,9 @@ body.lightmode .card-partner{
 
 .service-link-footer,
 .service-link-footer p{
-    font-size: var(--font-size-base) !important;
+    font-size: 1.25rem !important;
     color: var(--primary);
-    font-weight: var(--font-weight-medium);
+    font-weight: 500;
 }
 
 .service-link-footer:hover a{
