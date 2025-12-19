@@ -17,7 +17,7 @@ export const digitalSteps = [
 		id: 3,
 		icon: "/assets/images/Icon-10.png",
 		step: "03",
-		title: "Determinam resursele necesare",
+		title: "Determinam costul",
 		content: "Ne asiguram ca brandul tau primeste atentia pe care o merita.",
     },
 ];

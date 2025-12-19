@@ -39,7 +39,7 @@ function PricingPlanSection(){
                                         <p>Lasa audienta sa iti cunoasca brandul mai bine.</p>
                                         <div className="d-flex flex-row gspace-1 align-items-center h-100">
                                             <p>de la</p>
-                                            <h3>450EUR</h3>
+                                            <h3>450 EUR</h3>
                                             <p>/luna</p>
                                         </div>
                                         <ul className="check-list">
