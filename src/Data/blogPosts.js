@@ -49,14 +49,18 @@ export const getPostsByCategory = (category) => {
 
 // Function to load posts from localStorage or use default
 export const loadPosts = () => {
-  try {
-    const savedPosts = localStorage.getItem('blog_posts');
-    if (savedPosts) {
-      return JSON.parse(savedPosts);
+  // Check if localStorage is available (browser environment)
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      const savedPosts = localStorage.getItem('blog_posts');
+      if (savedPosts) {
+        return JSON.parse(savedPosts);
+      }
+    } catch (e) {
+      console.error('Error loading posts from localStorage:', e);
     }
-  } catch (e) {
-    console.error('Error loading posts from localStorage:', e);
   }
+  // Return default posts if localStorage is not available (server-side/build time)
   return blogPosts;
 };
 
@@ -66,5 +70,12 @@ export let blogPostsData = loadPosts();
 // Update function for admin
 export const updatePosts = (newPosts) => {
   blogPostsData = newPosts;
-  localStorage.setItem('blog_posts', JSON.stringify(newPosts));
+  // Only save to localStorage if available (browser environment)
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem('blog_posts', JSON.stringify(newPosts));
+    } catch (e) {
+      console.error('Error saving posts to localStorage:', e);
+    }
+  }
 };
