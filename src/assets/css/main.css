@@ -1197,6 +1197,8 @@ body.lightmode .banner-layout-wrapper::before {
 }
 
 .banner-content p {
+    font-size: 1.25rem;
+    font-weight: 500;
     color: #fffff0;
 }
 
