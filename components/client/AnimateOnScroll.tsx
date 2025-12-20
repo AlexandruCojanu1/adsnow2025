@@ -1,6 +1,6 @@
 'use client'
 
-import React, { cloneElement } from 'react'
+import React from 'react'
 import { useInView } from 'react-intersection-observer'
 import 'animate.css'
 
@@ -30,18 +30,21 @@ export default function AnimateOnScroll({
     slow: 'animate__slow',
   }[speed]
 
-  const child = React.Children.only(children)
+  const child = React.Children.only(children) as React.ReactElement<any>
 
-  return cloneElement(child, {
-    ref,
-    className: `${child.props.className || ''} animate__animated ${
-      inView ? `animate__${animation} ${speedClass}` : ''
-    }`.trim(),
-    style: {
-      ...child.props.style,
-      opacity: inView ? 1 : 0,
-      animationDelay: inView ? `${delay}ms` : undefined,
-    },
-  })
+  return (
+    <div ref={ref} style={{ display: 'contents' }}>
+      {React.cloneElement(child, {
+        className: `${(child.props as any).className || ''} animate__animated ${
+          inView ? `animate__${animation} ${speedClass}` : ''
+        }`.trim(),
+        style: {
+          ...((child.props as any).style || {}),
+          opacity: inView ? 1 : 0,
+          animationDelay: inView ? `${delay}ms` : undefined,
+        },
+      } as any)}
+    </div>
+  )
 }
 
