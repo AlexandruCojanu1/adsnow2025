@@ -84,7 +84,10 @@ export async function POST(request: NextRequest) {
     if (!clientEmail || !privateKey) {
       console.error('Missing Google credentials')
       return NextResponse.json(
-        { error: 'Google Indexing API credentials not configured' },
+        { 
+          error: 'Google Indexing API credentials not configured',
+          message: 'Configurați GOOGLE_CLIENT_EMAIL și GOOGLE_PRIVATE_KEY în Vercel Environment Variables'
+        },
         { status: 500 }
       )
     }

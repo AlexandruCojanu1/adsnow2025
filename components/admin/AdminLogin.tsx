@@ -53,6 +53,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
               placeholder="Introdu parola"
               required
               autoFocus
+              autoComplete="new-password"
             />
           </div>
 

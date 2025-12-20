@@ -65,11 +65,11 @@ export default function AdminDashboard() {
         updatedPosts = [...posts, postData]
       }
 
-      await savePosts(updatedPosts)
+      // Update local state (actual save happens via GitHub API)
       setPosts(updatedPosts)
       setEditingPost(null)
       setShowForm(false)
-      showMessage('success', editingPost ? 'Articol actualizat!' : 'Articol creat!')
+      showMessage('success', editingPost ? 'Articol actualizat local! Apasă "Publică pe GitHub" pentru a salva.' : 'Articol creat local! Apasă "Publică pe GitHub" pentru a salva.')
     } catch (error) {
       showMessage('error', 'Eroare la salvare')
     } finally {
@@ -171,18 +171,11 @@ export default function AdminDashboard() {
   }
 
   const savePosts = async (updatedPosts: BlogPost[]) => {
-    // This will be handled by the API route
-    const response = await fetch('/api/admin/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ posts: updatedPosts }),
-    })
-
-    if (!response.ok) {
-      throw new Error('Failed to save posts')
-    }
+    // Save posts to GitHub directly (Vercel has read-only filesystem)
+    // Posts are saved via GitHub API in handlePublishToGitHub
+    // For now, we just update local state
+    // The actual save happens when user clicks "Publică pe GitHub"
+    return Promise.resolve()
   }
 
   const showMessage = (type: 'success' | 'error', text: string) => {

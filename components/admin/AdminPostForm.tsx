@@ -10,86 +10,111 @@ interface AdminPostFormProps {
 }
 
 export default function AdminPostForm({ post, onSave, onCancel }: AdminPostFormProps) {
-  const [formData, setFormData] = useState<Partial<BlogPost>>({
-    title: '',
-    excerpt: '',
-    content: '',
-    slug: '',
-    image: '/favicon.webp',
-    date: new Date().toISOString().split('T')[0],
-    category: 'Social Media',
-    author: 'Algo Digital Solutions',
-    tags: [],
-    seo: {
-      metaTitle: '',
-      metaDescription: '',
-      keywords: '',
-    },
-    published: false,
-    featured: false,
-    id: 0,
-  })
-
-  const [tagsInput, setTagsInput] = useState('')
+  const [htmlContent, setHtmlContent] = useState('')
+  const [featured, setFeatured] = useState(false)
+  const [slug, setSlug] = useState('')
 
   useEffect(() => {
     if (post) {
-      setFormData(post)
-      setTagsInput(post.tags.join(', '))
+      setHtmlContent(post.content)
+      setFeatured(post.featured)
+      setSlug(post.slug)
     } else {
-      // Generate slug from title
-      const generateSlug = (title: string) => {
-        return title
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '')
-      }
-
-      setFormData((prev) => ({
-        ...prev,
-        slug: generateSlug(prev.title || ''),
-      }))
+      setHtmlContent('')
+      setFeatured(false)
+      setSlug('')
     }
   }, [post])
 
-  useEffect(() => {
-    if (!post) {
-      const generateSlug = (title: string) => {
-        return title
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/(^-|-$)/g, '')
-      }
+  const extractMetadataFromHTML = (html: string) => {
+    // Extract title from <h1> or <title>
+    const titleMatch = html.match(/<h1[^>]*>([^<]+)<\/h1>/i) || 
+                       html.match(/<title[^>]*>([^<]+)<\/title>/i)
+    const title = titleMatch ? titleMatch[1].trim() : 'Articol Nou'
 
-      setFormData((prev) => ({
-        ...prev,
-        slug: generateSlug(prev.title || ''),
-        seo: {
-          metaTitle: prev.title || '',
-          metaDescription: prev.excerpt || '',
-          keywords: prev.tags?.join(', ') || '',
-        },
-      }))
+    // Extract excerpt from first <p> or meta description
+    const excerptMatch = html.match(/<p[^>]*>([^<]+)<\/p>/i) ||
+                         html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)
+    const excerpt = excerptMatch ? excerptMatch[1].trim().substring(0, 200) : 'Articol nou'
+
+    // Extract category from meta tag or default
+    const categoryMatch = html.match(/<meta[^>]*name=["']category["'][^>]*content=["']([^"']+)["']/i)
+    const category = categoryMatch ? categoryMatch[1] : 'Social Media'
+
+    // Extract date from meta tag or use today
+    const dateMatch = html.match(/<meta[^>]*name=["']date["'][^>]*content=["']([^"']+)["']/i)
+    const date = dateMatch ? dateMatch[1] : new Date().toISOString().split('T')[0]
+
+    // Extract tags from meta tag
+    const tagsMatch = html.match(/<meta[^>]*name=["']tags["'][^>]*content=["']([^"']+)["']/i)
+    const tags = tagsMatch ? tagsMatch[1].split(',').map(t => t.trim()) : []
+
+    // Extract SEO metadata
+    const seoTitleMatch = html.match(/<meta[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/i) ||
+                           html.match(/<meta[^>]*name=["']title["'][^>]*content=["']([^"']+)["']/i)
+    const seoTitle = seoTitleMatch ? seoTitleMatch[1] : title
+
+    const seoDescMatch = html.match(/<meta[^>]*property=["']og:description["'][^>]*content=["']([^"']+)["']/i) ||
+                         html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/i)
+    const seoDesc = seoDescMatch ? seoDescMatch[1] : excerpt
+
+    const keywordsMatch = html.match(/<meta[^>]*name=["']keywords["'][^>]*content=["']([^"']+)["']/i)
+    const keywords = keywordsMatch ? keywordsMatch[1] : tags.join(', ')
+
+    return {
+      title,
+      excerpt,
+      category,
+      date,
+      tags,
+      seo: {
+        metaTitle: seoTitle,
+        metaDescription: seoDesc,
+        keywords,
+      },
     }
-  }, [formData.title, formData.excerpt, post])
+  }
+
+  const generateSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    const tags = tagsInput
-      .split(',')
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0)
+    if (!htmlContent.trim()) {
+      alert('Conținutul HTML este obligatoriu!')
+      return
+    }
+
+    if (!slug.trim()) {
+      alert('Slug-ul este obligatoriu!')
+      return
+    }
+
+    const metadata = extractMetadataFromHTML(htmlContent)
+    const finalSlug = slug.trim() || generateSlug(metadata.title)
 
     const postData: BlogPost = {
-      ...formData,
-      tags,
+      slug: finalSlug,
+      title: metadata.title,
+      excerpt: metadata.excerpt,
+      content: htmlContent,
+      image: '/favicon.webp',
+      date: metadata.date,
+      category: metadata.category,
+      author: 'Algo Digital Solutions',
+      tags: metadata.tags,
+      seo: metadata.seo,
+      published: true, // Auto-publish
+      featured: featured,
       id: post?.id || Date.now(),
-    } as BlogPost
+    }
 
     onSave(postData)
   }
@@ -104,173 +129,46 @@ export default function AdminPostForm({ post, onSave, onCancel }: AdminPostFormP
       </div>
 
       <form onSubmit={handleSubmit} className="admin-post-form-content">
-        <div className="admin-form-row">
-          <div className="admin-form-group">
-            <label htmlFor="title">Titlu *</label>
-            <input
-              type="text"
-              id="title"
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              required
-              className="admin-form-input"
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="slug">Slug *</label>
-            <input
-              type="text"
-              id="slug"
-              value={formData.slug}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              required
-              className="admin-form-input"
-            />
-          </div>
-        </div>
-
         <div className="admin-form-group">
-          <label htmlFor="excerpt">Rezumat *</label>
-          <textarea
-            id="excerpt"
-            value={formData.excerpt}
-            onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+          <label htmlFor="slug">Slug * (identificator unic pentru URL)</label>
+          <input
+            type="text"
+            id="slug"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
             required
-            rows={3}
-            className="admin-form-textarea"
+            className="admin-form-input"
+            placeholder="exemplu-articol-2025"
           />
+          <small style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
+            URL-ul articolului va fi: /blog/{slug || 'slug-articol'}
+          </small>
         </div>
 
         <div className="admin-form-group">
           <label htmlFor="content">Conținut HTML *</label>
           <textarea
             id="content"
-            value={formData.content}
-            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+            value={htmlContent}
+            onChange={(e) => setHtmlContent(e.target.value)}
             required
-            rows={15}
+            rows={20}
             className="admin-form-textarea admin-form-textarea-code"
             placeholder="<html>...</html>"
           />
-        </div>
-
-        <div className="admin-form-row">
-          <div className="admin-form-group">
-            <label htmlFor="category">Categorie *</label>
-            <input
-              type="text"
-              id="category"
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              required
-              className="admin-form-input"
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="date">Data *</label>
-            <input
-              type="date"
-              id="date"
-              value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-              required
-              className="admin-form-input"
-            />
-          </div>
-
-          <div className="admin-form-group">
-            <label htmlFor="image">Imagine</label>
-            <input
-              type="text"
-              id="image"
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              className="admin-form-input"
-              placeholder="/favicon.webp"
-            />
-          </div>
-        </div>
-
-        <div className="admin-form-group">
-          <label htmlFor="tags">Tag-uri (separate prin virgulă)</label>
-          <input
-            type="text"
-            id="tags"
-            value={tagsInput}
-            onChange={(e) => setTagsInput(e.target.value)}
-            className="admin-form-input"
-            placeholder="web design, Brașov, marketing digital"
-          />
-        </div>
-
-        <div className="admin-form-group">
-          <label htmlFor="seo-meta-title">SEO Meta Title</label>
-          <input
-            type="text"
-            id="seo-meta-title"
-            value={formData.seo?.metaTitle || ''}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                seo: { ...formData.seo!, metaTitle: e.target.value },
-              })
-            }
-            className="admin-form-input"
-          />
-        </div>
-
-        <div className="admin-form-group">
-          <label htmlFor="seo-meta-description">SEO Meta Description</label>
-          <textarea
-            id="seo-meta-description"
-            value={formData.seo?.metaDescription || ''}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                seo: { ...formData.seo!, metaDescription: e.target.value },
-              })
-            }
-            rows={2}
-            className="admin-form-textarea"
-          />
-        </div>
-
-        <div className="admin-form-group">
-          <label htmlFor="seo-keywords">SEO Keywords</label>
-          <input
-            type="text"
-            id="seo-keywords"
-            value={formData.seo?.keywords || ''}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                seo: { ...formData.seo!, keywords: e.target.value },
-              })
-            }
-            className="admin-form-input"
-            placeholder="web design, Brașov, marketing online"
-          />
+          <small style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.875rem' }}>
+            Lipește aici codul HTML complet al articolului. Titlul, rezumatul și alte metadata vor fi extrase automat.
+          </small>
         </div>
 
         <div className="admin-form-checkboxes">
           <label className="admin-checkbox-label">
             <input
               type="checkbox"
-              checked={formData.published}
-              onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+              checked={featured}
+              onChange={(e) => setFeatured(e.target.checked)}
             />
-            <span>Publicat</span>
-          </label>
-
-          <label className="admin-checkbox-label">
-            <input
-              type="checkbox"
-              checked={formData.featured}
-              onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-            />
-            <span>Featured</span>
+            <span>Featured (va apărea în secțiunea principală)</span>
           </label>
         </div>
 
@@ -311,12 +209,6 @@ export default function AdminPostForm({ post, onSave, onCancel }: AdminPostFormP
           gap: 1.5rem;
         }
 
-        .admin-form-row {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1rem;
-        }
-
         .admin-form-group {
           display: flex;
           flex-direction: column;
@@ -343,7 +235,7 @@ export default function AdminPostForm({ post, onSave, onCancel }: AdminPostFormP
 
         .admin-form-textarea {
           resize: vertical;
-          min-height: 100px;
+          min-height: 400px;
         }
 
         .admin-form-textarea-code {
@@ -389,10 +281,6 @@ export default function AdminPostForm({ post, onSave, onCancel }: AdminPostFormP
         }
 
         @media (max-width: 768px) {
-          .admin-form-row {
-            grid-template-columns: 1fr;
-          }
-
           .admin-form-actions {
             flex-direction: column;
           }
@@ -401,4 +289,3 @@ export default function AdminPostForm({ post, onSave, onCancel }: AdminPostFormP
     </div>
   )
 }
-
