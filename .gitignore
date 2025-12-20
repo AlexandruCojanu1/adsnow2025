@@ -31,6 +31,7 @@ dist-ssr
 
 # Build files
 build/
+.next/
 *.map
 
 # OS files

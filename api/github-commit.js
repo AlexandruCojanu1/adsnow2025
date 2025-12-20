@@ -22,8 +22,9 @@
 const GITHUB_OWNER = 'AlexandruCojanu1';
 const GITHUB_REPO = 'adsnow2025';
 const GITHUB_BRANCH = 'main';
-const BLOG_POSTS_PATH = 'src/Data/blogPosts.js';
-const SITEMAP_PATH = 'public/sitemap.xml';
+const BLOG_POSTS_PATH = 'content/posts.json';
+// Sitemap is now generated dynamically via app/sitemap.ts, no static file needed
+// SITEMAP_PATH removed - sitemap is generated dynamically by Next.js
 
 /**
  * Get file SHA from GitHub
@@ -331,8 +332,16 @@ export default async function handler(req, res) {
     }
 
     // Update sitemap.xml second (only if blogPosts succeeded, with timeout)
-    if (results.blogPosts.success) {
+    // NOTE: Sitemap is now generated dynamically by Next.js app/sitemap.ts
+    // This section is kept for backward compatibility but can be removed if not needed
+    if (results.blogPosts.success && sitemapXml) {
       try {
+        // Skip sitemap update - it's now generated dynamically
+        console.log('Step 4: Skipping sitemap.xml update (generated dynamically by Next.js)');
+        results.sitemap.success = true;
+        results.sitemap.message = 'Sitemap is generated dynamically by Next.js - no update needed';
+        results.sitemap.verified = true;
+        /* OLD CODE - Commented out since sitemap is now dynamic
         console.log('Step 4: Getting sitemap.xml SHA...');
         const sitemapShaPromise = getFileSha(githubToken, SITEMAP_PATH);
         const sitemapSha = await Promise.race([
@@ -398,14 +407,21 @@ export default async function handler(req, res) {
             throw verifyError;
           }
         }
+        */
       } catch (error) {
         results.sitemap.error = error.message;
         results.sitemap.verified = false;
         console.error('✗ Error updating sitemap:', error.message);
       }
     } else {
-      results.sitemap.error = 'Skipped - blogPosts update failed';
-      results.sitemap.verified = false;
+      if (!sitemapXml) {
+        results.sitemap.success = true;
+        results.sitemap.message = 'Sitemap is generated dynamically - no update needed';
+        results.sitemap.verified = true;
+      } else {
+        results.sitemap.error = 'Skipped - blogPosts update failed';
+        results.sitemap.verified = false;
+      }
     }
 
     // Return success if at least one file was updated and verified

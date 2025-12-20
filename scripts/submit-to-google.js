@@ -13,7 +13,7 @@
  * - SITE_URL: Your website URL (defaults to https://adsnow.ro)
  */
 
-import { getPublishedPosts } from '../src/Data/blogPosts.js';
+import { getSortedPostsData } from '../lib/blog.js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -56,7 +56,7 @@ async function submitUrl(url) {
  * Submit all published blog posts to Google
  */
 async function submitAllPosts() {
-  const posts = getPublishedPosts();
+  const posts = getSortedPostsData();
   console.log(`Found ${posts.length} published posts to submit...`);
 
   const results = [];
@@ -85,7 +85,7 @@ async function submitAllPosts() {
  * Submit a specific post by slug
  */
 async function submitPostBySlug(slug) {
-  const posts = getPublishedPosts();
+  const posts = getSortedPostsData();
   const post = posts.find(p => p.slug === slug);
   
   if (!post) {
