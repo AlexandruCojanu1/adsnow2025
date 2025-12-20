@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useInView } from 'react-intersection-observer'
 import 'animate.css'
 
@@ -19,10 +19,32 @@ export default function AnimateOnScroll({
   speed = 'normal',
   threshold = 0.15,
 }: AnimateOnScrollProps) {
-  const { ref, inView } = useInView({
+  const { ref: inViewRef, inView } = useInView({
     triggerOnce: true,
     threshold,
   })
+
+  const child = React.Children.only(children) as React.ReactElement<any>
+  const originalRef = (child as any).ref
+
+  // Combine refs: intersection observer + original child ref
+  const combinedRef = useCallback((node: HTMLElement | null) => {
+    // Set intersection observer ref
+    if (typeof inViewRef === 'function') {
+      inViewRef(node)
+    } else if (inViewRef) {
+      (inViewRef as React.MutableRefObject<HTMLElement | null>).current = node
+    }
+    
+    // Preserve original ref if it exists
+    if (originalRef) {
+      if (typeof originalRef === 'function') {
+        originalRef(node)
+      } else {
+        (originalRef as React.MutableRefObject<HTMLElement | null>).current = node
+      }
+    }
+  }, [inViewRef, originalRef])
 
   const speedClass = {
     normal: '',
@@ -30,21 +52,16 @@ export default function AnimateOnScroll({
     slow: 'animate__slow',
   }[speed]
 
-  const child = React.Children.only(children) as React.ReactElement<any>
-
-  return (
-    <div ref={ref} style={{ display: 'contents' }}>
-      {React.cloneElement(child, {
-        className: `${(child.props as any).className || ''} animate__animated ${
-          inView ? `animate__${animation} ${speedClass}` : ''
-        }`.trim(),
-        style: {
-          ...((child.props as any).style || {}),
-          opacity: inView ? 1 : 0,
-          animationDelay: inView ? `${delay}ms` : undefined,
-        },
-      } as any)}
-    </div>
-  )
+  return React.cloneElement(child, {
+    ref: combinedRef,
+    className: `${(child.props as any).className || ''} animate__animated ${
+      inView ? `animate__${animation} ${speedClass}` : ''
+    }`.trim(),
+    style: {
+      ...((child.props as any).style || {}),
+      opacity: inView ? 1 : 0,
+      animationDelay: inView ? `${delay}ms` : undefined,
+    },
+  } as any)
 }
 
