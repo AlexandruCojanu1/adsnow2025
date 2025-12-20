@@ -11,9 +11,15 @@ export default function AdminDashboard() {
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [githubToken, setGithubToken] = useState<string | null>(null)
 
   useEffect(() => {
     loadPosts()
+    // Load saved GitHub token from sessionStorage
+    const savedToken = sessionStorage.getItem('github_token')
+    if (savedToken) {
+      setGithubToken(savedToken)
+    }
   }, [])
 
   const loadPosts = async () => {
@@ -42,13 +48,51 @@ export default function AdminDashboard() {
   }
 
   const handleDelete = async (slug: string) => {
+    if (!confirm('Ești sigur că vrei să ștergi acest articol? Modificarea va fi salvată direct pe GitHub.')) {
+      return
+    }
+
     try {
+      setLoading(true)
       const updatedPosts = posts.filter((p) => p.slug !== slug)
-      await savePosts(updatedPosts)
-      setPosts(updatedPosts)
-      showMessage('success', 'Articol șters cu succes!')
+      
+      // Get or prompt for GitHub token
+      let token = githubToken
+      if (!token) {
+        token = prompt('Introdu token-ul GitHub:')
+        if (!token) {
+          showMessage('error', 'Token GitHub necesar pentru ștergere')
+          setLoading(false)
+          return
+        }
+        setGithubToken(token)
+        sessionStorage.setItem('github_token', token)
+      }
+
+      // Save to GitHub immediately
+      const response = await fetch('/api/github-commit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          githubToken: token,
+          posts: updatedPosts,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setPosts(updatedPosts)
+        showMessage('success', 'Articol șters și salvat pe GitHub cu succes! Vercel va face auto-deploy.')
+      } else {
+        showMessage('error', result.error || result.message || 'Eroare la ștergerea articolului')
+      }
     } catch (error) {
-      showMessage('error', 'Eroare la ștergerea articolului')
+      showMessage('error', 'Eroare la conectarea la GitHub')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -65,13 +109,43 @@ export default function AdminDashboard() {
         updatedPosts = [...posts, postData]
       }
 
-      // Update local state (actual save happens via GitHub API)
-      setPosts(updatedPosts)
-      setEditingPost(null)
-      setShowForm(false)
-      showMessage('success', editingPost ? 'Articol actualizat local! Apasă "Publică pe GitHub" pentru a salva.' : 'Articol creat local! Apasă "Publică pe GitHub" pentru a salva.')
+      // Get or prompt for GitHub token
+      let token = githubToken
+      if (!token) {
+        token = prompt('Introdu token-ul GitHub pentru a salva articolul:')
+        if (!token) {
+          showMessage('error', 'Token GitHub necesar pentru salvare')
+          setLoading(false)
+          return
+        }
+        setGithubToken(token)
+        sessionStorage.setItem('github_token', token)
+      }
+
+      // Save to GitHub immediately
+      const response = await fetch('/api/github-commit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          githubToken: token,
+          posts: updatedPosts,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setPosts(updatedPosts)
+        setEditingPost(null)
+        setShowForm(false)
+        showMessage('success', editingPost ? 'Articol actualizat și salvat pe GitHub! Vercel va face auto-deploy.' : 'Articol creat și salvat pe GitHub! Vercel va face auto-deploy.')
+      } else {
+        showMessage('error', result.error || result.message || 'Eroare la salvare')
+      }
     } catch (error) {
-      showMessage('error', 'Eroare la salvare')
+      showMessage('error', 'Eroare la conectarea la GitHub')
     } finally {
       setLoading(false)
     }
@@ -82,10 +156,17 @@ export default function AdminDashboard() {
       setLoading(true)
       setMessage(null)
 
-      const githubToken = prompt('Introdu token-ul GitHub:')
-      if (!githubToken) {
-        showMessage('error', 'Token GitHub necesar')
-        return
+      // Get or prompt for GitHub token
+      let token = githubToken
+      if (!token) {
+        token = prompt('Introdu token-ul GitHub:')
+        if (!token) {
+          showMessage('error', 'Token GitHub necesar')
+          setLoading(false)
+          return
+        }
+        setGithubToken(token)
+        sessionStorage.setItem('github_token', token)
       }
 
       const response = await fetch('/api/github-commit', {
@@ -94,7 +175,7 @@ export default function AdminDashboard() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          githubToken,
+          githubToken: token,
           posts: posts,
         }),
       })
@@ -102,9 +183,9 @@ export default function AdminDashboard() {
       const result = await response.json()
 
       if (response.ok) {
-        showMessage('success', 'Articole publicate pe GitHub cu succes!')
+        showMessage('success', 'Articole publicate pe GitHub cu succes! Vercel va face auto-deploy.')
       } else {
-        showMessage('error', result.error || 'Eroare la publicare')
+        showMessage('error', result.error || result.message || 'Eroare la publicare')
       }
     } catch (error) {
       showMessage('error', 'Eroare la conectarea la GitHub')

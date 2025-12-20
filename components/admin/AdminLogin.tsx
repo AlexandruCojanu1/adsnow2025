@@ -14,7 +14,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
   const router = useRouter()
 
   // Admin password - should be in environment variable in production
-  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'adsnow2025'
+  const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'Adsnow2026!'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
