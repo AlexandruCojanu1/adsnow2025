@@ -8,22 +8,31 @@ interface SchemaProps {
 export function OrganizationSchema({ siteUrl = "https://adsnow.ro" }: SchemaProps) {
   const schema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Algo Digital Solutions",
-    "alternateName": "ADSNOW",
+    "@type": ["Organization", "ProfessionalService", "LocalBusiness"],
+    "name": "ADS Now",
+    "alternateName": "Algo Digital Solutions",
     "url": siteUrl,
-    "logo": `${siteUrl}/assets/images/logo1.png`,
-    "description": "Consultanță în Identitate Digitală și Marketing Online. Construim identități digitale pentru profesioniști și branduri care aduc valoare.",
+    "logo": `${siteUrl}/opengraph-image.jpg`,
+    "description": "Agenție boutique de strategie digitală și marketing online. Construim identități digitale pentru profesioniști și branduri care aduc valoare.",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Brașov",
+      "addressRegion": "Brașov",
       "addressCountry": "RO"
     },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "addressLocality": "Brașov",
+      "addressCountry": "RO"
+    },
+    "priceRange": "$$",
     "contactPoint": {
       "@type": "ContactPoint",
       "email": "algodigitalsolutions@gmail.com",
       "telephone": "+40-771-587-498",
-      "contactType": "customer service"
+      "contactType": "customer service",
+      "areaServed": "RO",
+      "availableLanguage": "ro"
     },
     "sameAs": [
       "https://www.facebook.com/adsnow.ro",
@@ -44,12 +53,14 @@ export function WebsiteSchema({ siteUrl = "https://adsnow.ro" }: SchemaProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "ADSNOW - Your Online Identity Advisor",
+    "name": "ADS Now - Agenție Marketing Digital Brașov",
     "url": siteUrl,
-    "description": "Consultanță în Identitate Digitală și Marketing Online",
+    "description": "Agenție boutique de strategie digitală și marketing online",
+    "inLanguage": "ro-RO",
     "publisher": {
-      "@type": "Organization",
-      "name": "Algo Digital Solutions"
+      "@type": ["Organization", "ProfessionalService"],
+      "name": "ADS Now",
+      "alternateName": "Algo Digital Solutions"
     },
     "potentialAction": {
       "@type": "SearchAction",
@@ -94,20 +105,22 @@ export function BlogPostSchema({ post, siteUrl = "https://adsnow.ro" }: BlogPost
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
-    "image": post.image ? `${siteUrl}${post.image}` : `${siteUrl}/assets/images/logo1.png`,
+    "image": post.image ? `${siteUrl}${post.image}` : `${siteUrl}/opengraph-image.jpg`,
     "datePublished": post.date,
     "dateModified": post.date,
     "author": {
-      "@type": "Organization",
-      "name": post.author || "Algo Digital Solutions",
+      "@type": ["Organization", "ProfessionalService"],
+      "name": post.author || "ADS Now",
+      "alternateName": "Algo Digital Solutions",
       "url": siteUrl
     },
     "publisher": {
-      "@type": "Organization",
-      "name": "Algo Digital Solutions",
+      "@type": ["Organization", "ProfessionalService"],
+      "name": "ADS Now",
+      "alternateName": "Algo Digital Solutions",
       "logo": {
         "@type": "ImageObject",
-        "url": `${siteUrl}/assets/images/logo1.png`
+        "url": `${siteUrl}/opengraph-image.jpg`
       }
     },
     "mainEntityOfPage": {
@@ -156,15 +169,49 @@ export function BreadcrumbSchema({ items, siteUrl = "https://adsnow.ro" }: Bread
   );
 }
 
+interface FAQSchemaProps {
+  faqs: Array<{ question: string; answer: string }>;
+  siteUrl?: string;
+}
+
+export function FAQSchema({ faqs, siteUrl = "https://adsnow.ro" }: FAQSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 export function ServiceSchema({ siteUrl = "https://adsnow.ro" }: SchemaProps) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
     "serviceType": "Digital Marketing Services",
     "provider": {
-      "@type": "Organization",
-      "name": "Algo Digital Solutions",
-      "url": siteUrl
+      "@type": ["Organization", "ProfessionalService", "LocalBusiness"],
+      "name": "ADS Now",
+      "alternateName": "Algo Digital Solutions",
+      "url": siteUrl,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Brașov",
+        "addressCountry": "RO"
+      },
+      "priceRange": "$$"
     },
     "areaServed": {
       "@type": "Country",

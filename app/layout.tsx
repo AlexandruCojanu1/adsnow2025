@@ -24,8 +24,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://adsnow.ro'),
   title: {
-    template: '%s | ADSNOW - Your Online Identity Advisor',
-    default: 'Consultanță în Identitate Digitală și Marketing Online | Your Online Identity Advisor',
+    template: '%s | ADS Now',
+    default: 'ADS Now Brașov - Agenție Marketing Digital',
   },
   description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare. Nu vindem servicii. Alegem parteneri.',
   keywords: ['marketing digital', 'identitate digitală', 'branding', 'SEO', 'social media', 'web design', 'Brașov', 'performance marketing', 'brand strategy'],
@@ -43,15 +43,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ro_RO',
     url: 'https://adsnow.ro',
-    siteName: 'ADSNOW',
-    title: 'Consultanță în Identitate Digitală și Marketing Online | Your Online Identity Advisor',
-    description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare. Nu vindem servicii. Alegem parteneri.',
+    siteName: 'ADS Now',
+    title: 'ADS Now Brașov - Agenție Marketing Digital',
+    description: 'Agenție boutique de strategie digitală și marketing online. Construim identități digitale pentru profesioniști și branduri care aduc valoare.',
     images: [
       {
         url: '/opengraph-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'ADSNOW - Your Online Identity Advisor',
+        alt: 'ADS Now - Agenție Marketing Digital Brașov',
       },
     ],
   },
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: 'summary_large_image',
-    title: 'Consultanță în Identitate Digitală și Marketing Online',
-    description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare.',
+    title: 'ADS Now Brașov - Agenție Marketing Digital',
+    description: 'Agenție boutique de strategie digitală și marketing online. Construim identități digitale pentru profesioniști și branduri.',
     images: ['/opengraph-image.jpg'],
   },
   
@@ -82,12 +82,9 @@ export const metadata: Metadata = {
     google: 'your-google-verification-code',
   },
   
-  // Language
+  // Language - Single language site (Romanian only)
   alternates: {
     canonical: 'https://adsnow.ro',
-    languages: {
-      'ro-RO': 'https://adsnow.ro',
-    },
   },
 }
 

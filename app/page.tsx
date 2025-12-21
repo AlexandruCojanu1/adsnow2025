@@ -8,17 +8,18 @@ import DigitalProcessSection from '@/components/sections/DigitalProcessSection'
 import PricingSection from '@/components/sections/PricingSection'
 import NewsletterSection from '@/components/sections/NewsletterSection'
 import BlogSection from '@/components/sections/BlogSection'
+import FAQSection from '@/components/sections/FAQSection'
 import { OrganizationSchema, WebsiteSchema, ServiceSchema } from '@/components/seo/StructuredData'
 
 // Page-specific metadata (merges with root layout)
 export const metadata: Metadata = {
-  title: 'Consultanță în Identitate Digitală și Marketing Online',
-  description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare. Nu vindem servicii. Alegem parteneri.',
+  title: 'ADS Now Brașov - Agenție Marketing Digital',
+  description: 'Agenție boutique de strategie digitală și marketing online. Construim identități digitale pentru profesioniști și branduri care aduc valoare.',
   openGraph: {
-    title: 'Consultanță în Identitate Digitală și Marketing Online | Your Online Identity Advisor',
-    description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare. Nu vindem servicii. Alegem parteneri.',
+    title: 'ADS Now Brașov - Agenție Marketing Digital',
+    description: 'Agenție boutique de strategie digitală și marketing online. Construim identități digitale pentru profesioniști și branduri care aduc valoare.',
     url: 'https://adsnow.ro',
-    images: ['/assets/images/logo1.png'],
+    images: ['/opengraph-image.jpg'],
   },
 }
 
@@ -39,6 +40,7 @@ export default function HomePage() {
         <ServiceSection />
         <DigitalProcessSection />
         <PricingSection />
+        <FAQSection />
         <NewsletterSection />
         <BlogSection />
       </main>
