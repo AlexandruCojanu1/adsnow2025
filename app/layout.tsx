@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare. Nu vindem servicii. Alegem parteneri.',
     images: [
       {
-        url: '/assets/images/logo1.png',
+        url: '/opengraph-image.jpg',
         width: 1200,
         height: 630,
         alt: 'ADSNOW - Your Online Identity Advisor',
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Consultanță în Identitate Digitală și Marketing Online',
     description: 'Construim identități digitale pentru profesioniști și branduri care aduc valoare.',
-    images: ['/assets/images/logo1.png'],
+    images: ['/opengraph-image.jpg'],
   },
   
   // Additional Meta Tags
