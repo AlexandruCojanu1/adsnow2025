@@ -521,6 +521,11 @@
         min-height: 0;
         width: 100%;
     }
+    .chooseus-content{
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 20px 20px 20px;
+    }
     .chooseus-spacer.above {
         border-radius: 0px 25px 0px 0px;
         box-shadow: 10px -10px 0px 0px var(--secondary);

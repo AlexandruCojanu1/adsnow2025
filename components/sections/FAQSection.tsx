@@ -15,7 +15,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: 'Cât costă un website personalizat?',
-    answer: 'Prețurile pentru website-uri personalizate încep de la 550 EUR. Fiecare proiect este evaluat individual în funcție de complexitate, funcționalități necesare și scopul afacerii. Nu vindem template-uri - construim soluții custom optimizate pentru performanță și conversie.',
+    answer: 'Prețurile pentru website-uri personalizate încep de la 800 EUR. Fiecare proiect este evaluat individual în funcție de complexitate, funcționalități necesare și scopul afacerii. Nu vindem template-uri - construim soluții custom optimizate pentru performanță și conversie.',
   },
   {
     question: 'Cât timp durează să apară rezultatele SEO?',

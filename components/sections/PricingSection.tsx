@@ -36,7 +36,7 @@ export default function PricingSection() {
 
                 <AnimateOnScroll animation="fadeInUp" speed="normal">
                   <div className="card card-pricing">
-                    <h4>Social Media Managemant</h4>
+                    <h4>Social Media Management</h4>
                     <p>Lasă audiența să îți cunoască brandul mai bine.</p>
                     <div className="d-flex flex-row gspace-1 align-items-center h-100">
                       <p>de la</p>
